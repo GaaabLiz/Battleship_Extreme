@@ -41,10 +41,12 @@ public class BattleshipExtremeView extends JFrame{
     //Dichirazione dei bordi dei programmi
     protected final LineBorder BORDER_GRIGINO = new LineBorder(Color.LIGHT_GRAY);
     
-    private ActionListener azione_esciDalGioco;
     private JMenuBar barraDelMenu;
     private JMenu menu_File;
+    private JMenu menu_Aiuto;
     private JMenuItem menu_File_esci;
+    private JMenuItem menu_Aiuto_regole;
+    private JMenuItem menu_Aiuto_tutorial;
     
     
     /**
@@ -72,7 +74,7 @@ public class BattleshipExtremeView extends JFrame{
     	// Inizializzazione del JFrame
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(BattleshipExtremeView.class.getResource("/icons/ship.png")));
         this.setTitle(NOME_PROGRAMMA);
-        this.setBounds(500, 500, LARGHEZZA_FINESTRA, ALTEZZA_FINESTRA);
+        this.setBounds(100, 100, LARGHEZZA_FINESTRA, ALTEZZA_FINESTRA);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setVisible(true);
@@ -102,10 +104,46 @@ public class BattleshipExtremeView extends JFrame{
 		// Menu : FILE : ESCI
 		menu_File_esci = new JMenuItem("Esci dal gioco");
 		menu_File_esci.setFont(FONT_SEGOE_H2_P);
-		menu_File_esci.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		menu_File.add(menu_File_esci);
+		
+		// Menu : AIUTO
+		menu_Aiuto = new JMenu("Aiuto");
+		menu_Aiuto.setFont(FONT_SEGOE_H1_P);
+		barraDelMenu.add(menu_Aiuto);
+		
+		// Menu : AIUTO : REGOLE
+		menu_Aiuto_regole = new JMenuItem("Regole di Battaglia Navale");
+		menu_Aiuto_regole.setFont(FONT_SEGOE_H2_P);
+		menu_Aiuto.add(menu_Aiuto_regole);
+		
+		// Menu : AIUTO : TUTORIAL
+		menu_Aiuto_tutorial = new JMenuItem("Guida all'uso");
+		menu_Aiuto_tutorial.setFont(FONT_SEGOE_H2_P);
+		menu_Aiuto.add(menu_Aiuto_tutorial);
 	}
+
+
+	
+
+	/**
+	 * @return the menu_File_esci
+	 */
+	public JMenuItem getMenu_File_esci() {
+		return menu_File_esci;
+	}
+
+
+
+	/**
+	 * @return the menu_Aiuto_regole
+	 */
+	public JMenuItem getMenu_Aiuto_regole() {
+		return menu_Aiuto_regole;
+	}
+	
+	
+	
+	
+	
+	
 }
