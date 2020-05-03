@@ -9,6 +9,9 @@ import javax.swing.JOptionPane;
 
 import model.BattleshipExtremeModel;
 import view.BattleshipExtremeView;
+import view.ConsoleView;
+import view.ImpostazioniPartitaView;
+import view.ImpostazioniView;
 
 public class BattleshipExtremeController {
 	
@@ -16,6 +19,9 @@ public class BattleshipExtremeController {
 	private BattleshipExtremeView view;
 	private ActionListener uscitaDalGioco;
 	private ActionListener apriRegoleGioco;
+	private ActionListener nuovaPartita;
+	private ActionListener apriImpostazioni;
+	private ActionListener visualizzaConsole;
 	
 	/**
 	 * @param model
@@ -27,16 +33,36 @@ public class BattleshipExtremeController {
 		this.view = view;
 		
 		// Inizializzazione degli event Handler
+		set_Action_nuovaPartita();
 		set_Action_uscitaDalGioco();
+		set_Action_apriImpostazioni();
+		set_Action_visualizzaConsole();
 		set_Action_apriRegoleGioco();
 		
+		
 		// Settaggio Action Listener
+		view.getMenu_File_new().addActionListener(nuovaPartita);
 		view.getMenu_File_esci().addActionListener(uscitaDalGioco);
+		view.getMenu_Modifica_settings().addActionListener(apriImpostazioni);
+		view.getMenu_Visualizza_console().addActionListener(visualizzaConsole);
 		view.getMenu_Aiuto_regole().addActionListener(apriRegoleGioco);
+		view.getBtn_nuovaPartita().addActionListener(nuovaPartita);
 	}
 	
 	
 	
+	private void set_Action_nuovaPartita() {
+		nuovaPartita = new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ImpostazioniPartitaView impostazioniPartita = new ImpostazioniPartitaView(model, view);	
+			}
+		};
+		
+	}
+
+
+
 	private void set_Action_uscitaDalGioco() {
 		uscitaDalGioco = new ActionListener() {		
 			@Override
@@ -50,6 +76,27 @@ public class BattleshipExtremeController {
 			}
 		};
 		
+	}
+	
+	
+	private void set_Action_apriImpostazioni() {
+		apriImpostazioni = new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ImpostazioniView impostazioni = new ImpostazioniView(model, view);		
+			}
+		};
+	}
+	
+	
+	
+	private void set_Action_visualizzaConsole() {
+		visualizzaConsole = new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ConsoleView console = new ConsoleView(model.getLogGioco(), view);		
+			}
+		};
 	}
 	
 	
