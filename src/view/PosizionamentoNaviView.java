@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
@@ -26,7 +27,7 @@ public class PosizionamentoNaviView extends JFrame{
 	private PannelloGriglia griglia_navi;
 	
 
-	public PosizionamentoNaviView(BattleshipExtremeModel model, BattleshipExtremeView view, Object obj) {
+	public PosizionamentoNaviView(BattleshipExtremeModel model, BattleshipExtremeView view, Object[] obj) {
 		
 		this.model = model;
 		this.view = view;
@@ -107,7 +108,7 @@ public class PosizionamentoNaviView extends JFrame{
 		
 		JComboBox comboBox_tipo = new JComboBox();
 		comboBox_tipo.setModel(new DefaultComboBoxModel(new String[] 
-				{"Pattugliatore (1 Cella)", 
+				{ 
 				"Cacciatorpedinieri (2 Celle)", 
 				"Sottomarini (3 Celle)",
 				"Incrociatori (4 Celle)",
@@ -137,13 +138,13 @@ public class PosizionamentoNaviView extends JFrame{
 		btnCheck.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				// scaricamento cose necessarie
+				// Prendo i valori inseriti dall'utente
 				int coordX = (int) spinner_X.getValue();
 				int coordY = (int) spinner_Y.getValue();
 				Point p = new Point(coordX, coordY);
 				PuntoCardinale orinetamento = null;
 				String o = (String) comboBox_orient.getSelectedItem();
-				int dim = comboBox_tipo.getSelectedIndex() + 1;
+				int dim = comboBox_tipo.getSelectedIndex() + 2;
 				
 				switch (o) {
 				case "Nord":
@@ -163,6 +164,7 @@ public class PosizionamentoNaviView extends JFrame{
 					break;
 				}
 				
+				// Stampo i debug nella console
 				model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "INPUT NAVE (X): " + coordX);
 				model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "INPUT NAVE (Y): " + coordY);
 				model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "INPUT NAVE (DIM): " + dim);
@@ -174,11 +176,31 @@ public class PosizionamentoNaviView extends JFrame{
 				model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "Controllo fuori mappa: " + controlloFuoriMappa);
 				Boolean controlloNaviVicine = model.controllaNaviVicine(dim, p, orinetamento, model.getMappe_Giocatore());
 				model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "Controllo navi vicine: " + controlloNaviVicine);
+				
+				if (controlloFuoriMappa && controlloNaviVicine) {
+					    obj[0] = dim;
+					    obj[1] = orinetamento;
+					    obj[2] = p;
+					    model.aggiungiLog("DEBUG", "Export Posizionamento Navi", "OBJ[0] = " + obj[0]);
+					    model.aggiungiLog("DEBUG", "Export Posizionamento Navi", "OBJ[1] = " + obj[1]);
+					    model.aggiungiLog("DEBUG", "Export Posizionamento Navi", "OBJ[2] = " + obj[2]);
+					    JFrame f=new JFrame();  
+					    JOptionPane.showMessageDialog(f,"Le impostazioni inserite sono correte e la nave e' stata creata.");
+					    nascondiJFrame();
+				}else {
+					JFrame f=new JFrame();  
+				    JOptionPane.showMessageDialog(f,"La nave inserita esce dalla mappa oppure e' in conflitto con altre navi.","Errore Posizionamento navi",JOptionPane.ERROR_MESSAGE); 
+				}
 			}
 		});
 		this.getContentPane().add(btnCheck);
 		
 		this.setVisible(true);
+	}
+	
+	private void nascondiJFrame() {
+		this.setVisible(false);
+		this.dispose();
 	}
 
 }

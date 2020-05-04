@@ -265,6 +265,9 @@ public class ImpostazioniPartitaView extends JFrame {
 	private void creaNaveManuale() {
 		Object obj[] = new Object[3];
 		PosizionamentoNaviView creaPosNavi = new PosizionamentoNaviView(model, view, obj);
+		model.aggiungiLog("DEBUG", "Impostazioni Partita Navi", "OBJ[0] = " + obj[0]);
+	    model.aggiungiLog("DEBUG", "Impostazioni Partita Navi", "OBJ[1] = " + obj[1]);
+	    model.aggiungiLog("DEBUG", "Impostazioni Partita Navi", "OBJ[2] = " + obj[2]);
 	}
 	
 	
