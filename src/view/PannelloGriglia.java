@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Point;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -79,5 +80,96 @@ public class PannelloGriglia extends JPanel{
 				
 				this.setVisible(true);
 			}
+		}
+		
+		/**
+		 * Dopo aver inserito le coordinate X e Y mostra sulla mappa una preview del punto in cui comparirà la nave 
+		 * dopo i controlli. Questa preview viene eseguita prima dell'inserimento dell'orientamento da parte dell'utente.
+		 * Se dopo l'inserimento dell'orientamento la nave non può essere inserita con tale orientamento il programma
+		 * richiede l'inserimento delle nuove coordinate e la vecchia preview della prua viene eliminata.
+		 * 
+		 * @param p Il punto all'interno della mappa contenente le coordinata della prua
+		 * @param visibilita TRUE se si vuole vedere la preview nel punto. FALSE altrimenti.
+		 */
+		public void previewPrua(Point p, Boolean visibilita) {
+			int coordX = p.x;
+			int coordY = p.y;
+			
+			for (int i = 0; i < griglia.length; i++) {
+				for (int j = 0; j < griglia.length; j++) {
+					if ((i == coordX) && (j == coordY)) {
+						if (visibilita) {
+							griglia[coordX+1][coordY+1].setBackground(COLORE_PREVIEW);
+						}else {
+							if (griglia[coordX+1][coordY+1].getBackground() == COLORE_NAVE) {
+								griglia[coordX+1][coordY+1].setBackground(COLORE_NAVE);
+							}else {
+								griglia[coordX+1][coordY+1].setBackground(COLORE_CELLA);
+							}
+						}
+						
+					}
+				}
+			}
+		}
+		
+		
+		
+		/**
+		 * Metodo che cambia il colore della cella con il colore nave. Questo metodo serve per visualizzare, dato in
+		 * ingresso lo spazioNavidel player, tutte le celle in cui ci soSno navi.
+		 * @param x X della cella
+		 * @param y Y della cella
+		 * @param p Il codice player di cui visualizzare pezzo nave
+		 */
+		public void visualizzaPezzoNave(int x, int y, int p) {
+//			System.out.println("[DEBUG]: Ho colorato di BLU (metodo GridPanel): X=" + x + " Y=" + y);
+			if (p == 0) {
+				griglia[x+1][y+1].setBackground(COLORE_NAVE);
+			} else {
+				griglia[x+1][y+1].setBackground(COLORE_NAVE_CPU);
+			}
+			
+		}
+		
+		
+		/**
+		 * Visualizza nella cella selezionata l'id della nave che la occupa
+		 * @param id l'id della nave da mostrare nella JLabel
+		 * @param x X della cella
+		 * @param y Y della cella
+		 */
+		public void visualizzaIdNave(int id, int x, int y) {
+			griglia[x+1][y+1].setFont(FONT_TENTATIVO);
+			griglia[x+1][y+1].setText(String.valueOf(id));
+		}
+
+
+		/**
+		 * Mostra sulla mappa un tentativo di affondamento nave
+		 * @param x X della cella
+		 * @param y Y della cella
+		 */
+		public void visualizzaTentativiDiAffondamento(int x, int y) {
+			griglia[x+1][y+1].setText("X");
+			griglia[x+1][y+1].setFont(FONT_TENTATIVO);	
+		}
+		
+		
+		/**
+		 * Mostra sulla mappa la cella di una nave affondata
+		 * @param x X della cella
+		 * @param y Y della cella
+		 * @param codicePlayer Il codice relativo al player in questione
+		 */
+		public void visualizzaNaviAffondate(int x, int y, int codicePlayer) {
+			griglia[x+1][y+1].setText("X");
+			griglia[x+1][y+1].setForeground(COLORE_TENTATIVO);
+			if (codicePlayer == 0) {
+				griglia[x+1][y+1].setBackground(COLORE_NAVE);
+			}else {
+				griglia[x+1][y+1].setBackground(COLORE_NAVE_CPU);
+			}
+			griglia[x+1][y+1].setFont(FONT_TENTATIVO);
 		}
 }

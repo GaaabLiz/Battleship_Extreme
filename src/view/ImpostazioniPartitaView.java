@@ -19,11 +19,13 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import model.BattleshipExtremeModel;
+import model.Nave;
 
 public class ImpostazioniPartitaView extends JFrame {
 	
 	private BattleshipExtremeModel model;
 	private BattleshipExtremeView view;
+	private Boolean confermMappaNavi = false;
 	JPanel panello_creaPosNavi;
 	JLabel label_naviInserite;
 
@@ -110,23 +112,39 @@ public class ImpostazioniPartitaView extends JFrame {
 		btn_confermaNavi.setBounds(190, 247, 238, 45);
 		btn_confermaNavi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFrame f = new JFrame();
 				int naviInserite = (int) spinner_navi.getValue();
 				int mappaInserita = (int) spinner_mappa.getValue();
-				int a=JOptionPane.showConfirmDialog(f,"Confermi di voler giocare con " + naviInserite + " navi in una mappa di " + mappaInserita + "X" + mappaInserita + " caselle?");  
-				if(a==JOptionPane.YES_OPTION){  
-//				    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
-					model.setNumeroNavi(naviInserite);
-					model.aggiungiLog("INFO", "Impostazioni partita", "Il numero della navi della partita corrente è settata a: " + model.getNumeroNavi());
-					model.setDimensioneMappa(mappaInserita);
-					model.aggiungiLog("INFO", "Impostazioni partita", "La dimensione della mappa nella partita attuale e' stata settata a : " + model.getDimensioneMappa());
-					spinner_mappa.setEnabled(false);
-					spinner_navi.setEnabled(false);
-					btn_confermaNavi.setEnabled(false);
-					btn_confermaNavi.setVisible(false);
-					visualizzaPannellonavi();
-					label_naviInserite.setText("Hai inserito " + numNaviCreate + " / " + model.getNumeroNavi() + " navi.");
-				}  
+				Boolean condinzione1 =  ((naviInserite <= model.MAX_NUM_NAVI) && (naviInserite >= model.MIN_NUM_NAVI));
+				Boolean condinzione2 =  ((mappaInserita <= model.MAX_DIM_MAPPA) && (mappaInserita >= model.MIN_DIM_MAPPA));
+				if (condinzione1 && condinzione2) {
+					JFrame f = new JFrame();			
+					int a=JOptionPane.showConfirmDialog(f,"Confermi di voler giocare con " + naviInserite + " navi in una mappa di " + mappaInserita + "X" + mappaInserita + " caselle?");  
+					if(a==JOptionPane.YES_OPTION){  
+//					    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+						model.setNumeroNavi(naviInserite);
+						model.aggiungiLog("INFO", "Impostazioni partita", "Il numero della navi della partita corrente è settata a: " + model.getNumeroNavi());
+						model.setDimensioneMappa(mappaInserita);
+						model.aggiungiLog("INFO", "Impostazioni partita", "La dimensione della mappa nella partita attuale e' stata settata a : " + model.getDimensioneMappa());
+						model.setMappe_Giocatore(model.getDimensioneMappa());
+						model.setMappe_Cpu(model.getDimensioneMappa());
+						model.setModelloNavi();
+						model.setGiocatore();	
+						model.setCpu();
+						model.getMappe_Giocatore().setSpazioNavi();
+						model.getMappe_Cpu().setSpazioNavi();
+						spinner_mappa.setEnabled(false);
+						spinner_navi.setEnabled(false);
+						btn_confermaNavi.setEnabled(false);
+						btn_confermaNavi.setVisible(false);
+						visualizzaPannellonavi();
+						label_naviInserite.setText("Hai inserito " + numNaviCreate + " / " + model.getNumeroNavi() + " navi.");
+						confermMappaNavi = true;
+					}
+				}else {
+					JFrame f = new JFrame();
+					JOptionPane.showMessageDialog(f,"Ce almeno un valore inserito che non rientra nel range di valori ammissibili. Riprovare.","Errore",JOptionPane.ERROR_MESSAGE);  
+				}
+				  
 				
 			}
 		});
@@ -150,6 +168,11 @@ public class ImpostazioniPartitaView extends JFrame {
 		// Pulsante crea navi manualmente
 		JButton btn_manualCreaNavi = new JButton("Crea e posiziona nave manualmente");
 		btn_manualCreaNavi.setFont(view.FONT_SEGOE_H1_P);
+		btn_manualCreaNavi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				creaNaveManuale();
+			}
+		});
 		btn_manualCreaNavi.setBounds(111, 94, 333, 33);
 		panello_creaPosNavi.add(btn_manualCreaNavi);
 		
@@ -177,22 +200,30 @@ public class ImpostazioniPartitaView extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"ID", "Tipo", "Dim", "Coordinate"
+				"ID", "Tipo", "Dim", "Coordinate", "Orientamento"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				Integer.class, String.class, Integer.class, String.class
+				Integer.class, String.class, Integer.class, String.class, String.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 			boolean[] columnEditables = new boolean[] {
-				false, true, true, true
+				true, true, true, true, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
+		table.getColumnModel().getColumn(0).setPreferredWidth(10);
+		table.getColumnModel().getColumn(0).setMinWidth(5);
+		table.getColumnModel().getColumn(1).setPreferredWidth(90);
+		table.getColumnModel().getColumn(1).setMinWidth(25);
+		table.getColumnModel().getColumn(2).setPreferredWidth(20);
+		table.getColumnModel().getColumn(2).setMinWidth(10);
+		table.getColumnModel().getColumn(4).setPreferredWidth(78);
+		table.getColumnModel().getColumn(4).setMinWidth(26);
 		scrollPane.setViewportView(table);
 		
 		
@@ -201,6 +232,16 @@ public class ImpostazioniPartitaView extends JFrame {
 		JButton btnIniziaPartita = new JButton("Inizia Partita");
 		btnIniziaPartita.setFont(view.FONT_SEGOE_H1_P);
 		btnIniziaPartita.setBounds(115, 705, 189, 45);
+		btnIniziaPartita.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (confermMappaNavi == false) {
+					JFrame f = new JFrame();
+					JOptionPane.showMessageDialog(f,"Prima di procedere confermare la dimensione della mappa e il numero navi (Pulsante qua sopra).","Errore",JOptionPane.ERROR_MESSAGE);
+				}else {
+					
+				}
+			}
+		});
 		btnIniziaPartita.setEnabled(true);
 		this.getContentPane().add(btnIniziaPartita);
 		
@@ -218,6 +259,12 @@ public class ImpostazioniPartitaView extends JFrame {
 		
 		
 		this.setVisible(true);
+	}
+	
+	
+	private void creaNaveManuale() {
+		Object obj[] = new Object[3];
+		PosizionamentoNaviView creaPosNavi = new PosizionamentoNaviView(model, view, obj);
 	}
 	
 	
