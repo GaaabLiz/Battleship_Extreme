@@ -39,6 +39,7 @@ public class BattleshipExtremeView extends JFrame{
     protected final Font FONT_SEGOE_H1_P = new Font("Segoe UI", Font.PLAIN, 18);
     protected final Font FONT_SEGOE_H1_BI = new Font("Segoe UI", Font.BOLD | Font.ITALIC, 18);
     protected final Font FONT_SEGOE_H2_P = new Font("Segoe UI", Font.PLAIN, 16);
+    protected final Font FONT_SEGOE_H3_P = new Font("Segoe UI", Font.PLAIN, 14);
 
     //Dichirazione dei bordi dei programmi
     protected final LineBorder BORDER_GRIGINO = new LineBorder(Color.LIGHT_GRAY);

@@ -18,6 +18,7 @@ import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 
 import model.BattleshipExtremeModel;
+import model.Nave;
 import model.PuntoCardinale;
 
 public class PosizionamentoNaviView extends JFrame{
@@ -25,9 +26,10 @@ public class PosizionamentoNaviView extends JFrame{
 	private BattleshipExtremeModel model;
 	private BattleshipExtremeView view;
 	private PannelloGriglia griglia_navi;
+	private static int idCorrente = 1;
 	
 
-	public PosizionamentoNaviView(BattleshipExtremeModel model, BattleshipExtremeView view, Object[] obj) {
+	public PosizionamentoNaviView(BattleshipExtremeModel model, BattleshipExtremeView view) {
 		
 		this.model = model;
 		this.view = view;
@@ -178,15 +180,14 @@ public class PosizionamentoNaviView extends JFrame{
 				model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "Controllo navi vicine: " + controlloNaviVicine);
 				
 				if (controlloFuoriMappa && controlloNaviVicine) {
-					    obj[0] = dim;
-					    obj[1] = orinetamento;
-					    obj[2] = p;
-					    model.aggiungiLog("DEBUG", "Export Posizionamento Navi", "OBJ[0] = " + obj[0]);
-					    model.aggiungiLog("DEBUG", "Export Posizionamento Navi", "OBJ[1] = " + obj[1]);
-					    model.aggiungiLog("DEBUG", "Export Posizionamento Navi", "OBJ[2] = " + obj[2]);
-					    JFrame f=new JFrame();  
-					    JOptionPane.showMessageDialog(f,"Le impostazioni inserite sono correte e la nave e' stata creata.");
-					    nascondiJFrame();
+					Nave n = new Nave(idCorrente, dim, orinetamento, p);
+				    model.aggiungiLog("DEBUG", "Export Posizionamento Navi", "Dim nave = " + n.getDimensioneNave());
+				    model.aggiungiLog("DEBUG", "Export Posizionamento Navi", "ORine. Nave = " + n.getOrientamento());
+				    model.aggiungiLog("DEBUG", "Export Posizionamento Navi", "Coord Prua= " + n.getCoordinatePrua());
+				    System.out.println("export");
+				    JFrame f=new JFrame();  
+				    JOptionPane.showMessageDialog(f,"Le impostazioni inserite sono correte e la nave e' stata creata.");
+				    nascondiJFrame();
 				}else {
 					JFrame f=new JFrame();  
 				    JOptionPane.showMessageDialog(f,"La nave inserita esce dalla mappa oppure e' in conflitto con altre navi.","Errore Posizionamento navi",JOptionPane.ERROR_MESSAGE); 
@@ -200,7 +201,6 @@ public class PosizionamentoNaviView extends JFrame{
 	
 	private void nascondiJFrame() {
 		this.setVisible(false);
-		this.dispose();
 	}
 
 }

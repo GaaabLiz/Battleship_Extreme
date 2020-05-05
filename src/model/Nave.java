@@ -148,4 +148,43 @@ public class Nave {
 	public void setCelleColpite(int celleColpite) {
 		this.celleColpite = celleColpite;
 	}
+
+
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
+	/**
+	 * @param orientamento the orientamento to set
+	 */
+	public void setOrientamento(PuntoCardinale orientamento) {
+		this.orientamento = orientamento;
+	}
+
+
+
+	/**
+	 * @param coordinatePrua the coordinatePrua to set
+	 */
+	public void setCoordinatePrua(Point coordinatePrua) {
+		this.coordinatePrua = coordinatePrua;
+	}
+
+
+
+	/**
+	 * @param dimensioneNave the dimensioneNave to set
+	 */
+	public void setDimensioneNave(int dimensioneNave) {
+		this.dimensioneNave = dimensioneNave;
+	}
+	
+	
+	
 }
