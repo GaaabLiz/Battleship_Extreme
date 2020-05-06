@@ -21,6 +21,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import model.BattleshipExtremeModel;
@@ -121,7 +122,7 @@ public class ImpostazioniPartitaView extends JFrame {
 		// Pulsante conferma navi e mappa
 		JButton btn_confermaNavi = new JButton("Conferma mappa e navi");
 		btn_confermaNavi.setFont(view.FONT_SEGOE_H1_P);
-		btn_confermaNavi.setBounds(190, 247, 238, 45);
+		btn_confermaNavi.setBounds(190, 247, 238, 40);
 		btn_confermaNavi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int naviInserite = (int) spinner_navi.getValue();
@@ -170,8 +171,8 @@ public class ImpostazioniPartitaView extends JFrame {
 		
 		// PPannello che contiene tutto la creazione pos navi
 		panello_creaPosNavi = new JPanel();
-		panello_creaPosNavi.setBorder(view.BORDER_GRIGIO);
 		panello_creaPosNavi.setBounds(39, 294, 555, 390);
+		panello_creaPosNavi.setBackground(view.COLORE_BIANCO);
 		panello_creaPosNavi.setVisible(false);
 		this.getContentPane().add(panello_creaPosNavi);
 		panello_creaPosNavi.setLayout(null);
@@ -188,6 +189,7 @@ public class ImpostazioniPartitaView extends JFrame {
 		// PANE 1: Crea posiziona navi
 		JPanel panello_CreaPos = new JPanel();
 		tabbedPane_main.addTab("Crea e posiziona navi", null, panello_CreaPos, null);
+		panello_CreaPos.setBackground(view.COLORE_BIANCO);
 		panello_CreaPos.setLayout(null);
 		
 		// label info
@@ -276,87 +278,98 @@ public class ImpostazioniPartitaView extends JFrame {
 		btn_tentaPiazzamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				// Prendo i valori inseriti dall'utente
-				int coordX = (int) spinner_XPRua.getValue();
-				int coordY = (int) spinner_YPRua.getValue();
-				Point p = new Point(coordX, coordY);
-				PuntoCardinale orinetamento = null;
-				String o = (String) comboBox_Orinet.getSelectedItem();
-				int dim = comboBox_TipoNave.getSelectedIndex() + 2;
-				
-				switch (o) {
-				case "Nord":
-					orinetamento = PuntoCardinale.NORD;
-					break;
-				case "Sud":
-					orinetamento = PuntoCardinale.SUD;
-					break;
-				case "Est":
-					orinetamento = PuntoCardinale.EST;
-					break;
-				case "Ovest":
-					orinetamento = PuntoCardinale.OVEST;
-					break;
+				// contrllo gia navi inserite tutte
+				if(numNaviCreate == model.getNumeroNavi()) {
+					JFrame f=new JFrame();  
+				    JOptionPane.showMessageDialog(f,"Hai già inserito tutte le navi richieste! Clicca sul 'Inizia Partita' per incominciare a giocare.", "Avviso", JOptionPane.WARNING_MESSAGE);
+				} else {
+					// Prendo i valori inseriti dall'utente
+					int coordX = (int) spinner_XPRua.getValue();
+					int coordY = (int) spinner_YPRua.getValue();
+					Point p = new Point(coordX, coordY);
+					PuntoCardinale orinetamento = null;
+					String o = (String) comboBox_Orinet.getSelectedItem();
+					int dim = comboBox_TipoNave.getSelectedIndex() + 2;
+					
+					switch (o) {
+					case "Nord":
+						orinetamento = PuntoCardinale.NORD;
+						break;
+					case "Sud":
+						orinetamento = PuntoCardinale.SUD;
+						break;
+					case "Est":
+						orinetamento = PuntoCardinale.EST;
+						break;
+					case "Ovest":
+						orinetamento = PuntoCardinale.OVEST;
+						break;
 
-				default:
-					break;
+					default:
+						break;
+					}
+					
+					// Stampo i debug nella console
+					model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "INPUT NAVE (X): " + coordX);
+					model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "INPUT NAVE (Y): " + coordY);
+					model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "INPUT NAVE (DIM): " + dim);
+					model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "INPUT NAVE (ORIENT): " + orinetamento);
+					
+					
+					// COntrolli sui dati della nave
+					Boolean controlloFuoriMappa = model.controlloFuoriuscitaNave(dim, p, orinetamento);
+					model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "Controllo fuori mappa: " + controlloFuoriMappa);
+					Boolean controlloNaviVicine = model.controllaNaviVicine(dim, p, orinetamento, model.getMappe_Giocatore());
+					model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "Controllo navi vicine: " + controlloNaviVicine);
+					
+					if (controlloFuoriMappa && controlloNaviVicine) {
+						
+						// Stampa messaggio nave giusta
+						JFrame f=new JFrame();  
+					    JOptionPane.showMessageDialog(f,"Le impostazioni inserite sono correte e la nave e' stata creata.");
+						
+					    /* Creazione dell'oggetto nave ---------------------------*/
+						Nave naveDefinitiva = new Nave(iDcorrente, dim, orinetamento, p);
+						
+						/* Aggiunta della nave al giocatore ----------------------*/
+						model.getGiocatore().aggiungiNaveAlleMieNavi(naveDefinitiva);
+						
+						/* aggiungi il tipo di nave corrente al modelllo che dovrà usare la cpu per creare le sue navi */
+						model.aggiungiModelloNave(iDcorrente-1, dim);
+						
+						/* Aggiunta nave nello spazio navi del player */
+						model.getMappe_Giocatore().piazzaNaveNellaMappa(naveDefinitiva);
+						
+						/* aggiorna la view per visualizzare la mappa aggiornata con la nave appena aggiunta */
+						updateGrigliaPan3(model.getMappe_Giocatore().getSpazioNavi(), model.getDimensioneMappa());
+					    
+						/* Stampa nella mappa gli ID della nave se opzioni di debug asserita */
+//						if (model.MOSTRA_NUMERI_NAVE) {view.visualizzaIdNave(model.getMappe_Giocatore(), 0);}
+
+						/* Aggiutna nave alle variabili */
+						numNaviCreate++;
+						label_naviInserite.setText("Hai inserito " + numNaviCreate + " / " + model.getNumeroNavi() + " navi.");
+						
+						/* Aggiunta della nave nella tabella */
+						DefaultTableModel m = (DefaultTableModel) table.getModel();
+						int temp_id = naveDefinitiva.getId();
+						String tempTipo = naveDefinitiva.getTipologiaNave();
+						int temp_dim = naveDefinitiva.getDimensioneNave();
+						String tempcoordinate = "(" + naveDefinitiva.getCoordinatePrua().x + ", " + naveDefinitiva.getCoordinatePrua().y + ")";
+						String temp_orin = naveDefinitiva.getOrientamento().toString();
+						Object datiDaInserire[] = {temp_id, tempTipo, temp_dim, tempcoordinate, temp_orin};
+						m.addRow(datiDaInserire);
+						
+						/* Aumento id */
+						iDcorrente++;
+						
+					}else {
+						JFrame f=new JFrame();  
+					    JOptionPane.showMessageDialog(f,"La nave inserita esce dalla mappa oppure e' in conflitto con altre navi.","Errore Posizionamento navi",JOptionPane.ERROR_MESSAGE); 
+					}
 				}
 				
-				// Stampo i debug nella console
-				model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "INPUT NAVE (X): " + coordX);
-				model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "INPUT NAVE (Y): " + coordY);
-				model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "INPUT NAVE (DIM): " + dim);
-				model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "INPUT NAVE (ORIENT): " + orinetamento);
 				
-				
-				// COntrolli sui dati della nave
-				Boolean controlloFuoriMappa = model.controlloFuoriuscitaNave(dim, p, orinetamento);
-				model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "Controllo fuori mappa: " + controlloFuoriMappa);
-				Boolean controlloNaviVicine = model.controllaNaviVicine(dim, p, orinetamento, model.getMappe_Giocatore());
-				model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "Controllo navi vicine: " + controlloNaviVicine);
-				
-				if (controlloFuoriMappa && controlloNaviVicine) {
-					
-					// Stampa messaggio nave giusta
-					JFrame f=new JFrame();  
-				    JOptionPane.showMessageDialog(f,"Le impostazioni inserite sono correte e la nave e' stata creata.");
-					
-				    /* Creazione dell'oggetto nave ---------------------------*/
-					Nave naveDefinitiva = new Nave(iDcorrente, dim, orinetamento, p);
-					
-					/* Aggiunta della nave al giocatore ----------------------*/
-					model.getGiocatore().aggiungiNaveAlleMieNavi(naveDefinitiva);
-					
-					/* aggiungi il tipo di nave corrente al modelllo che dovrà usare la cpu per creare le sue navi */
-					model.aggiungiModelloNave(iDcorrente-1, dim);
-					
-					/* Aggiunta nave nello spazio navi del player */
-					model.getMappe_Giocatore().piazzaNaveNellaMappa(naveDefinitiva);
-					
-					/* aggiorna la view per visualizzare la mappa aggiornata con la nave appena aggiunta */
-					updateGrigliaPan3(model.getMappe_Giocatore().getSpazioNavi(), model.getDimensioneMappa());
-				    
-					/* Stampa nella mappa gli ID della nave se opzioni di debug asserita */
-//					if (model.MOSTRA_NUMERI_NAVE) {view.visualizzaIdNave(model.getMappe_Giocatore(), 0);}
-
-					/* Aggiutna nave alle variabili */
-					numNaviCreate++;
-					label_naviInserite.setText("Hai inserito " + numNaviCreate + " / " + model.getNumeroNavi() + " navi.");
-					
-					/* Aggiunta della nave nella tabella */
-					DefaultTableModel m = (DefaultTableModel) table.getModel();
-					int temp_id = naveDefinitiva.getId();
-					String tempTipo = naveDefinitiva.getTipologiaNave();
-					int temp_dim = naveDefinitiva.getDimensioneNave();
-					String tempcoordinate = "(" + naveDefinitiva.getCoordinatePrua().x + ", " + naveDefinitiva.getCoordinatePrua().y + ")";
-					String temp_orin = naveDefinitiva.getOrientamento().toString();
-					Object datiDaInserire[] = {temp_id, tempTipo, temp_dim, tempcoordinate, temp_orin};
-					m.addRow(datiDaInserire);
-					
-				}else {
-					JFrame f=new JFrame();  
-				    JOptionPane.showMessageDialog(f,"La nave inserita esce dalla mappa oppure e' in conflitto con altre navi.","Errore Posizionamento navi",JOptionPane.ERROR_MESSAGE); 
-				}
 			}
 		});
 		panello_PosNaviManuale.add(btn_tentaPiazzamento);
@@ -376,6 +389,92 @@ public class ImpostazioniPartitaView extends JFrame {
 		JButton btnGeneraNaveCasuale = new JButton("Genera nave casuale");
 		btnGeneraNaveCasuale.setFont(view.FONT_SEGOE_H2_P);
 		btnGeneraNaveCasuale.setBounds(137, 115, 231, 38);
+		btnGeneraNaveCasuale.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Boolean infoNaveOk = false;
+				Point p;
+				PuntoCardinale orinetamento;
+				int dim;
+				
+				// contrllo gia navi inserite tutte
+				if(numNaviCreate == model.getNumeroNavi()) {
+					JFrame f=new JFrame();  
+				    JOptionPane.showMessageDialog(f,"Hai già inserito tutte le navi richieste! Clicca sul 'Inizia Partita' per incominciare a giocare.", "Avviso", JOptionPane.WARNING_MESSAGE);
+				} else {
+					do {
+						
+						
+						
+						// Genero a caso dei valori della nave
+						p = model.getCpu().generaCoordinateCasuali(model.getDimensioneMappa());
+						orinetamento = model.getCpu().generaOrientamentoCasuale();
+						dim = model.getCpu().generaDimNaveCasuale();
+						
+						// Stampo i debug nella console
+						model.aggiungiLog("INFO", "Posizionamento Navi Random", "INPUT NAVE (X): " + p.x);
+						model.aggiungiLog("INFO", "Posizionamento Navi Random", "INPUT NAVE (Y): " + p.y);
+						model.aggiungiLog("INFO", "Posizionamento Navi Random", "INPUT NAVE (DIM): " + dim);
+						model.aggiungiLog("INFO", "Posizionamento Navi Random", "INPUT NAVE (ORIENT): " + orinetamento);				
+						
+						// COntrolli sui dati della nave
+						Boolean controlloFuoriMappa = model.controlloFuoriuscitaNave(dim, p, orinetamento);
+						model.aggiungiLog("INFO", "Posizionamento Navi Random", "Controllo fuori mappa: " + controlloFuoriMappa);
+						Boolean controlloNaviVicine = model.controllaNaviVicine(dim, p, orinetamento, model.getMappe_Giocatore());
+						model.aggiungiLog("INFO", "Posizionamento Navi Random", "Controllo navi vicine: " + controlloNaviVicine);
+						
+						
+						if (controlloFuoriMappa && controlloNaviVicine) { 
+							infoNaveOk = true;
+						}
+						
+					} while (infoNaveOk == false);
+					
+									
+					// Stampa messaggio nave giusta
+					JFrame f=new JFrame();  
+				    JOptionPane.showMessageDialog(f,"È stata creata una nave casuale.");
+					
+				    /* Creazione dell'oggetto nave ---------------------------*/
+					Nave naveDefinitiva = new Nave(iDcorrente, dim, orinetamento, p);
+					
+					/* Aggiunta della nave al giocatore ----------------------*/
+					model.getGiocatore().aggiungiNaveAlleMieNavi(naveDefinitiva);
+					
+					/* aggiungi il tipo di nave corrente al modelllo che dovrà usare la cpu per creare le sue navi */
+					model.aggiungiModelloNave(iDcorrente-1, dim);
+					
+					/* Aggiunta nave nello spazio navi del player */
+					model.getMappe_Giocatore().piazzaNaveNellaMappa(naveDefinitiva);
+					
+					/* aggiorna la view per visualizzare la mappa aggiornata con la nave appena aggiunta */
+					updateGrigliaPan3(model.getMappe_Giocatore().getSpazioNavi(), model.getDimensioneMappa());
+				    
+					/* Stampa nella mappa gli ID della nave se opzioni di debug asserita */
+//						if (model.MOSTRA_NUMERI_NAVE) {view.visualizzaIdNave(model.getMappe_Giocatore(), 0);}
+
+					/* Aggiutna nave alle variabili */
+					numNaviCreate++;
+					label_naviInserite.setText("Hai inserito " + numNaviCreate + " / " + model.getNumeroNavi() + " navi.");
+					
+					/* Aggiunta della nave nella tabella */
+					DefaultTableModel m = (DefaultTableModel) table.getModel();
+					int temp_id = naveDefinitiva.getId();
+					String tempTipo = naveDefinitiva.getTipologiaNave();
+					int temp_dim = naveDefinitiva.getDimensioneNave();
+					String tempcoordinate = "(" + naveDefinitiva.getCoordinatePrua().x + ", " + naveDefinitiva.getCoordinatePrua().y + ")";
+					String temp_orin = naveDefinitiva.getOrientamento().toString();
+					Object datiDaInserire[] = {temp_id, tempTipo, temp_dim, tempcoordinate, temp_orin};
+					m.addRow(datiDaInserire);
+					
+					/* Aumento id */
+					iDcorrente++;
+				}
+				
+				
+				
+			}
+		});
 		panello_PosNaviRandom.add(btnGeneraNaveCasuale);
 		
 		
@@ -384,6 +483,7 @@ public class ImpostazioniPartitaView extends JFrame {
 		// PANE 2 : pannello vedi nave create
 		JPanel panello_VediNaviCreate = new JPanel();
 		tabbedPane_main.addTab("Vedi elenco navi", null, panello_VediNaviCreate, null);
+		panello_VediNaviCreate.setBackground(view.COLORE_BIANCO);
 		panello_VediNaviCreate.setLayout(null);
 		
 		// PANE 2 : label info navi
@@ -414,12 +514,21 @@ public class ImpostazioniPartitaView extends JFrame {
 				return columnTypes[columnIndex];
 			}
 			boolean[] columnEditables = new boolean[] {
-				true, true, true, true, false
+				false, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER); 
+        table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+		table.setRowHeight(25);
+		table.setFont(view.FONT_SEGOE_H3_P);
 		table.getColumnModel().getColumn(0).setPreferredWidth(10);
 		table.getColumnModel().getColumn(0).setMinWidth(5);
 		table.getColumnModel().getColumn(1).setPreferredWidth(90);
@@ -435,6 +544,7 @@ public class ImpostazioniPartitaView extends JFrame {
 		
 		JPanel panello_VediNaviPos = new JPanel();
 		tabbedPane_main.addTab("Vedi Navi posizionate", null, panello_VediNaviPos, null);
+		panello_VediNaviPos.setBackground(view.COLORE_BIANCO);
 		panello_VediNaviPos.setLayout(null);
 		
 		panelloGrigliaCOntainer = new JPanel();
@@ -491,18 +601,6 @@ public class ImpostazioniPartitaView extends JFrame {
 	}
 	
 	
-	private void creaNaveManuale() {
-//		Object obj[] = new Object[3];	
-//		PosizionamentoNaviView creaPosNavi = new PosizionamentoNaviView(model, view);
-		
-	}
-	
-	protected void creaNaveManualeSettaggio(Nave n) {
-//		model.aggiungiLog("DEBUG", "Settaggio Posizionamento Navi", "Dim nave = " + nTemp.getDimensioneNave());
-//	    model.aggiungiLog("DEBUG", "Settaggio Posizionamento Navi", "ORine. Nave = " + nTemp.getOrientamento());
-//	    model.aggiungiLog("DEBUG", "Settaggio Posizionamento Navi", "Coord Prua= " + nTemp.getCoordinatePrua());
-//	    System.out.println("settaggio");
-	}
 	
 	
 	private void updateGrigliaPan3 (Boolean[][] spazioNavi, int dimensioneMappa) {

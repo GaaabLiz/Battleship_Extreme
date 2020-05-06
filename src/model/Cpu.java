@@ -26,6 +26,19 @@ public class Cpu extends Player{
 	
 	
 	/**
+	 * Metodo che genera un intero casuale per la dim nave.
+	 * @return l'intero generato
+	 */
+	public int generaDimNaveCasuale() {
+			int min = 2;
+		    int max = 6;
+			Random rand = new Random();
+		 int randomInt = (int) (Math.random() * (max - min + 1) + min);	     
+	     return randomInt;
+	}
+	
+	
+	/**
 	 * Genera un orientamento casuale per una nave della CPU
 	 * @return Un PuntoCardinale a caso tra i 4
 	 */

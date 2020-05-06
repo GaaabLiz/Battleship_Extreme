@@ -208,17 +208,10 @@ public class BattleshipExtremeView extends JFrame{
 	}
 	
 	
-	
-	
-	private void inizializzazioneTitoloEStart() {
+	private void creaCampoDaGioco() {
 		
-		// Label del titolo
-		label_titolo = new JLabel("");
-		label_titolo.setIcon(new ImageIcon(BattleshipExtremeView.class.getResource("/images/titleHome_2.png")));
-		label_titolo.setBounds(361, 30, 850, 65);
-		this.getContentPane().add(label_titolo);
 	}
-
+	
 	
 	
 	

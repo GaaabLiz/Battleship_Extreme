@@ -59,6 +59,9 @@ public class Nave {
 		case 5:
 			this.tipoNave = TipoNave.PORTAEREI;
 			break;
+		case 6:
+			this.tipoNave = TipoNave.CORAZZATA;
+			break;
 		default:
 			break;
 		}
@@ -75,16 +78,19 @@ public class Nave {
 		String temp = "";
 		switch (tipoNave) {
 		case CACCIATORPEDINIERE:
-			temp = "un cacciatorpediniere";
+			temp = "Cacciatorpediniere";
 			break;
 		case SOTTOMARINO:
-			temp = "un sottomarino";
+			temp = "Sottomarino";
 			break;
 		case INCROCIATORE:
-			temp = "un incrociatore";
+			temp = "Incrociatore";
 			break;
 		case PORTAEREI:
-			temp = "una portaerei";
+			temp = "Portaerei";
+			break;
+		case CORAZZATA:
+			temp = "Corazzata";
 			break;
 
 		default:
