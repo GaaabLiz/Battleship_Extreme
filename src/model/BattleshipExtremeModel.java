@@ -19,8 +19,8 @@ public class BattleshipExtremeModel {
 		public Boolean ABILITA_NAVE_DIM_1 = false;			/* Abilita la dimensione della nave corrispondete */
 		
 		// # COSTANTI USATE PER SCOPI DI DEBUG #-------------------------------------------------------------
-		public final Boolean MOSTRA_NUMERI_NAVE = false;	/* Mostra sulle celle occupate l'ID della nave. */
-		public final Boolean MOSTRA_NAVI_CPU = false; 		/* Mostra le navi della CPU nella mappa tentativi */
+		public Boolean MOSTRA_NUMERI_NAVE = false;	/* Mostra sulle celle occupate l'ID della nave. */
+		public Boolean MOSTRA_NAVI_CPU = true; 		/* Mostra le navi della CPU nella mappa tentativi */
 		
 		// # VARIABILI PRINCIPALI DEL GIOCO #----------------------------------------------------------------
 		private ArrayList<Log> LogGioco;
@@ -35,6 +35,8 @@ public class BattleshipExtremeModel {
 		private String nomeGiocatore;						/* Indica il nome del giocatore */
 		private Instant startPartita;
 		private Instant stopPartita;
+		private int turnoAttuale = 0;
+		private int secondiTurnoCpu = 3;
 			
 		
 		/**
@@ -505,6 +507,47 @@ public class BattleshipExtremeModel {
 		public void setNomeGiocatore(String nomeGiocatore) {
 			this.nomeGiocatore = nomeGiocatore;
 		}
+
+		/**
+		 * @return the modelloNavi
+		 */
+		public int[] getModelloNavi() {
+			return modelloNavi;
+		}
+
+		/**
+		 * @return the turnoAttuale
+		 */
+		public int getTurnoAttuale() {
+			return turnoAttuale;
+		}
+
+		/**
+		 * @param turnoAttuale the turnoAttuale to set
+		 */
+		public void setTurnoAttuale(int turnoAttuale) {
+			this.turnoAttuale = turnoAttuale;
+		}
+
+		/**
+		 * @return the secondiTurnoCpu
+		 */
+		public int getSecondiTurnoCpu() {
+			return secondiTurnoCpu;
+		}
+
+		/**
+		 * @param secondiTurnoCpu the secondiTurnoCpu to set
+		 */
+		public void setSecondiTurnoCpu(int secondiTurnoCpu) {
+			this.secondiTurnoCpu = secondiTurnoCpu;
+		}
+		
+		
+		
+		
+		
+		
 		
 		
 		

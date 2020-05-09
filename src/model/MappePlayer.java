@@ -83,23 +83,23 @@ public class MappePlayer {
 	
 	
 	
-//	/**
-//	 * Metodo usato solamente per scopi di debug. Usato per testare il settaggio TRUE/FALSE dello spazio navi 
-//	 */
-//	public void stampaSpazioNavi() {
-//		System.out.println();
-//		for (int i = 0; i < spazioNavi.length; i++) {
-//			for (int j = 0; j < spazioNavi.length; j++) {
-//				if (spazioNavi[i][j] == true) {
-//					System.out.print('▒');
-//				}else {
-//					System.out.print('|');
-//				}
-//				
-//			}
-//			System.out.println();
-//		}
-//	}
+	/**
+	 * Metodo usato solamente per scopi di debug. Usato per testare il settaggio TRUE/FALSE dello spazio navi 
+	 */
+	public void stampaSpazioNavi() {
+		System.out.println();
+		for (int i = 0; i < spazioNavi.length; i++) {
+			for (int j = 0; j < spazioNavi.length; j++) {
+				if (spazioNavi[i][j] == true) {
+					System.out.print('▒');
+				}else {
+					System.out.print('|');
+				}
+				
+			}
+			System.out.println();
+		}
+	}
 	
 	
 	/**

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -127,6 +128,52 @@ public class ImpostazioniView extends JFrame {
 		
 		
 		
+		/* Pannello CHEAT & DEBUG --------------*/ 
+		
+		JPanel pannello_CheatDebug = new JPanel();
+		tabbedPane.addTab("Cheat & Debug", null, pannello_CheatDebug, null);
+		pannello_CheatDebug.setLayout(null);
+		
+		JCheckBox chckbxMostraLeNavi = new JCheckBox("Mostra le navi della CPU (è un cheat!)");
+		chckbxMostraLeNavi.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		chckbxMostraLeNavi.setBounds(26, 28, 291, 23);
+		if (model.MOSTRA_NAVI_CPU) {
+			chckbxMostraLeNavi.setSelected(true);
+		}else {
+			chckbxMostraLeNavi.setSelected(false);
+		}
+		pannello_CheatDebug.add(chckbxMostraLeNavi);
+		
+		
+		JCheckBox chckbxMostraID = new JCheckBox("Mostra gli ID della navi nella mappa");
+		chckbxMostraID.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		chckbxMostraID.setBounds(26, 78, 279, 23);
+		if (model.MOSTRA_NUMERI_NAVE) {
+			chckbxMostraID.setSelected(true);
+		}else {
+			chckbxMostraID.setSelected(false);
+		}
+		pannello_CheatDebug.add(chckbxMostraID);
+		
+		
+		
+		
+		/* Pannello Partita --------------*/ 
+		
+		JPanel pannello_Partita = new JPanel();
+		tabbedPane.addTab("Partita", null, pannello_CheatDebug, null);
+		pannello_CheatDebug.setLayout(null);
+		
+		JLabel lblNewLabel_1_4 = new JLabel("Secondi di attività turno CPU :");
+		lblNewLabel_1_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_1_4.setBounds(20, 32, 213, 22);
+		pannello_CheatDebug.add(lblNewLabel_1_4);
+		
+		JSpinner spinner_SecCpu = new JSpinner();
+		spinner_SecCpu.setValue(model.getSecondiTurnoCpu());
+		spinner_SecCpu.setBounds(236, 31, 48, 30);
+		pannello_CheatDebug.add(spinner_SecCpu);
+		
 		
 		
 		
@@ -152,6 +199,15 @@ public class ImpostazioniView extends JFrame {
 				
 				model.MAX_NUM_NAVI = (int) spinner_max_navi.getValue();
 				model.aggiungiLog("INFO", "Impostazioni", "Il numero massimo di navi è stata settato a: " + model.MAX_NUM_NAVI);
+				
+				model.MOSTRA_NAVI_CPU = chckbxMostraLeNavi.isSelected();
+				model.aggiungiLog("INFO", "Impostazioni", "Il mostra navi CPU è settato a: " + model.MOSTRA_NAVI_CPU);
+				
+				model.MOSTRA_NUMERI_NAVE = chckbxMostraID.isSelected();
+				model.aggiungiLog("INFO", "Impostazioni", "Il mostra ID nave è settato a: " + model.MOSTRA_NUMERI_NAVE);
+				
+				model.setSecondiTurnoCpu((int) spinner_SecCpu.getValue());
+				model.aggiungiLog("INFO", "Impostazioni", "I secondi di attività di CPU sono: " + model.getSecondiTurnoCpu());
 				
 				chiudiJFrame();
 			}

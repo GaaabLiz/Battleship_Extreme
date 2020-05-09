@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import model.BattleshipExtremeModel;
+import model.MappePlayer;
 import model.Nave;
 import model.PuntoCardinale;
 
@@ -355,6 +356,7 @@ public class ImpostazioniPartitaView extends JFrame {
 						
 					    /* Creazione dell'oggetto nave ---------------------------*/
 						Nave naveDefinitiva = new Nave(iDcorrente, dim, orinetamento, p);
+						model.aggiungiLog("INFO", "Posizionamento Navi Manuale", "l'id della nave corrente è' : " + naveDefinitiva.getId());
 						
 						/* Aggiunta della nave al giocatore ----------------------*/
 						model.getGiocatore().aggiungiNaveAlleMieNavi(naveDefinitiva);
@@ -369,7 +371,7 @@ public class ImpostazioniPartitaView extends JFrame {
 						updateGrigliaPan3(model.getMappe_Giocatore().getSpazioNavi(), model.getDimensioneMappa());
 					    
 						/* Stampa nella mappa gli ID della nave se opzioni di debug asserita */
-//						if (model.MOSTRA_NUMERI_NAVE) {view.visualizzaIdNave(model.getMappe_Giocatore(), 0);}
+						if (model.MOSTRA_NUMERI_NAVE) {view.visualizzaIdNave(model.getMappe_Giocatore(), 0);}
 
 						/* Aggiutna nave alle variabili */
 						numNaviCreate++;
@@ -466,17 +468,16 @@ public class ImpostazioniPartitaView extends JFrame {
 					/* Aggiunta della nave al giocatore ----------------------*/
 					model.getGiocatore().aggiungiNaveAlleMieNavi(naveDefinitiva);
 					
-					/* aggiungi il tipo di nave corrente al modelllo che dovrà usare la cpu per creare le sue navi */
-					model.aggiungiModelloNave(iDcorrente-1, dim);
-					
 					/* Aggiunta nave nello spazio navi del player */
 					model.getMappe_Giocatore().piazzaNaveNellaMappa(naveDefinitiva);
 					
+					/* aggiungi il tipo di nave corrente al modelllo che dovrà usare la cpu per creare le sue navi */
+					model.aggiungiModelloNave(iDcorrente-1, dim);
+									
 					/* aggiorna la view per visualizzare la mappa aggiornata con la nave appena aggiunta */
 					updateGrigliaPan3(model.getMappe_Giocatore().getSpazioNavi(), model.getDimensioneMappa());
 				    
-					/* Stampa nella mappa gli ID della nave se opzioni di debug asserita */
-//						if (model.MOSTRA_NUMERI_NAVE) {view.visualizzaIdNave(model.getMappe_Giocatore(), 0);}
+					
 
 					/* Aggiutna nave alle variabili */
 					numNaviCreate++;
@@ -587,7 +588,7 @@ public class ImpostazioniPartitaView extends JFrame {
 		
 		
 		// Pulsanti finali
-		JButton btnIniziaPartita = new JButton("Inizia Partita");
+		JButton btnIniziaPartita = new JButton("Conferma impostazioni");
 		btnIniziaPartita.setFont(view.FONT_SEGOE_H1_P);
 		btnIniziaPartita.setBounds(111, 805, 189, 45);
 		btnIniziaPartita.addActionListener(new ActionListener() {
@@ -598,17 +599,13 @@ public class ImpostazioniPartitaView extends JFrame {
 				}else {
 					if (numNaviCreate == model.getNumeroNavi()) {
 						JFrame f = new JFrame();
-						JOptionPane.showMessageDialog(f,"Tutte le navi sono state inserite. Ora inizia il gioco.");
+						JOptionPane.showMessageDialog(f,"Tutte le navi sono state inserite. Clicca sul pulsante 'Inizia Partita' nella home per iniziare a giocare.");
 						chiudiJFrame();
-						model.startaTimer();
-						view.visualizzaCampoDiGioco();
-						view.creaGriglie(model.getDimensioneMappa());
-						view.updateNaviPlayer(0, model.getMappe_Giocatore().getSpazioNavi(), model.getDimensioneMappa(), model.MOSTRA_NAVI_CPU);
-						view.getBtn_nuovaPartita().setEnabled(false);
-						view.getBtn_nuovaPartita().setVisible(false);
-						view.getMenu_Partita_TempoCorrente().setEnabled(true);
-						view.getPanelloPunteggioTempo().setVisible(true);
-						view.getPanello_InformazioniPartitaMaster().setVisible(true);
+						
+						view.getBtn_inziaPartita().setVisible(true);
+						view.getBtn_inziaPartita().setEnabled(true);
+						
+						
 					}else {
 						JFrame f = new JFrame();
 						JOptionPane.showMessageDialog(f,"Non sono state create tutte le navi richieste. Hai inserito " + numNaviCreate + "/" + model.getNumeroNavi(),"Errore",JOptionPane.ERROR_MESSAGE);
@@ -656,11 +653,16 @@ public class ImpostazioniPartitaView extends JFrame {
 	}
 	
 	
+	
+	
 
 	
 	private void chiudiJFrame() {
 		this.setVisible(false);
 	}
+	
+	
+	
 	
 
 }

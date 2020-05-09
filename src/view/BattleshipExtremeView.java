@@ -16,6 +16,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import model.BattleshipExtremeModel;
+import model.MappePlayer;
 
 import java.awt.*;
 
@@ -80,6 +81,8 @@ public class BattleshipExtremeView extends JFrame{
     private JLabel labelValueCpu_statoNavi;
     private JLabel labelValueCpu_TurniGiocati;
     private JButton btn_nuovaPartita;
+    private JButton btn_inziaPartita;
+    private JButton btnColpisciCella;
     private JPanel panello_griglia_navi_master;
     private JPanel panello_griglia_tentativi_master;
     private JPanel panelloGriglianaviContainer;
@@ -91,6 +94,7 @@ public class BattleshipExtremeView extends JFrame{
     private JSpinner spinnerValueY;
     private PannelloGriglia griglia_navi;
     private PannelloGriglia griglia_tentativi;
+    private JTextArea textAreaChat;
     
     
     /**
@@ -195,8 +199,16 @@ public class BattleshipExtremeView extends JFrame{
     	// Pulsante di nuova partita
  		btn_nuovaPartita = new JButton("Nuova Partita");
  		btn_nuovaPartita.setFont(FONT_SEGOE_H1_P);
- 		btn_nuovaPartita.setBounds(742, 115, 152, 43);
+ 		btn_nuovaPartita.setBounds(617, 96, 152, 43);
 		this.getContentPane().add(btn_nuovaPartita);
+		
+		// Pulsante di Inizia partita
+		btn_inziaPartita = new JButton("Inzia Partita");
+		btn_inziaPartita.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		btn_inziaPartita.setBounds(823, 96, 152, 43);
+		btn_inziaPartita.setVisible(true);
+		btn_inziaPartita.setEnabled(false);
+		this.getContentPane().add(btn_inziaPartita);
     	
     	
     	this.setVisible(true);
@@ -363,9 +375,9 @@ public class BattleshipExtremeView extends JFrame{
 		scrollPaneChat.setBounds(0, 0, 448, 477);
 		panello_chat.add(scrollPaneChat);
 		
-		JTextArea textAreaChat = new JTextArea();
+		textAreaChat = new JTextArea();
 		textAreaChat.setEditable(false);
-		textAreaChat.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		textAreaChat.setFont(new Font("Segoe UI", Font.PLAIN, 17));
 		scrollPaneChat.setViewportView(textAreaChat);
 		
 		
@@ -484,6 +496,7 @@ public class BattleshipExtremeView extends JFrame{
 		panello_GestioneTurno.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(128, 128, 128)));
 		panello_GestioneTurno.setBackground(Color.WHITE);
 		panello_GestioneTurno.setBounds(1101, 618, 473, 205);
+		panello_GestioneTurno.setVisible(false);
 		this.getContentPane().add(panello_GestioneTurno);
 		
 		JPanel panel_1_1_1 = new JPanel();
@@ -520,7 +533,7 @@ public class BattleshipExtremeView extends JFrame{
 		spinnerValueY.setBounds(372, 97, 50, 32);
 		panello_GestioneTurno.add(spinnerValueY);
 		
-		JButton btnColpisciCella = new JButton("Colpisci Cella");
+		btnColpisciCella = new JButton("Colpisci Cella");
 		btnColpisciCella.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnColpisciCella.setBounds(160, 156, 153, 38);
 		panello_GestioneTurno.add(btnColpisciCella);
@@ -529,7 +542,7 @@ public class BattleshipExtremeView extends JFrame{
     }
     
     
-    protected void visualizzaCampoDiGioco() {
+    public void visualizzaCampoDiGioco() {
     	panello_griglia_navi_master.setVisible(true);
     	panello_griglia_tentativi_master.setVisible(true);
     }
@@ -538,7 +551,7 @@ public class BattleshipExtremeView extends JFrame{
 
 	
 	
-	protected void creaGriglie(int dimensioneMappa) {
+	public void creaGriglie(int dimensioneMappa) {
 		
 		// Griglia Navi
 		panelloGriglianaviContainer.remove(griglia_navi);
@@ -552,7 +565,7 @@ public class BattleshipExtremeView extends JFrame{
 		panelloGriglianaviContainer.repaint();
 		
 		
-		// Griglia Navi
+		// Griglia tentativi
 		panelloGrigliTentativiContainer.remove(griglia_tentativi);
 		panelloGrigliTentativiContainer.revalidate();
 		panelloGrigliTentativiContainer.repaint();
@@ -591,6 +604,102 @@ public class BattleshipExtremeView extends JFrame{
 			}
 		}		
 	}
+	
+	
+	
+	/**
+	 * Metodo usato solamente per scopi di debug, mostra per ogni cella della mappa in cui è presente una nave, il suo id
+	 * 
+	 * @param mappe le mappe del player di cuisi volgiono visualizzare gli ID
+	 * @param CodicePlayer Il codice identificato del player
+	 */
+	public void visualizzaIdNave(MappePlayer mappe, int CodicePlayer) {
+		int[][] s = mappe.getSpazioNaviId();
+		for (int i = 0; i < s.length; i++) {
+			for (int j = 0; j < s.length; j++) {
+				if (mappe.getSpazioNaviId()[i][j] != 0) {
+					if (CodicePlayer == 0) {
+						griglia_navi.visualizzaIdNave(s[i][j], i, j);
+					}else if (CodicePlayer == 1) {
+						griglia_tentativi.visualizzaIdNave(s[i][j], i, j);
+					}
+					
+				}			
+			}
+		}
+	}
+	
+	
+	
+	public void writeChatLine(String s) {
+
+		if(textAreaChat.getText().length() != 0) {
+			textAreaChat.setText(textAreaChat.getText() +  "\n" + "> "+ s);
+		}else {
+			textAreaChat.setText(textAreaChat.getText() +"> "+ s);
+		}
+		
+	}
+	
+	
+	/**
+	 * Aggiorna la griglia relativa al giocatore mostrando i rispettivi tenativi di affondamkento 
+	 * delle navi avversarie.
+	 * 
+	 * @param p Il player di cui si vogliono visualizzare i tentativi nella mappa avversaria
+	 * @param tentativiDiAffondEffettuati lo spazio navi corrispondenti ai tentativi
+	 */
+	public void updateTentativiDiAffondamento(int p, Boolean[][] tentativiDiAffondEffettuati) {
+		
+		for (int i = 0; i < tentativiDiAffondEffettuati.length; i++) {
+			for (int j = 0; j < tentativiDiAffondEffettuati.length; j++) {
+				if (tentativiDiAffondEffettuati[i][j] == true) {
+					switch (p) {
+					case 0:
+						griglia_tentativi.visualizzaTentativiDiAffondamento(i,j);
+						break;
+					case 1:
+						griglia_navi.visualizzaTentativiDiAffondamento(i,j);
+						break;			
+					default:
+						break;
+					}
+					
+				}
+			}
+		}
+		
+	}
+	
+	
+	/**
+	 * Aggionra la mappa tentativi del player, mostrando sulla griglia tutti i tentativi di affondamento
+	 * effettuati.
+	 * 
+	 * @param codicePlayer il codice idnetificato del p'layer
+	 * @param m La mappa che contiene gli affondamento da visualizzare
+	 */
+	public void updateNaviAffondate(int codicePlayer, MappePlayer m) {
+		Boolean[][] affondamenti = m.getSpazioNaviAvversarioAffondate();
+		for (int i = 0; i < affondamenti.length; i++) {
+			for (int j = 0; j < affondamenti.length; j++) {
+				if (affondamenti[i][j] == true) {
+					switch (codicePlayer) {
+					case 0:
+						griglia_tentativi.visualizzaNaviAffondate(i, j, 0);
+						break;
+					case 1:
+						griglia_navi.visualizzaNaviAffondate(i, j, 1);
+						break;
+
+					default:
+						break;
+					}
+				}
+			}
+		}
+	}
+	
 	
 	
 	
@@ -670,6 +779,63 @@ public class BattleshipExtremeView extends JFrame{
 	public JPanel getPanello_InformazioniPartitaMaster() {
 		return panello_InformazioniPartitaMaster;
 	}
+
+
+	/**
+	 * @return the btn_inziaPartita
+	 */
+	public JButton getBtn_inziaPartita() {
+		return btn_inziaPartita;
+	}
+
+
+	/**
+	 * @return the panello_GestioneTurno
+	 */
+	public JPanel getPanello_GestioneTurno() {
+		return panello_GestioneTurno;
+	}
+
+
+	/**
+	 * @return the textAreaChat
+	 */
+	public JTextArea getTextAreaChat() {
+		return textAreaChat;
+	}
+
+
+	/**
+	 * @return the btnColpisciCella
+	 */
+	public JButton getBtnColpisciCella() {
+		return btnColpisciCella;
+	}
+
+
+	/**
+	 * @return the spinnerValueX
+	 */
+	public JSpinner getSpinnerValueX() {
+		return spinnerValueX;
+	}
+
+
+	/**
+	 * @return the spinnerValueY
+	 */
+	public JSpinner getSpinnerValueY() {
+		return spinnerValueY;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
