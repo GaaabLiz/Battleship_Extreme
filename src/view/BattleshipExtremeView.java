@@ -7,7 +7,15 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
+
+import model.BattleshipExtremeModel;
 
 import java.awt.*;
 
@@ -49,17 +57,40 @@ public class BattleshipExtremeView extends JFrame{
     private JMenu menu_File;
     private JMenu menu_Modifica;
     private JMenu menu_Visualizza;
+    private JMenu menu_Partita;
     private JMenu menu_Aiuto;
     private JMenu menu_Info;
     private JMenuItem menu_File_new;
     private JMenuItem menu_File_esci;
     private JMenuItem menu_Modifica_settings;
     private JMenuItem menu_Visualizza_console;
+    private JMenuItem menu_Partita_TempoCorrente;
     private JMenuItem menu_Aiuto_regole;
     private JMenuItem menu_Aiuto_tutorial;
     private JMenuItem menu_Info_progetto;
     private JLabel label_titolo;
+    private JLabel labelValueTurno;
+    private JLabel labelValuePunteggio;
+    private JLabel labelValue_tentativiDiaffondamento;
+    private JLabel labelValue_nCelleAffondate;
+    private JLabel labelValue_statoNavi;
+    private JLabel labelValue_TurniGiocati;
+    private JLabel labelValueCpu_tentativiDiaffondamento;
+    private JLabel labelValueCpu_nCelleAffondate;
+    private JLabel labelValueCpu_statoNavi;
+    private JLabel labelValueCpu_TurniGiocati;
     private JButton btn_nuovaPartita;
+    private JPanel panello_griglia_navi_master;
+    private JPanel panello_griglia_tentativi_master;
+    private JPanel panelloGriglianaviContainer;
+    private JPanel panelloGrigliTentativiContainer;
+    private JPanel panelloPunteggioTempo;
+    private JPanel panello_InformazioniPartitaMaster;
+    private JPanel panello_GestioneTurno;
+    private JSpinner spinnerValueX;
+    private JSpinner spinnerValueY;
+    private PannelloGriglia griglia_navi;
+    private PannelloGriglia griglia_tentativi;
     
     
     /**
@@ -127,6 +158,17 @@ public class BattleshipExtremeView extends JFrame{
 		menu_Visualizza_console.setFont(FONT_SEGOE_H2_P);
 		menu_Visualizza.add(menu_Visualizza_console);
 		
+		// Menu : PARTITA
+		menu_Partita = new JMenu("Partita");
+		menu_Partita.setFont(FONT_SEGOE_H1_P);
+		barraDelMenu.add(menu_Partita);
+		
+		// Menu : PARTITA : TEMPO TRASCORSO
+		menu_Partita_TempoCorrente = new JMenuItem("Calcola tempo trascorso");
+		menu_Partita_TempoCorrente.setFont(FONT_SEGOE_H2_P);
+		menu_Partita_TempoCorrente.setEnabled(false);
+		menu_Partita.add(menu_Partita_TempoCorrente);
+		
 		// Menu : AIUTO
 		menu_Aiuto = new JMenu("Aiuto");
 		menu_Aiuto.setFont(FONT_SEGOE_H1_P);
@@ -145,9 +187,9 @@ public class BattleshipExtremeView extends JFrame{
         /* ----------------------------------------------------- */
     	
         // Label del titolo
- 		label_titolo = new JLabel("");
- 		label_titolo.setIcon(new ImageIcon(BattleshipExtremeView.class.getResource("/images/titleHome_2.png")));
- 		label_titolo.setBounds(453, 30, 677, 65);
+		label_titolo = new JLabel("");
+		label_titolo.setIcon(new ImageIcon(BattleshipExtremeView.class.getResource("/images/titleHome_3.png")));
+		label_titolo.setBounds(507, 30, 570, 65);
  		this.getContentPane().add(label_titolo); 	
 	
     	// Pulsante di nuova partita
@@ -158,58 +200,396 @@ public class BattleshipExtremeView extends JFrame{
     	
     	
     	this.setVisible(true);
+    	
+    	
+    	
+    	
+    	/* ----------------------------------------------------- */
+    	/* Creazione del campop da gioco : Griglia Navi          */
+        /* ----------------------------------------------------- */
+    	
+    	// PANNELLO MAIN : Pannello della griglia delle navi
+    	panello_griglia_navi_master = new JPanel();
+    	panello_griglia_navi_master.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(65, 105, 225)));
+    	panello_griglia_navi_master.setBackground(Color.WHITE);
+    	panello_griglia_navi_master.setBounds(10, 191, 521, 572);
+		this.getContentPane().add(panello_griglia_navi_master);
+		panello_griglia_navi_master.setLayout(null);
+		panello_griglia_navi_master.setVisible(false);
+		
+		// Pannello label
+		JPanel panelloLabelnavi = new JPanel();
+		panelloLabelnavi.setBackground(new Color(230, 230, 250));
+		panelloLabelnavi.setBounds(10, 11, 500, 39);
+		panello_griglia_navi_master.add(panelloLabelnavi);
+		panelloLabelnavi.setVisible(true);
+		
+		// Label titolo griglia
+		JLabel labelGrigliaNavi = new JLabel("GRIGLIA DELLA NAVI");
+		labelGrigliaNavi.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		panelloLabelnavi.add(labelGrigliaNavi);
+		
+		// Pannello della griglia
+		panelloGriglianaviContainer = new JPanel();
+		panelloGriglianaviContainer.setBackground(Color.WHITE);
+		panelloGriglianaviContainer.setBounds(10, 61, 500, 500);
+		panello_griglia_navi_master.add(panelloGriglianaviContainer);
+		panelloGriglianaviContainer.setLayout(new BorderLayout());
+		
+		// griglia delle navi
+		griglia_navi = new PannelloGriglia(10);
+		griglia_navi.setBackground(Color.WHITE);
+		panelloGriglianaviContainer.add(griglia_navi, BorderLayout.CENTER);
+		
+		
+		
+		
+		
+		/* ----------------------------------------------------- */
+    	/* Creazione del campop da gioco : Griglia Tenativi      */
+        /* ----------------------------------------------------- */
+		
+		// PANNELLO MAIN : Pannello della griglia delle navi tenativi
+		panello_griglia_tentativi_master = new JPanel();
+		panello_griglia_tentativi_master.setLayout(null);
+		panello_griglia_tentativi_master.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(65, 105, 225)));
+		panello_griglia_tentativi_master.setBackground(Color.WHITE);
+		panello_griglia_tentativi_master.setBounds(541, 191, 521, 572);
+		panello_griglia_tentativi_master.setVisible(false);
+		this.getContentPane().add(panello_griglia_tentativi_master);
+		
+		// Pannello label
+		JPanel panelloLabeltent = new JPanel();
+		panelloLabeltent.setBackground(new Color(230, 230, 250));
+		panelloLabeltent.setBounds(10, 11, 501, 39);
+		panello_griglia_tentativi_master.add(panelloLabeltent);
+		
+		// Label titolo griglia
+		JLabel labelTent = new JLabel("GRIGLIA DEI TENTATIVI");
+		labelTent.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		panelloLabeltent.add(labelTent);
+    	
+		// Pannel container griglia
+		panelloGrigliTentativiContainer = new JPanel();
+		panelloGrigliTentativiContainer.setBounds(10, 61, 501, 500);
+		panelloGrigliTentativiContainer.setBackground(Color.WHITE);
+		panello_griglia_tentativi_master.add(panelloGrigliTentativiContainer);
+		panelloGrigliTentativiContainer.setLayout(new BorderLayout());
+		
+		// griglia delle navi
+		griglia_tentativi = new PannelloGriglia(10);
+		griglia_tentativi.setBackground(Color.WHITE);
+		panelloGrigliTentativiContainer.add(griglia_tentativi, BorderLayout.CENTER);
+		
+		
+		
+		
+		/* ----------------------------------------------------- */
+    	/* Barra del punteggio/tempo                             */
+        /* ----------------------------------------------------- */
+		
+		// Pannello
+		panelloPunteggioTempo = new JPanel();
+		panelloPunteggioTempo.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		panelloPunteggioTempo.setBackground(Color.WHITE);
+		panelloPunteggioTempo.setBounds(10, 774, 1052, 49);
+		panelloPunteggioTempo.setVisible(false);
+		this.getContentPane().add(panelloPunteggioTempo);
+		panelloPunteggioTempo.setLayout(null);
+		
+		// Turno 
+		JLabel labelTurno = new JLabel("Turno attuale :");
+		labelTurno.setBounds(145, 11, 125, 25);
+		panelloPunteggioTempo.add(labelTurno);
+		labelTurno.setFont(FONT_SEGOE_H1_P);
+		
+		labelValueTurno = new JLabel("Giocatore");
+		labelValueTurno.setBounds(267, 12, 227, 25);
+		panelloPunteggioTempo.add(labelValueTurno);
+		labelValueTurno.setForeground(new Color(65, 105, 225));
+		labelValueTurno.setFont(new Font("Segoe UI", Font.BOLD, 16));	
+    	
+		// Punteggio
+		JLabel labelPunteggio = new JLabel("Punteggio :");
+		labelPunteggio.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		labelPunteggio.setBounds(688, 10, 91, 25);
+		panelloPunteggioTempo.add(labelPunteggio);
+		
+		labelValuePunteggio = new JLabel("0");
+		labelValuePunteggio.setForeground(new Color(65, 105, 225));
+		labelValuePunteggio.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		labelValuePunteggio.setBounds(789, 12, 38, 25);
+		panelloPunteggioTempo.add(labelValuePunteggio);
+		
+		
+		
+		
+		
+		/* ----------------------------------------------------- */
+    	/* PANNELLO INFORMAZIONI PARTITA                         */
+        /* ----------------------------------------------------- */
+		
+		// Pannello principale informazione partita
+		panello_InformazioniPartitaMaster = new JPanel();
+		panello_InformazioniPartitaMaster.setBounds(1101, 11, 473, 588);
+		this.getContentPane().add(panello_InformazioniPartitaMaster);
+		panello_InformazioniPartitaMaster.setLayout(null);
+		panello_InformazioniPartitaMaster.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(128, 128, 128)));
+		panello_InformazioniPartitaMaster.setBackground(Color.WHITE);
+		panello_InformazioniPartitaMaster.setVisible(false);
+		
+		// pannello + label info pannello
+		JPanel panelloLabelInforPartita = new JPanel();
+		panelloLabelInforPartita.setBackground(Color.WHITE);
+		panelloLabelInforPartita.setBounds(10, 11, 453, 39);
+		panello_InformazioniPartitaMaster.add(panelloLabelInforPartita);
+		
+		JLabel labelInfoPartita = new JLabel("INFORMAZIONI PARTITA");
+		labelInfoPartita.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		panelloLabelInforPartita.add(labelInfoPartita);
+		
+		// Tabbed pain principale
+		JTabbedPane tabbedPaneInfoPartita = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPaneInfoPartita.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		tabbedPaneInfoPartita.setBounds(10, 61, 453, 516);
+		panello_InformazioniPartitaMaster.add(tabbedPaneInfoPartita);
+		
+		// Pannello CHAT
+		JPanel panello_chat = new JPanel();
+		tabbedPaneInfoPartita.addTab("Attività partita", null, panello_chat, null);
+		panello_chat.setLayout(null);
+		
+		JScrollPane scrollPaneChat = new JScrollPane();
+		scrollPaneChat.setBounds(0, 0, 448, 477);
+		panello_chat.add(scrollPaneChat);
+		
+		JTextArea textAreaChat = new JTextArea();
+		textAreaChat.setEditable(false);
+		textAreaChat.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		scrollPaneChat.setViewportView(textAreaChat);
+		
+		
+		// Pannello Info giocatore
+		JPanel panello_InfoGIocatore = new JPanel();
+		panello_InfoGIocatore.setBackground(new Color(255, 255, 255));
+		tabbedPaneInfoPartita.addTab("Info Giocatore", null, panello_InfoGIocatore, null);
+		panello_InfoGIocatore.setLayout(null);
+		
+		JLabel lblNewLabel_1_1_1_2_1 = new JLabel("Tentativi di affondamento :");
+		lblNewLabel_1_1_1_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblNewLabel_1_1_1_2_1.setBounds(93, 28, 226, 25);
+		panello_InfoGIocatore.add(lblNewLabel_1_1_1_2_1);
+		
+		labelValue_tentativiDiaffondamento = new JLabel("150");
+		labelValue_tentativiDiaffondamento.setForeground(new Color(65, 105, 225));
+		labelValue_tentativiDiaffondamento.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		labelValue_tentativiDiaffondamento.setBounds(317, 29, 38, 25);
+		panello_InfoGIocatore.add(labelValue_tentativiDiaffondamento);
+		
+		JLabel lblNewLabel_1_1_1_2_1_1 = new JLabel("N° celle affondate :");
+		lblNewLabel_1_1_1_2_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblNewLabel_1_1_1_2_1_1.setBounds(110, 84, 161, 25);
+		panello_InfoGIocatore.add(lblNewLabel_1_1_1_2_1_1);
+		
+		labelValue_nCelleAffondate = new JLabel("0 / 100");
+		labelValue_nCelleAffondate.setForeground(new Color(65, 105, 225));
+		labelValue_nCelleAffondate.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		labelValue_nCelleAffondate.setBounds(281, 85, 63, 25);
+		panello_InfoGIocatore.add(labelValue_nCelleAffondate);
+		
+		JLabel lblNewLabel_1_1_1_2_1_1_1 = new JLabel("Stato navi : ");
+		lblNewLabel_1_1_1_2_1_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblNewLabel_1_1_1_2_1_1_1.setBounds(153, 141, 93, 25);
+		panello_InfoGIocatore.add(lblNewLabel_1_1_1_2_1_1_1);
+		
+		labelValue_statoNavi = new JLabel("0 / 10");
+		labelValue_statoNavi.setForeground(new Color(65, 105, 225));
+		labelValue_statoNavi.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		labelValue_statoNavi.setBounds(256, 142, 63, 25);
+		panello_InfoGIocatore.add(labelValue_statoNavi);
+		
+		JLabel lblNewLabel_1_1_1_2_1_1_1_1 = new JLabel("Turni giocati : ");
+		lblNewLabel_1_1_1_2_1_1_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblNewLabel_1_1_1_2_1_1_1_1.setBounds(153, 201, 118, 25);
+		panello_InfoGIocatore.add(lblNewLabel_1_1_1_2_1_1_1_1);
+		
+		labelValue_TurniGiocati = new JLabel("0");
+		labelValue_TurniGiocati.setForeground(new Color(65, 105, 225));
+		labelValue_TurniGiocati.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		labelValue_TurniGiocati.setBounds(269, 202, 63, 25);
+		panello_InfoGIocatore.add(labelValue_TurniGiocati);
+		
+		
+		
+		
+		// PPanellop info CPU
+		JPanel panello_InfoCpu = new JPanel();
+		panello_InfoCpu.setBackground(new Color(255, 255, 255));
+		panello_InfoCpu.setLayout(null);
+		tabbedPaneInfoPartita.addTab("Info Cpu", null, panello_InfoCpu, null);
+		
+		JLabel lblNewLabel_1_1_1_2_11 = new JLabel("Tentativi di affondamento :");
+		lblNewLabel_1_1_1_2_11.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblNewLabel_1_1_1_2_11.setBounds(93, 28, 226, 25);
+		panello_InfoCpu.add(lblNewLabel_1_1_1_2_11);
+		
+		labelValueCpu_tentativiDiaffondamento = new JLabel("150");
+		labelValueCpu_tentativiDiaffondamento.setForeground(new Color(65, 105, 225));
+		labelValueCpu_tentativiDiaffondamento.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		labelValueCpu_tentativiDiaffondamento.setBounds(317, 29, 38, 25);
+		panello_InfoCpu.add(labelValueCpu_tentativiDiaffondamento);
+		
+		JLabel lblNewLabel_1_1_1_2_1_112 = new JLabel("N° celle affondate :");
+		lblNewLabel_1_1_1_2_1_112.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblNewLabel_1_1_1_2_1_112.setBounds(110, 84, 161, 25);
+		panello_InfoCpu.add(lblNewLabel_1_1_1_2_1_112);
+		
+		labelValueCpu_nCelleAffondate = new JLabel("0 / 100");
+		labelValueCpu_nCelleAffondate.setForeground(new Color(65, 105, 225));
+		labelValueCpu_nCelleAffondate.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		labelValueCpu_nCelleAffondate.setBounds(281, 85, 63, 25);
+		panello_InfoCpu.add(labelValueCpu_nCelleAffondate);
+		
+		JLabel lblNewLabel_1_1_1_22_1_1_1 = new JLabel("Stato navi : ");
+		lblNewLabel_1_1_1_22_1_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblNewLabel_1_1_1_22_1_1_1.setBounds(153, 141, 93, 25);
+		panello_InfoCpu.add(lblNewLabel_1_1_1_22_1_1_1);
+		
+		labelValueCpu_statoNavi = new JLabel("0 / 10");
+		labelValueCpu_statoNavi.setForeground(new Color(65, 105, 225));
+		labelValueCpu_statoNavi.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		labelValueCpu_statoNavi.setBounds(256, 142, 63, 25);
+		panello_InfoCpu.add(labelValueCpu_statoNavi);
+		
+		JLabel lblNewLabel_11_1_1_2_1_1_1_1 = new JLabel("Turni giocati : ");
+		lblNewLabel_11_1_1_2_1_1_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblNewLabel_11_1_1_2_1_1_1_1.setBounds(153, 201, 118, 25);
+		panello_InfoCpu.add(lblNewLabel_11_1_1_2_1_1_1_1);
+		
+		labelValueCpu_TurniGiocati = new JLabel("0");
+		labelValueCpu_TurniGiocati.setForeground(new Color(65, 105, 225));
+		labelValueCpu_TurniGiocati.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		labelValueCpu_TurniGiocati.setBounds(269, 202, 63, 25);
+		panello_InfoCpu.add(labelValueCpu_TurniGiocati);
+		
+		
+		
+		
+		/* ----------------------------------------------------- */
+    	/* PANNELLO GESTIONE TURNO                               */
+        /* ----------------------------------------------------- */
+		
+		panello_GestioneTurno = new JPanel();
+		panello_GestioneTurno.setLayout(null);
+		panello_GestioneTurno.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(128, 128, 128)));
+		panello_GestioneTurno.setBackground(Color.WHITE);
+		panello_GestioneTurno.setBounds(1101, 618, 473, 205);
+		this.getContentPane().add(panello_GestioneTurno);
+		
+		JPanel panel_1_1_1 = new JPanel();
+		panel_1_1_1.setBounds(10, 11, 453, 39);
+		panello_GestioneTurno.add(panel_1_1_1);
+		panel_1_1_1.setBackground(new Color(255, 255, 255));
+		
+		JLabel lblNewLabel_2_1 = new JLabel("GESTIONE TURNO");
+		lblNewLabel_2_1.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		panel_1_1_1.add(lblNewLabel_2_1);
+		
+		JLabel lblNewLabel_1_1_1_2 = new JLabel("Inserisci le coordinate della cella che vuoi colpire.");
+		lblNewLabel_1_1_1_2.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblNewLabel_1_1_1_2.setBounds(33, 61, 406, 25);
+		panello_GestioneTurno.add(lblNewLabel_1_1_1_2);
+		
+		JLabel lblNewLabel_1_1_2 = new JLabel("Coordinata X : ");
+		lblNewLabel_1_1_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_1_1_2.setBounds(43, 101, 101, 25);
+		panello_GestioneTurno.add(lblNewLabel_1_1_2);
+		
+		spinnerValueX = new JSpinner();
+		spinnerValueX.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		spinnerValueX.setBounds(150, 97, 50, 32);
+		panello_GestioneTurno.add(spinnerValueX);
+		
+		JLabel lblNewLabel_1_1_2_1 = new JLabel("Coordinata Y : ");
+		lblNewLabel_1_1_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_1_1_2_1.setBounds(265, 101, 101, 25);
+		panello_GestioneTurno.add(lblNewLabel_1_1_2_1);
+		
+		spinnerValueY = new JSpinner();
+		spinnerValueY.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		spinnerValueY.setBounds(372, 97, 50, 32);
+		panello_GestioneTurno.add(spinnerValueY);
+		
+		JButton btnColpisciCella = new JButton("Colpisci Cella");
+		btnColpisciCella.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		btnColpisciCella.setBounds(160, 156, 153, 38);
+		panello_GestioneTurno.add(btnColpisciCella);
+		
+		
     }
     
     
+    protected void visualizzaCampoDiGioco() {
+    	panello_griglia_navi_master.setVisible(true);
+    	panello_griglia_tentativi_master.setVisible(true);
+    }
     
-    /**
-     * Metodo che crea e setta la barra dei menu e tutti i suoi sotto menu.
-     */
-	private void inizializzazioneBarraMenu() {
+    
+
+	
+	
+	protected void creaGriglie(int dimensioneMappa) {
 		
-		// Inizializzazione della barra del menu
-        barraDelMenu = new JMenuBar();
-		this.setJMenuBar(barraDelMenu);
+		// Griglia Navi
+		panelloGriglianaviContainer.remove(griglia_navi);
+		panelloGriglianaviContainer.revalidate();
+		panelloGriglianaviContainer.repaint();
 		
-		// Menu : FILE
-		menu_File = new JMenu("File");
-		menu_File.setFont(FONT_SEGOE_H1_P);
-		barraDelMenu.add(menu_File);
+		griglia_navi = new PannelloGriglia(dimensioneMappa);
+		griglia_navi.setBackground(Color.WHITE);
+		panelloGriglianaviContainer.add(griglia_navi, BorderLayout.CENTER);
+		panelloGriglianaviContainer.revalidate();
+		panelloGriglianaviContainer.repaint();
 		
-		// Menu : FILE : ESCI
-		menu_File_esci = new JMenuItem("Esci dal gioco");
-		menu_File_esci.setFont(FONT_SEGOE_H2_P);
-		menu_File.add(menu_File_esci);
 		
-		// Menu : AIUTO
-		menu_Aiuto = new JMenu("Aiuto");
-		menu_Aiuto.setFont(FONT_SEGOE_H1_P);
-		barraDelMenu.add(menu_Aiuto);
+		// Griglia Navi
+		panelloGrigliTentativiContainer.remove(griglia_tentativi);
+		panelloGrigliTentativiContainer.revalidate();
+		panelloGrigliTentativiContainer.repaint();
 		
-		// Menu : AIUTO : REGOLE
-		menu_Aiuto_regole = new JMenuItem("Regole di Battaglia Navale");
-		menu_Aiuto_regole.setFont(FONT_SEGOE_H2_P);
-		menu_Aiuto.add(menu_Aiuto_regole);
+		griglia_tentativi = new PannelloGriglia(dimensioneMappa);
+		griglia_tentativi.setBackground(Color.WHITE);
+		panelloGrigliTentativiContainer.add(griglia_tentativi, BorderLayout.CENTER);
+		panelloGrigliTentativiContainer.revalidate();
+		panelloGrigliTentativiContainer.repaint();
 		
-		// Menu : AIUTO : TUTORIAL
-		menu_Aiuto_tutorial = new JMenuItem("Guida all'uso");
-		menu_Aiuto_tutorial.setFont(FONT_SEGOE_H2_P);
-		menu_Aiuto.add(menu_Aiuto_tutorial);
 		
-		// Menu : INFO
-		menu_Info = new JMenu("Info");
-		menu_Info.setFont(FONT_SEGOE_H1_P);
-		barraDelMenu.add(menu_Info);
-		
-		// Menu : INFO : PROGETTO
-		menu_Info_progetto = new JMenuItem("Info sul progetto");
-		menu_Info_progetto.setFont(FONT_SEGOE_H2_P);
-		menu_Info.add(menu_Info_progetto);
 	}
 	
 	
-	private void creaCampoDaGioco() {
-		
+	/**
+	 * Aggiorna la griglia visualizzando nella mappa tutte le navi del player.
+	 * @param CodicePlayer il codice player relativo al player in questione
+	 * @param spazioNavi lo spazio navi del player
+	 * @param dimensioneMappa la dimensione della mappa
+	 * @param mostraNaviCpu variabile di debug che mostra sulla mappa tenativi le navi della CPU
+	 */
+	public void updateNaviPlayer(int CodicePlayer, Boolean[][] spazioNavi, int dimensioneMappa, Boolean mostraNaviCpu) {		
+		for (int i = 0; i < dimensioneMappa; i++) {
+			for (int j = 0; j < dimensioneMappa; j++) {
+				if (spazioNavi[i][j] == true) {
+//					System.out.println("[DEBUG]: sto colorando X=" + i + "Y=" + j);
+					if (CodicePlayer == 0) {
+						griglia_navi.visualizzaPezzoNave(i, j, CodicePlayer);
+					}else if (CodicePlayer == 1){
+						if (mostraNaviCpu) {
+							griglia_tentativi.visualizzaPezzoNave(i, j, CodicePlayer);
+						}	
+					}
+					
+				}
+			}
+		}		
 	}
 	
 	
@@ -266,6 +646,37 @@ public class BattleshipExtremeView extends JFrame{
 	public JButton getBtn_nuovaPartita() {
 		return btn_nuovaPartita;
 	}
+
+
+	/**
+	 * @return the panelloPunteggioTempo
+	 */
+	public JPanel getPanelloPunteggioTempo() {
+		return panelloPunteggioTempo;
+	}
+
+
+	/**
+	 * @return the menu_Partita_TempoCorrente
+	 */
+	public JMenuItem getMenu_Partita_TempoCorrente() {
+		return menu_Partita_TempoCorrente;
+	}
+
+
+	/**
+	 * @return the panello_InformazioniPartitaMaster
+	 */
+	public JPanel getPanello_InformazioniPartitaMaster() {
+		return panello_InformazioniPartitaMaster;
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

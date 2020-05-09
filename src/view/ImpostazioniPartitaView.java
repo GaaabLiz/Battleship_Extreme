@@ -20,6 +20,7 @@ import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -53,7 +54,7 @@ public class ImpostazioniPartitaView extends JFrame {
 		// Inizializzazione del JFrame
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(BattleshipExtremeView.class.getResource("/icons/settings.png")));
         this.setTitle("Impostazioni della partita");
-        this.setBounds(700, 100, 650, 800);
+        this.setBounds(700, 100, 650, 900);
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.setResizable(false);
         
@@ -74,10 +75,30 @@ public class ImpostazioniPartitaView extends JFrame {
 		
 		
 		
+		// Pannello nome giocatore
+		JPanel panelloNomeGIocatore = new JPanel();
+		panelloNomeGIocatore.setLayout(null);
+		panelloNomeGIocatore.setBorder(new LineBorder(Color.GRAY));
+		panelloNomeGIocatore.setBounds(39, 83, 555, 55);
+		this.getContentPane().add(panelloNomeGIocatore);
+		
+		JLabel labelNomeGiocatore = new JLabel("Nome del giocatore (facoltativo): ");
+		labelNomeGiocatore.setFont(view.FONT_SEGOE_H1_P);
+		labelNomeGiocatore.setBounds(10, 15, 278, 25);
+		panelloNomeGIocatore.add(labelNomeGiocatore);
+		
+		JTextField textField_nomeGIocatore = new JTextField();
+		textField_nomeGIocatore.setFont(view.FONT_SEGOE_H1_P);
+		textField_nomeGIocatore.setBounds(285, 14, 239, 27);
+		panelloNomeGIocatore.add(textField_nomeGIocatore);
+		textField_nomeGIocatore.setColumns(10);
+		
+		
+		
 		// Pannello dimensione mappa
 		JPanel panello_mappa = new JPanel();
 		panello_mappa.setBorder(new LineBorder(Color.GRAY));
-		panello_mappa.setBounds(39, 101, 555, 55);
+		panello_mappa.setBounds(39, 149, 555, 55);
 		this.getContentPane().add(panello_mappa);
 		panello_mappa.setLayout(null);
 		
@@ -100,7 +121,7 @@ public class ImpostazioniPartitaView extends JFrame {
 		JPanel panello_navi = new JPanel();
 		panello_navi.setLayout(null);
 		panello_navi.setBorder(view.BORDER_GRIGIO);
-		panello_navi.setBounds(39, 167, 555, 55);
+		panello_navi.setBounds(39, 215, 555, 55);
 		this.getContentPane().add(panello_navi);
 		
 		// Label navi
@@ -120,9 +141,9 @@ public class ImpostazioniPartitaView extends JFrame {
 		
 		
 		// Pulsante conferma navi e mappa
-		JButton btn_confermaNavi = new JButton("Conferma mappa e navi");
+		JButton btn_confermaNavi = new JButton("Conferma e inizia posizionamento navi");
 		btn_confermaNavi.setFont(view.FONT_SEGOE_H1_P);
-		btn_confermaNavi.setBounds(190, 247, 238, 40);
+		btn_confermaNavi.setBounds(147, 293, 345, 43);
 		btn_confermaNavi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int naviInserite = (int) spinner_navi.getValue();
@@ -145,10 +166,14 @@ public class ImpostazioniPartitaView extends JFrame {
 						model.setCpu();
 						model.getMappe_Giocatore().setSpazioNavi();
 						model.getMappe_Cpu().setSpazioNavi();
+						if (textField_nomeGIocatore.getText().length() != 0) {
+							model.setNomeGiocatore(textField_nomeGIocatore.getText());
+						}					
 						spinner_mappa.setEnabled(false);
 						spinner_navi.setEnabled(false);
 						btn_confermaNavi.setEnabled(false);
 						btn_confermaNavi.setVisible(false);
+						textField_nomeGIocatore.setEnabled(false);
 						visualizzaPannellonavi();
 						label_naviInserite.setText("Hai inserito " + numNaviCreate + " / " + model.getNumeroNavi() + " navi.");
 						confermMappaNavi = true;
@@ -171,7 +196,7 @@ public class ImpostazioniPartitaView extends JFrame {
 		
 		// PPannello che contiene tutto la creazione pos navi
 		panello_creaPosNavi = new JPanel();
-		panello_creaPosNavi.setBounds(39, 294, 555, 390);
+		panello_creaPosNavi.setBounds(39, 381, 555, 390);
 		panello_creaPosNavi.setBackground(view.COLORE_BIANCO);
 		panello_creaPosNavi.setVisible(false);
 		this.getContentPane().add(panello_creaPosNavi);
@@ -564,7 +589,7 @@ public class ImpostazioniPartitaView extends JFrame {
 		// Pulsanti finali
 		JButton btnIniziaPartita = new JButton("Inizia Partita");
 		btnIniziaPartita.setFont(view.FONT_SEGOE_H1_P);
-		btnIniziaPartita.setBounds(115, 705, 189, 45);
+		btnIniziaPartita.setBounds(111, 805, 189, 45);
 		btnIniziaPartita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (confermMappaNavi == false) {
@@ -574,6 +599,16 @@ public class ImpostazioniPartitaView extends JFrame {
 					if (numNaviCreate == model.getNumeroNavi()) {
 						JFrame f = new JFrame();
 						JOptionPane.showMessageDialog(f,"Tutte le navi sono state inserite. Ora inizia il gioco.");
+						chiudiJFrame();
+						model.startaTimer();
+						view.visualizzaCampoDiGioco();
+						view.creaGriglie(model.getDimensioneMappa());
+						view.updateNaviPlayer(0, model.getMappe_Giocatore().getSpazioNavi(), model.getDimensioneMappa(), model.MOSTRA_NAVI_CPU);
+						view.getBtn_nuovaPartita().setEnabled(false);
+						view.getBtn_nuovaPartita().setVisible(false);
+						view.getMenu_Partita_TempoCorrente().setEnabled(true);
+						view.getPanelloPunteggioTempo().setVisible(true);
+						view.getPanello_InformazioniPartitaMaster().setVisible(true);
 					}else {
 						JFrame f = new JFrame();
 						JOptionPane.showMessageDialog(f,"Non sono state create tutte le navi richieste. Hai inserito " + numNaviCreate + "/" + model.getNumeroNavi(),"Errore",JOptionPane.ERROR_MESSAGE);
@@ -586,9 +621,10 @@ public class ImpostazioniPartitaView extends JFrame {
 		
 		JButton btnAnnulla = new JButton("Annulla");
 		btnAnnulla.setFont(view.FONT_SEGOE_H1_P);
-		btnAnnulla.setBounds(314, 705, 189, 45);
+		btnAnnulla.setBounds(310, 805, 189, 45);
 		btnAnnulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				view.getMenu_Modifica_settings().setEnabled(true);
 				chiudiJFrame();
 			}
 		});
@@ -612,6 +648,8 @@ public class ImpostazioniPartitaView extends JFrame {
 			}
 		}
 	}
+	
+	
 	
 	private void visualizzaPannellonavi() {
 		panello_creaPosNavi.setVisible(true);

@@ -1,6 +1,8 @@
 package model;
 
 import java.awt.Point;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 
 
@@ -30,6 +32,9 @@ public class BattleshipExtremeModel {
 		private Cpu cpu;									/* Oggetto che identifica il computer che gioca */	
 		private int[] modelloNavi;							/* Modello che contiene i tipi di nave di ogni player */
 		private int numeroTurno;							/* Indica il numero del turno attuale */
+		private String nomeGiocatore;						/* Indica il nome del giocatore */
+		private Instant startPartita;
+		private Instant stopPartita;
 			
 		
 		/**
@@ -43,6 +48,39 @@ public class BattleshipExtremeModel {
 		public void aggiungiLog(String tipo, String fonte, String Text) {
 			Log g = new Log(tipo, fonte, Text);
 			LogGioco.add(g);
+		}
+		
+		
+		public void startaTimer() {
+			startPartita = Instant.now();
+		}
+		
+		public void stoppaTimer() {
+			stopPartita = Instant.now();
+		}
+		
+		public Long getSecondTimer() {
+			Duration Interval = Duration.between(startPartita, stopPartita);
+			return Interval.getSeconds();
+		}
+		
+		public String getActualTimer() {
+			Long secondi = getSecondTimer();
+			int minuti = 0;
+			Boolean secondiMinori = false;
+			
+			do {
+				if(secondi > 59) {
+					minuti++;
+					secondi = secondi - 60;
+				} else {
+					secondiMinori = true;
+				}
+			} while (secondiMinori == false);
+			
+			String temp = minuti + " Minuti" + " e " + secondi + " secondi";
+			return temp;
+			
 		}
 
 		
@@ -453,6 +491,23 @@ public class BattleshipExtremeModel {
 		public void setCpu() {
 			this.cpu = new Cpu();
 		}
+
+		/**
+		 * @return the nomeGiocatore
+		 */
+		public String getNomeGiocatore() {
+			return nomeGiocatore;
+		}
+
+		/**
+		 * @param nomeGiocatore the nomeGiocatore to set
+		 */
+		public void setNomeGiocatore(String nomeGiocatore) {
+			this.nomeGiocatore = nomeGiocatore;
+		}
+		
+		
+		
 		
 		
 		

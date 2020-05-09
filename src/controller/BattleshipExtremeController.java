@@ -22,6 +22,7 @@ public class BattleshipExtremeController {
 	private ActionListener nuovaPartita;
 	private ActionListener apriImpostazioni;
 	private ActionListener visualizzaConsole;
+	private ActionListener calcolaTempoTrascorso;
 	
 	/**
 	 * @param model
@@ -38,6 +39,7 @@ public class BattleshipExtremeController {
 		set_Action_apriImpostazioni();
 		set_Action_visualizzaConsole();
 		set_Action_apriRegoleGioco();
+		set_Action_calcolaTempoTrascorso();
 		
 		
 		// Settaggio Action Listener
@@ -47,14 +49,31 @@ public class BattleshipExtremeController {
 		view.getMenu_Visualizza_console().addActionListener(visualizzaConsole);
 		view.getMenu_Aiuto_regole().addActionListener(apriRegoleGioco);
 		view.getBtn_nuovaPartita().addActionListener(nuovaPartita);
+		view.getMenu_Partita_TempoCorrente().addActionListener(calcolaTempoTrascorso);
 	}
 	
 	
 	
+	private void set_Action_calcolaTempoTrascorso() {
+		calcolaTempoTrascorso = new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.stoppaTimer();
+				String temp = model.getActualTimer();
+				 JFrame f=new JFrame();  
+				 JOptionPane.showMessageDialog(f,"Dall'inizio della partita sono trascorsi " + temp + ".");  
+			}
+		};
+		
+	}
+
+
+
 	private void set_Action_nuovaPartita() {
 		nuovaPartita = new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				view.getMenu_Modifica_settings().setEnabled(false);
 				ImpostazioniPartitaView impostazioniPartita = new ImpostazioniPartitaView(model, view);	
 			}
 		};
