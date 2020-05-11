@@ -17,6 +17,7 @@ public class BattleshipExtremeModel {
 		public final int CODICE_CPU = 1;					/* Codice identificativo della CPU */
 		public Boolean PARTITA_INIZIATA = false;			/* Indentifica se la partita è in corso o no */
 		public Boolean ABILITA_NAVE_DIM_1 = false;			/* Abilita la dimensione della nave corrispondete */
+		public int VINCITORE = -1;
 		
 		// # COSTANTI USATE PER SCOPI DI DEBUG #-------------------------------------------------------------
 		public Boolean MOSTRA_NUMERI_NAVE = false;	/* Mostra sulle celle occupate l'ID della nave. */

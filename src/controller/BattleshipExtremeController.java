@@ -15,6 +15,7 @@ import view.BattleshipExtremeView;
 import view.ConsoleView;
 import view.ImpostazioniPartitaView;
 import view.ImpostazioniView;
+import view.StatistichePartitaView;
 
 public class BattleshipExtremeController {
 	
@@ -34,6 +35,7 @@ public class BattleshipExtremeController {
 	Boolean cellagiacolpita = true;
 	Boolean giocatore_ha_vinto = false;
 	Boolean cpu_ha_vinto = false;
+	Boolean partitaVinta = false;
 	
 	/**
 	 * @param model
@@ -136,6 +138,8 @@ public class BattleshipExtremeController {
 								view.writeChatLine("Hai affondato tutte le navi della CPU");
 								view.writeChatLine("Hai vinto la partita!");
 								view.getPanello_GestioneTurno().setVisible(false);
+								partitaVinta = true;
+								model.VINCITORE = 0;
 							}else {
 								
 							}
@@ -156,6 +160,10 @@ public class BattleshipExtremeController {
 						chiamaCPUperTurno();
 						
 					}
+				}
+				
+				if (partitaVinta) {
+					StatistichePartitaView risultati_partita = new StatistichePartitaView(model, view);
 				}
 				
 								
@@ -469,6 +477,8 @@ public class BattleshipExtremeController {
 					view.writeChatLine("La CPU ha affondato tutte le tue navi");
 					view.writeChatLine("Hai perso la partita.");
 					view.getPanello_GestioneTurno().setVisible(false);
+					partitaVinta = true;
+					model.VINCITORE = 1;
 				}else {
 				}
 			}else {
@@ -482,7 +492,7 @@ public class BattleshipExtremeController {
 			model.getCpu().aggiungiPunteggio(model.getSecondTimer(), naveColpita);
 			model.getCpu().turniGiocati = model.getCpu().turniGiocati + 1;
 			view.getLabelValueCpu_TurniGiocati().setText(String.valueOf(model.getCpu().turniGiocati));
-			view.getLabelValueCpu_tentativiDiaffondamento().setText(String.valueOf(model.getMappe_Cpu().getNumTentativiDiAffondEffettuati()) + " / " + model.getMappe_Cpu().getNumeroCelleMappa());;
+			view.getLabelValueCpu_tentativiDiaffondamento().setText(String.valueOf(model.getMappe_Cpu().getNumTentativiDiAffondEffettuati()) + " / " + model.getMappe_Cpu().getNumeroCelleMappa());
 			view.getLabelValueCpu_nCelleAffondate().setText(String.valueOf(model.getCpu().mieCelleNaviAffondate) + " / "+ model.getCpu().getNumeroCelleNaviPlayer());
 			view.getLabelValueCpu_statoNavi().setText(String.valueOf(model.getMappe_Giocatore().getMieNaviAffondate()) + " / " + model.getNumeroNavi());
 			
