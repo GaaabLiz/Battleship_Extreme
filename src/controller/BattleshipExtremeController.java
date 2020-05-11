@@ -28,6 +28,8 @@ public class BattleshipExtremeController {
 	private ActionListener calcolaTempoTrascorso;
 	private ActionListener iniziaPartita;
 	private ActionListener colpisciCella;
+	private ActionListener nascondiSpinnerColpisci;
+
 	
 	Boolean cellagiacolpita = true;
 	Boolean giocatore_ha_vinto = false;
@@ -51,6 +53,7 @@ public class BattleshipExtremeController {
 		set_Action_calcolaTempoTrascorso();
 		set_Action_iniziaPartita();
 		set_Action_colpisciCella();
+		set_Action_nascondiSpinnerColpisci();
 		
 		
 		// Settaggio Action Listener
@@ -63,6 +66,7 @@ public class BattleshipExtremeController {
 		view.getMenu_Partita_TempoCorrente().addActionListener(calcolaTempoTrascorso);
 		view.getBtn_inziaPartita().addActionListener(iniziaPartita);
 		view.getBtnColpisciCella().addActionListener(colpisciCella);
+		view.getChckbxColpisciCoordCasuale().addActionListener(nascondiSpinnerColpisci);
 	}
 	
 	
@@ -71,54 +75,82 @@ public class BattleshipExtremeController {
 		colpisciCella = new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				int coordX = 0;
+				int coordY = 0;
 				
 				// Il giocatore cerca di colpire una cella avversaria
-				int coordX = (int) view.getSpinnerValueX().getValue();
-				int coordY = (int) view.getSpinnerValueY().getValue();
-				model.aggiungiLog("INFO", "Turno Giocatore", "La variabile X contenuta nello spinnerX è: " + coordX);
-				model.aggiungiLog("INFO", "Turno Giocatore", "La variabile Y contenuta nello spinnerY è: " + coordY);
-				cellagiacolpita = model.getGiocatore().controllaCellaGiaColpita(model.getMappe_Giocatore().getTentativiDiAffondEffettuati(), new Point(coordX, coordY));
-				if (cellagiacolpita) {
-					model.aggiungiLog("ERRORE", "Turno Giocatore", "CElla già tentata di colpirla :" + new Point(coordX, coordY));
-					JFrame f=new JFrame();  
-					JOptionPane.showMessageDialog(f,"Hai gia' tentato di colpire questa cella. Inserisci nuove coordinate.", "Errore Coordinate,", JOptionPane.ERROR_MESSAGE);  
-				}else {
-					model.aggiungiLog("DEBUG", "Turno Giocatore", "Le coordinate sono giuste (non hai mai colpito qui:" + new Point(coordX, coordY) + ")");
-				
-					model.getMappe_Giocatore().aggiungiTentativoDiAffondamento(new Point(coordX, coordY));
-					view.updateTentativiDiAffondamento(0, model.getMappe_Giocatore().getTentativiDiAffondEffettuati());
-					
-					Boolean naveColpita = model.getGiocatore().colpisci(model.getMappe_Cpu(), new Point(coordX, coordY));
-					if (naveColpita) {
+				if ((model.getTurnoAttuale() == 0) &&  (cpu_ha_vinto == false) && (giocatore_ha_vinto == false)) {
+//					view.writeChatLineTurno(model.getTurniCount());
+					if (view.getChckbxColpisciCoordCasuale().isSelected()) {
+						Boolean cordGenerataOk = false;
+						do {
+							Point p = model.getCpu().generaCoordinateCasuali(model.getDimensioneMappa());
+							cellagiacolpita = model.getGiocatore().controllaCellaGiaColpita(model.getMappe_Giocatore().getTentativiDiAffondEffettuati(), p);
+							if (cellagiacolpita) {
+								model.aggiungiLog("ERRORE", "Turno Giocatore", "Le coordinate casuali generate per il giocatore sono già state usate." + p);
+								cordGenerataOk = false;
+							}else {
+								cordGenerataOk = true;
+								coordX = p.x;
+								coordY = p.y;
+							}
+						} while (cordGenerataOk == false);			
 						
-						view.writeChatLine("Hai colpito una nave della CPU!");
-						model.aggiungiLog("INFO", "Turno Giocatore", "La nave della CPU posizionata in X=" + coordX + " Y=" + coordY + " è stata colpita!");
-						model.getMappe_Giocatore().aggiungiAffondamento(new Point(coordX, coordY), model.getMappe_Cpu(), model.getCpu());
-						view.updateNaviAffondate(0, model.getMappe_Giocatore());
-						
-						//controllo se la nave è affondata (se è stata colpita)
-						Boolean naveColpitaAffondata = model.getMappe_Giocatore().controlloNaveColpitaAffondata(new Point(coordX, coordY), model.getMappe_Cpu(), model.getCpu());
-						if (naveColpitaAffondata) {
-							model.aggiungiLog("INFO", "Turno Giocatore", "La nave che hai appena colpito è stata totalmente affondata.");
-							view.writeChatLine("La nave che hai colpito è stata affondata.");
-						}
-						
-						// Controllo se giocatore ha vinto
-						giocatore_ha_vinto = model.getGiocatore().controllaVittoria(model.getMappe_Giocatore(), model.getMappe_Cpu());
-						if ((cpu_ha_vinto == false) && (giocatore_ha_vinto == true)) {
-							view.writeChatLine("Complimenti!");
-							view.writeChatLine("Hai affondato tutte le navi della CPU");
-							view.writeChatLine("Hai vinto la partita!");
-							view.getPanello_GestioneTurno().setVisible(false);
-						}else {
-							
-						}
 					}else {
-						view.writeChatLine("Non hai colpito nessuna nave della CPU");
+						coordX = (int) view.getSpinnerValueX().getValue();
+						coordY = (int) view.getSpinnerValueY().getValue();
+						model.aggiungiLog("INFO", "Turno Giocatore", "La variabile X contenuta nello spinnerX è: " + coordX);
+						model.aggiungiLog("INFO", "Turno Giocatore", "La variabile Y contenuta nello spinnerY è: " + coordY);
+					}			
+					cellagiacolpita = model.getGiocatore().controllaCellaGiaColpita(model.getMappe_Giocatore().getTentativiDiAffondEffettuati(), new Point(coordX, coordY));
+					if (cellagiacolpita) {
+						model.aggiungiLog("ERRORE", "Turno Giocatore", "CElla già tentata di colpirla :" + new Point(coordX, coordY));
+						JFrame f=new JFrame();  
+						JOptionPane.showMessageDialog(f,"Hai gia' tentato di colpire questa cella. Inserisci nuove coordinate.", "Errore Coordinate,", JOptionPane.ERROR_MESSAGE);  
+					}else {
+						model.aggiungiLog("DEBUG", "Turno Giocatore", "Le coordinate sono giuste (non hai mai colpito qui:" + new Point(coordX, coordY) + ")");
+					
+						model.getMappe_Giocatore().aggiungiTentativoDiAffondamento(new Point(coordX, coordY));
+						view.updateTentativiDiAffondamento(0, model.getMappe_Giocatore().getTentativiDiAffondEffettuati());
+						
+						Boolean naveColpita = model.getGiocatore().colpisci(model.getMappe_Cpu(), new Point(coordX, coordY));
+						if (naveColpita) {
+							
+							view.writeChatLine("Hai colpito una nave della CPU!");
+							model.aggiungiLog("INFO", "Turno Giocatore", "La nave della CPU posizionata in X=" + coordX + " Y=" + coordY + " è stata colpita!");
+							model.getMappe_Giocatore().aggiungiAffondamento(new Point(coordX, coordY), model.getMappe_Cpu(), model.getCpu());
+							view.updateNaviAffondate(0, model.getMappe_Giocatore());
+							
+							//controllo se la nave è affondata (se è stata colpita)
+							Boolean naveColpitaAffondata = model.getMappe_Giocatore().controlloNaveColpitaAffondata(new Point(coordX, coordY), model.getMappe_Cpu(), model.getCpu());
+							if (naveColpitaAffondata) {
+								model.aggiungiLog("INFO", "Turno Giocatore", "La nave che hai appena colpito è stata totalmente affondata.");
+								view.writeChatLine("La nave che hai colpito è stata affondata.");
+							}
+							
+							// Controllo se giocatore ha vinto
+							giocatore_ha_vinto = model.getGiocatore().controllaVittoria(model.getMappe_Giocatore(), model.getMappe_Cpu());
+							if ((cpu_ha_vinto == false) && (giocatore_ha_vinto == true)) {
+								view.writeChatLine("Complimenti!");
+								view.writeChatLine("Hai affondato tutte le navi della CPU");
+								view.writeChatLine("Hai vinto la partita!");
+								view.getPanello_GestioneTurno().setVisible(false);
+							}else {
+								
+							}
+						}else {
+							view.writeChatLine("Non hai colpito nessuna nave della CPU");
+						}
+						model.setTurniCount(model.getTurniCount()+1);
+						model.stoppaTimer();
+						model.getGiocatore().aggiungiPunteggio(model.getSecondTimer(), naveColpita);
+						view.getLabelValuePunteggio().setText(view.getLabelValuePunteggio().getText() + Integer.toString(model.getGiocatore().punteggio));
+						chiamaCPUperTurno();
+						view.getLabelValueTurno().setText(String.valueOf(model.getTurniCount()));
 					}
-					chiamaCPUperTurno();
-				}				
+				}
+				
+								
 				
 			}
 		};
@@ -159,6 +191,7 @@ public class BattleshipExtremeController {
 				view.writeChatLine("\n");
 				model.setTurnoAttuale(model.CODICE_GIOCATORE);
 				
+				view.writeChatLineTurno(model.getTurniCount());
 				view.writeChatLine("Ora è il turno del giocatore.");
 				view.writeChatLine("Usa il riquadro sotto per colpire una cella avversaria.");
 				view.writeChatLine("In attesa che il giocatore colpisca...");
@@ -181,6 +214,23 @@ public class BattleshipExtremeController {
 				String temp = model.getActualTimer();
 				 JFrame f=new JFrame();  
 				 JOptionPane.showMessageDialog(f,"Dall'inizio della partita sono trascorsi " + temp + ".");  
+			}
+		};
+		
+	}
+	
+	
+	private void set_Action_nascondiSpinnerColpisci() {
+		nascondiSpinnerColpisci = new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(view.getChckbxColpisciCoordCasuale().isSelected()) {
+					view.getSpinnerValueX().setEnabled(false);
+					view.getSpinnerValueY().setEnabled(false);
+				} else {
+					view.getSpinnerValueX().setEnabled(true);
+					view.getSpinnerValueY().setEnabled(true);
+				}
 			}
 		};
 		
@@ -352,74 +402,83 @@ public class BattleshipExtremeController {
 	
 	private void chiamaCPUperTurno() {
 		// La CPU fa la sua mossa
-		view.getBtnColpisciCella().setEnabled(false);
 		model.setTurnoAttuale(model.CODICE_CPU);
-		view.writeChatLine("\n");
-		view.writeChatLine("Ora è il turno della CPU!");
-		view.writeChatLine("La CPU tenterà di colpire una tua nave.");
-		view.writeChatLine("La CPU sta colpendo...");
-//		try {
-//			Thread.sleep(model.getSecondiTurnoCpu() * 1000);
-//		} catch (InterruptedException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 		
-		Point CoordinateDaColpire = new Point();
-		do {
-			// Generazione coordinata
-			CoordinateDaColpire = model.getCpu().generaCoordinateCasuali(model.getDimensioneMappa());
+		if ((model.getTurnoAttuale() == 1) && (giocatore_ha_vinto == false) && (cpu_ha_vinto == false)) {
+			view.writeChatLine("\n");
+			view.writeChatLineTurno(model.getTurniCount());
+			view.writeChatLine("Ora è il turno della CPU!");
+			view.writeChatLine("La CPU tenterà di colpire una tua nave.");
+			view.writeChatLine("La CPU sta colpendo...");
+//			try {
+//				Thread.sleep(model.getSecondiTurnoCpu() * 1000);
+//			} catch (InterruptedException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 			
-			// Controllo cella già colpita
-			cellagiacolpita = model.getCpu().controllaCellaGiaColpita(model.getMappe_Cpu().getTentativiDiAffondEffettuati(), CoordinateDaColpire);
-			if (cellagiacolpita) {
-				model.aggiungiLog("ERRORE", "Turno CPU", "CElla già tentata di colpirla :" + CoordinateDaColpire);
+			Point CoordinateDaColpire = new Point();
+			do {
+				// Generazione coordinata
+				CoordinateDaColpire = model.getCpu().generaCoordinateCasuali(model.getDimensioneMappa());
+				
+				// Controllo cella già colpita
+				cellagiacolpita = model.getCpu().controllaCellaGiaColpita(model.getMappe_Cpu().getTentativiDiAffondEffettuati(), CoordinateDaColpire);
+				if (cellagiacolpita) {
+					model.aggiungiLog("ERRORE", "Turno CPU", "CElla già tentata di colpirla :" + CoordinateDaColpire);
+				}else {
+					model.aggiungiLog("DEBUG", "Turno CPU", "Cella non ancora colpita:" + CoordinateDaColpire);
+				}
+				
+			} while (cellagiacolpita == true);
+			
+			model.getMappe_Cpu().aggiungiTentativoDiAffondamento(CoordinateDaColpire);
+			view.updateTentativiDiAffondamento(1, model.getMappe_Cpu().getTentativiDiAffondEffettuati());
+			
+			Boolean naveColpita = model.getCpu().colpisci(model.getMappe_Giocatore(), CoordinateDaColpire);
+			if (naveColpita) {
+				
+				view.writeChatLine("La CPU ha colpito una tua nave.");
+				model.aggiungiLog("INFO", "Turno CPU", "La nave del giocatore posizionata in X=" + CoordinateDaColpire.x + " Y=" + CoordinateDaColpire.y + " è stata colpita!");
+				
+				//aggiungi affondamento della nave alla griglia navi
+				model.getMappe_Cpu().aggiungiAffondamento(CoordinateDaColpire, model.getMappe_Giocatore(), model.getGiocatore());
+				view.updateNaviAffondate(1, model.getMappe_Cpu());
+				
+				//controllo se la nave è affondata (se è stata colpita)
+				Boolean naveColpitaAffondata = model.getMappe_Cpu().controlloNaveColpitaAffondata(CoordinateDaColpire, model.getMappe_Giocatore(), model.getGiocatore());
+				if (naveColpitaAffondata) {
+					view.writeChatLine("La nave che ti ha colpito è stata affondata!");
+				}
+				
+				// Controllo se CPU ha vinto
+				cpu_ha_vinto = model.getCpu().controllaVittoria(model.getMappe_Cpu(), model.getMappe_Giocatore());
+				if ((cpu_ha_vinto == true) && (giocatore_ha_vinto == false)) {
+					view.writeChatLine("Spiacenti!");
+					view.writeChatLine("La CPU ha affondato tutte le tue navi");
+					view.writeChatLine("Hai perso la partita.");
+					view.getPanello_GestioneTurno().setVisible(false);
+				}else {
+				}
 			}else {
-				model.aggiungiLog("DEBUG", "Turno CPU", "Cella non ancora colpita:" + CoordinateDaColpire);
+				view.writeChatLine("CPU non ha colpito nessuna tua nave.");
 			}
 			
-		} while (cellagiacolpita == true);
-		
-		model.getMappe_Cpu().aggiungiTentativoDiAffondamento(CoordinateDaColpire);
-		view.updateTentativiDiAffondamento(1, model.getMappe_Cpu().getTentativiDiAffondEffettuati());
-		
-		Boolean naveColpita = model.getCpu().colpisci(model.getMappe_Giocatore(), CoordinateDaColpire);
-		if (naveColpita) {
+			view.writeChatLine("\n");
+			model.setTurnoAttuale(model.CODICE_GIOCATORE);
+			model.setTurniCount(model.getTurniCount()+1);
+			model.stoppaTimer();
+			model.getCpu().aggiungiPunteggio(model.getSecondTimer(), naveColpita);
 			
-			view.writeChatLine("La CPU ha colpito una tua nave.");
-			model.aggiungiLog("INFO", "Turno CPU", "La nave del giocatore posizionata in X=" + CoordinateDaColpire.x + " Y=" + CoordinateDaColpire.y + " è stata colpita!");
+			view.writeChatLineTurno(model.getTurniCount());
+			view.writeChatLine("Ora è il turno del giocatore.");
+			view.writeChatLine("Usa il riquadro sotto per colpire una cella avversaria.");
+			view.writeChatLine("In attesa che il giocatore colpisca...");
 			
-			//aggiungi affondamento della nave alla griglia navi
-			model.getMappe_Cpu().aggiungiAffondamento(CoordinateDaColpire, model.getMappe_Giocatore(), model.getGiocatore());
-			view.updateNaviAffondate(1, model.getMappe_Cpu());
 			
-			//controllo se la nave è affondata (se è stata colpita)
-			Boolean naveColpitaAffondata = model.getMappe_Cpu().controlloNaveColpitaAffondata(CoordinateDaColpire, model.getMappe_Giocatore(), model.getGiocatore());
-			if (naveColpitaAffondata) {
-				view.writeChatLine("La nave che ti ha colpito è stata affondata!");
-			}
-			
-			// Controllo se CPU ha vinto
-			cpu_ha_vinto = model.getCpu().controllaVittoria(model.getMappe_Cpu(), model.getMappe_Giocatore());
-			if ((cpu_ha_vinto == true) && (giocatore_ha_vinto == false)) {
-				view.writeChatLine("Spiacenti!");
-				view.writeChatLine("La CPU ha affondato tutte le tue navi");
-				view.writeChatLine("Hai perso la partita.");
-				view.getPanello_GestioneTurno().setVisible(false);
-			}else {
-			}
-		}else {
-			view.writeChatLine("CPU non ha colpito nessuna tua nave.");
 		}
 		
-		view.writeChatLine("\n");
-		model.setTurnoAttuale(model.CODICE_GIOCATORE);
 		
-		view.writeChatLine("Ora è il turno del giocatore.");
-		view.writeChatLine("Usa il riquadro sotto per colpire una cella avversaria.");
-		view.writeChatLine("In attesa che il giocatore colpisca...");
-		
-		view.getBtnColpisciCella().setEnabled(true);
 	}
 	
 	

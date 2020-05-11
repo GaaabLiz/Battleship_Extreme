@@ -37,6 +37,7 @@ public class BattleshipExtremeModel {
 		private Instant stopPartita;
 		private int turnoAttuale = 0;
 		private int secondiTurnoCpu = 3;
+		private int turniCount = 1;
 			
 		
 		/**
@@ -542,6 +543,23 @@ public class BattleshipExtremeModel {
 		public void setSecondiTurnoCpu(int secondiTurnoCpu) {
 			this.secondiTurnoCpu = secondiTurnoCpu;
 		}
+
+		/**
+		 * @return the turniCount
+		 */
+		public int getTurniCount() {
+			return turniCount;
+		}
+
+		/**
+		 * @param turniCount the turniCount to set
+		 */
+		public void setTurniCount(int turniCount) {
+			this.turniCount = turniCount;
+		}
+		
+		
+		
 		
 		
 		

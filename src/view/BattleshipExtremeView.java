@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -95,6 +96,7 @@ public class BattleshipExtremeView extends JFrame{
     private PannelloGriglia griglia_navi;
     private PannelloGriglia griglia_tentativi;
     private JTextArea textAreaChat;
+    private JCheckBox chckbxColpisciCoordCasuale;
     
     
     /**
@@ -310,7 +312,7 @@ public class BattleshipExtremeView extends JFrame{
 		panelloPunteggioTempo.setLayout(null);
 		
 		// Turno 
-		JLabel labelTurno = new JLabel("Turno attuale :");
+		JLabel labelTurno = new JLabel("Numero turno: ");
 		labelTurno.setBounds(145, 11, 125, 25);
 		panelloPunteggioTempo.add(labelTurno);
 		labelTurno.setFont(FONT_SEGOE_H1_P);
@@ -330,7 +332,7 @@ public class BattleshipExtremeView extends JFrame{
 		labelValuePunteggio = new JLabel("0");
 		labelValuePunteggio.setForeground(new Color(65, 105, 225));
 		labelValuePunteggio.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		labelValuePunteggio.setBounds(789, 12, 38, 25);
+		labelValuePunteggio.setBounds(789, 12, 60, 25);
 		panelloPunteggioTempo.add(labelValuePunteggio);
 		
 		
@@ -535,8 +537,14 @@ public class BattleshipExtremeView extends JFrame{
 		
 		btnColpisciCella = new JButton("Colpisci Cella");
 		btnColpisciCella.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		btnColpisciCella.setBounds(160, 156, 153, 38);
+		btnColpisciCella.setBounds(252, 156, 153, 38);
 		panello_GestioneTurno.add(btnColpisciCella);
+		
+		chckbxColpisciCoordCasuale = new JCheckBox("Coordinate casuali");
+		chckbxColpisciCoordCasuale.setBackground(Color.WHITE);
+		chckbxColpisciCoordCasuale.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		chckbxColpisciCoordCasuale.setBounds(18, 167, 153, 23);
+		panello_GestioneTurno.add(chckbxColpisciCoordCasuale);
 		
 		
     }
@@ -638,6 +646,14 @@ public class BattleshipExtremeView extends JFrame{
 		}else {
 			textAreaChat.setText(textAreaChat.getText() +"> "+ s);
 		}
+		
+	}
+	
+	public void writeChatLineTurno(int numeroTurno) {
+
+		
+		textAreaChat.setText(textAreaChat.getText() +  "\n" + "# TURNO "+ numeroTurno + "# --------------------------------------------");
+		
 		
 	}
 	
@@ -827,6 +843,39 @@ public class BattleshipExtremeView extends JFrame{
 	public JSpinner getSpinnerValueY() {
 		return spinnerValueY;
 	}
+
+
+	/**
+	 * @return the chckbxColpisciCoordCasuale
+	 */
+	public JCheckBox getChckbxColpisciCoordCasuale() {
+		return chckbxColpisciCoordCasuale;
+	}
+
+
+	/**
+	 * @return the labelValueTurno
+	 */
+	public JLabel getLabelValueTurno() {
+		return labelValueTurno;
+	}
+
+
+	/**
+	 * @return the labelValuePunteggio
+	 */
+	public JLabel getLabelValuePunteggio() {
+		return labelValuePunteggio;
+	}
+	
+	
+
+
+	
+	
+	
+	
+	
 	
 	
 	

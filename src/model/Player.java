@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class Player {
 	public ArrayList<Nave> navi;
 	public final int NUMERO_GIOCATORE = 0;
+	public int punteggio;
 
 	
 	/**
@@ -111,6 +112,49 @@ public class Player {
 		}else {
 			return false;
 		}
+	}
+	
+	
+	public void aggiungiPunteggio(Long secondi, Boolean naveColpita) {
+		int temp = 0;
+		if( (secondi <60)) {
+			if (naveColpita) {
+				temp = temp + 500;
+			}else {
+				temp = temp + 10;
+			}
+		}else if((secondi >= 60) && (secondi < 120)) {
+			if (naveColpita) {
+				temp = temp + 400;
+			}else {
+				temp = temp + 5;
+			}
+		}else if((secondi >= 120) && (secondi < 180)) {
+			if (naveColpita) {
+				temp = temp + 350;
+			}else {
+				temp = temp + 3;
+			}
+		}else if((secondi >= 180) && (secondi < 240)) {
+			if (naveColpita) {
+				temp = temp + 200;
+			}else {
+				temp = temp + 2;
+			}
+		}else if((secondi >= 240) && (secondi < 300)) {
+			if (naveColpita) {
+				temp = temp + 100;
+			}else {
+				temp = temp + 1;
+			}
+		}else if((secondi >= 300)) {
+			if (naveColpita) {
+				temp = temp + 50;
+			}else {
+				temp = temp + 0;
+			}
+		}
+		punteggio = temp;		
 	}
 	
 	
