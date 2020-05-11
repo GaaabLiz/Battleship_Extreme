@@ -317,7 +317,7 @@ public class BattleshipExtremeView extends JFrame{
 		panelloPunteggioTempo.add(labelTurno);
 		labelTurno.setFont(FONT_SEGOE_H1_P);
 		
-		labelValueTurno = new JLabel("Giocatore");
+		labelValueTurno = new JLabel("1");
 		labelValueTurno.setBounds(267, 12, 227, 25);
 		panelloPunteggioTempo.add(labelValueTurno);
 		labelValueTurno.setForeground(new Color(65, 105, 225));
@@ -397,7 +397,7 @@ public class BattleshipExtremeView extends JFrame{
 		labelValue_tentativiDiaffondamento = new JLabel("150");
 		labelValue_tentativiDiaffondamento.setForeground(new Color(65, 105, 225));
 		labelValue_tentativiDiaffondamento.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		labelValue_tentativiDiaffondamento.setBounds(317, 29, 38, 25);
+		labelValue_tentativiDiaffondamento.setBounds(317, 29, 85, 25);
 		panello_InfoGIocatore.add(labelValue_tentativiDiaffondamento);
 		
 		JLabel lblNewLabel_1_1_1_2_1_1 = new JLabel("N° celle affondate :");
@@ -450,7 +450,7 @@ public class BattleshipExtremeView extends JFrame{
 		labelValueCpu_tentativiDiaffondamento = new JLabel("150");
 		labelValueCpu_tentativiDiaffondamento.setForeground(new Color(65, 105, 225));
 		labelValueCpu_tentativiDiaffondamento.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		labelValueCpu_tentativiDiaffondamento.setBounds(317, 29, 38, 25);
+		labelValueCpu_tentativiDiaffondamento.setBounds(317, 29, 85, 25);
 		panello_InfoCpu.add(labelValueCpu_tentativiDiaffondamento);
 		
 		JLabel lblNewLabel_1_1_1_2_1_112 = new JLabel("N° celle affondate :");
@@ -867,6 +867,73 @@ public class BattleshipExtremeView extends JFrame{
 	public JLabel getLabelValuePunteggio() {
 		return labelValuePunteggio;
 	}
+
+
+	/**
+	 * @return the labelValue_tentativiDiaffondamento
+	 */
+	public JLabel getLabelValue_tentativiDiaffondamento() {
+		return labelValue_tentativiDiaffondamento;
+	}
+
+
+	/**
+	 * @return the labelValue_nCelleAffondate
+	 */
+	public JLabel getLabelValue_nCelleAffondate() {
+		return labelValue_nCelleAffondate;
+	}
+
+
+	/**
+	 * @return the labelValue_statoNavi
+	 */
+	public JLabel getLabelValue_statoNavi() {
+		return labelValue_statoNavi;
+	}
+
+
+	/**
+	 * @return the labelValue_TurniGiocati
+	 */
+	public JLabel getLabelValue_TurniGiocati() {
+		return labelValue_TurniGiocati;
+	}
+
+
+	/**
+	 * @return the labelValueCpu_tentativiDiaffondamento
+	 */
+	public JLabel getLabelValueCpu_tentativiDiaffondamento() {
+		return labelValueCpu_tentativiDiaffondamento;
+	}
+
+
+	/**
+	 * @return the labelValueCpu_nCelleAffondate
+	 */
+	public JLabel getLabelValueCpu_nCelleAffondate() {
+		return labelValueCpu_nCelleAffondate;
+	}
+
+
+	/**
+	 * @return the labelValueCpu_statoNavi
+	 */
+	public JLabel getLabelValueCpu_statoNavi() {
+		return labelValueCpu_statoNavi;
+	}
+
+
+	/**
+	 * @return the labelValueCpu_TurniGiocati
+	 */
+	public JLabel getLabelValueCpu_TurniGiocati() {
+		return labelValueCpu_TurniGiocati;
+	}
+	
+	
+	
 	
 	
 

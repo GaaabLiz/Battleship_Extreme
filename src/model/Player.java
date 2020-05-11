@@ -15,6 +15,8 @@ public class Player {
 	public ArrayList<Nave> navi;
 	public final int NUMERO_GIOCATORE = 0;
 	public int punteggio;
+	public int turniGiocati;
+	public int mieCelleNaviAffondate;
 
 	
 	/**
@@ -154,7 +156,17 @@ public class Player {
 				temp = temp + 0;
 			}
 		}
-		punteggio = temp;		
+		punteggio = punteggio + temp;		
+	}
+	
+	
+	
+	public int getNumeroCelleNaviPlayer() {
+		int temp = 0;
+		for (int i = 0; i < navi.size(); i++) {
+			temp = temp + navi.get(i).getDimensioneNave();
+		}
+		return temp;
 	}
 	
 	

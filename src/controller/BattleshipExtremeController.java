@@ -119,6 +119,7 @@ public class BattleshipExtremeController {
 							view.writeChatLine("Hai colpito una nave della CPU!");
 							model.aggiungiLog("INFO", "Turno Giocatore", "La nave della CPU posizionata in X=" + coordX + " Y=" + coordY + " è stata colpita!");
 							model.getMappe_Giocatore().aggiungiAffondamento(new Point(coordX, coordY), model.getMappe_Cpu(), model.getCpu());
+							model.getCpu().mieCelleNaviAffondate = model.getCpu().mieCelleNaviAffondate + 1;
 							view.updateNaviAffondate(0, model.getMappe_Giocatore());
 							
 							//controllo se la nave è affondata (se è stata colpita)
@@ -144,9 +145,16 @@ public class BattleshipExtremeController {
 						model.setTurniCount(model.getTurniCount()+1);
 						model.stoppaTimer();
 						model.getGiocatore().aggiungiPunteggio(model.getSecondTimer(), naveColpita);
-						view.getLabelValuePunteggio().setText(view.getLabelValuePunteggio().getText() + Integer.toString(model.getGiocatore().punteggio));
-						chiamaCPUperTurno();
+						int punteggioAttuale = model.getGiocatore().punteggio;
+						view.getLabelValuePunteggio().setText(String.valueOf(punteggioAttuale));
+						model.getGiocatore().turniGiocati = model.getGiocatore().turniGiocati + 1;
 						view.getLabelValueTurno().setText(String.valueOf(model.getTurniCount()));
+						view.getLabelValue_TurniGiocati().setText(String.valueOf(model.getGiocatore().turniGiocati));
+						view.getLabelValue_tentativiDiaffondamento().setText(String.valueOf(model.getMappe_Giocatore().getNumTentativiDiAffondEffettuati()) + " / " + model.getMappe_Giocatore().getNumeroCelleMappa());
+						view.getLabelValue_nCelleAffondate().setText(String.valueOf(model.getGiocatore().mieCelleNaviAffondate) + " / " + String.valueOf(model.getGiocatore().getNumeroCelleNaviPlayer()));
+						view.getLabelValue_statoNavi().setText(String.valueOf(model.getMappe_Cpu().getMieNaviAffondate()) + " / " + model.getNumeroNavi());
+						chiamaCPUperTurno();
+						
 					}
 				}
 				
@@ -177,6 +185,8 @@ public class BattleshipExtremeController {
 				view.getPanelloPunteggioTempo().setVisible(true);
 				view.getPanello_InformazioniPartitaMaster().setVisible(true);
 				view.getPanello_GestioneTurno().setVisible(true);
+				
+				inizializzaLabelConValoriModel();
 				
 				// Creazione e posizionamento navi CPU
 				creaPosNaviCpu();
@@ -440,6 +450,7 @@ public class BattleshipExtremeController {
 				
 				view.writeChatLine("La CPU ha colpito una tua nave.");
 				model.aggiungiLog("INFO", "Turno CPU", "La nave del giocatore posizionata in X=" + CoordinateDaColpire.x + " Y=" + CoordinateDaColpire.y + " è stata colpita!");
+				model.getGiocatore().mieCelleNaviAffondate = model.getGiocatore().mieCelleNaviAffondate + 1;
 				
 				//aggiungi affondamento della nave alla griglia navi
 				model.getMappe_Cpu().aggiungiAffondamento(CoordinateDaColpire, model.getMappe_Giocatore(), model.getGiocatore());
@@ -469,11 +480,19 @@ public class BattleshipExtremeController {
 			model.setTurniCount(model.getTurniCount()+1);
 			model.stoppaTimer();
 			model.getCpu().aggiungiPunteggio(model.getSecondTimer(), naveColpita);
+			model.getCpu().turniGiocati = model.getCpu().turniGiocati + 1;
+			view.getLabelValueCpu_TurniGiocati().setText(String.valueOf(model.getCpu().turniGiocati));
+			view.getLabelValueCpu_tentativiDiaffondamento().setText(String.valueOf(model.getMappe_Cpu().getNumTentativiDiAffondEffettuati()) + " / " + model.getMappe_Cpu().getNumeroCelleMappa());;
+			view.getLabelValueCpu_nCelleAffondate().setText(String.valueOf(model.getCpu().mieCelleNaviAffondate) + " / "+ model.getCpu().getNumeroCelleNaviPlayer());
+			view.getLabelValueCpu_statoNavi().setText(String.valueOf(model.getMappe_Giocatore().getMieNaviAffondate()) + " / " + model.getNumeroNavi());
 			
-			view.writeChatLineTurno(model.getTurniCount());
-			view.writeChatLine("Ora è il turno del giocatore.");
-			view.writeChatLine("Usa il riquadro sotto per colpire una cella avversaria.");
-			view.writeChatLine("In attesa che il giocatore colpisca...");
+			if (!cpu_ha_vinto) {
+				view.writeChatLineTurno(model.getTurniCount());
+				view.writeChatLine("Ora è il turno del giocatore.");
+				view.writeChatLine("Usa il riquadro sotto per colpire una cella avversaria.");
+				view.writeChatLine("In attesa che il giocatore colpisca...");
+			}
+			
 			
 			
 		}
@@ -483,79 +502,15 @@ public class BattleshipExtremeController {
 	
 	
 	
-	/**
-	 * Metodo che esegue la partita vera e propria a Battaglia Navale. QUesto metodo viene chiamato quando
-	 * il posizionamento navi di entrambi i giocatori e' completato.
-	 */
-	@SuppressWarnings("unused")
-	private void eseguiPartita() {
-		Boolean turno_Giocatore = true;
-		Boolean turno_cpu = false;
-		Boolean finePartita = false;
-		Boolean giocatore_ha_vinto = false;
-		Boolean cpu_ha_vinto = false;
-		
-		
-		// Scrivi le primi righe di benvenuto nella chat
-		
-		
-//		//Ciclo dei turni
-//		do {
-//			
-//			
-//			/* TURNO GIOCATORE ---------------------------------------------------------------- */
-//			if ((turno_Giocatore == true) && (turno_cpu == false) && (cpu_ha_vinto == false)) {
-//				
-//				// Creazione dell'oggetto turno relativo al giocatore 
-//				TurnoGiocatoreController turno = new TurnoGiocatoreController(model, view, controller);
-//				
-//				// Controllo se giocatore ha vinto
-//				giocatore_ha_vinto = model.getGiocatore().controllaVittoria(model.getMappe_Giocatore(), model.getMappe_Cpu());
-//				if ((cpu_ha_vinto == false) && (giocatore_ha_vinto == true)) {
-//					System.out.println(controller.MSG_I + "COMPLIMENTI! Hai affondato tutte le navi della CPU e hai vinto la partita.");
-//					finePartita = true;
-//				}else {
-//					finePartita = false;
-//				}
-//				
-//				// Aumento turno
-//				model.setNumeroTurno(model.getNumeroTurno()+1);
-//				
-////				//cambio turno
-//				turno_Giocatore = false;
-//				turno_cpu = true;
-//				
-//				controller.stampaLineeVuote(1);
-//			}
-//			
-//			
-//			/* TURNO CPU ---------------------------------------------------------------------- */
-//			if ((turno_Giocatore == false) && (turno_cpu == true) && (giocatore_ha_vinto == false)) {
-//				
-//				// Creazione dell'oggetto turno relativo al giocatore 
-//				TurnoCpuController turno = new TurnoCpuController(model, view, controller);
-//				
-//				// Controllo se CPU ha vinto
-//				cpu_ha_vinto = model.getCpu().controllaVittoria(model.getMappe_Cpu(), model.getMappe_Giocatore());
-//				if ((cpu_ha_vinto == true) && (giocatore_ha_vinto == false)) {
-//					System.out.println(controller.MSG_I + "SPIACENTE! La CPU ha affondato tutte le tue navi e hai perso la partita.");
-//					finePartita = true;
-//				}else {
-//					finePartita = false;
-//				}
-//				
-//				// Aumento turno
-//				model.setNumeroTurno(model.getNumeroTurno()+1);
-//				
-////				//cambio turno
-//				turno_Giocatore = true;
-//				turno_cpu = false;
-//				
-//				controller.stampaLineeVuote(1);
-//			}
-//			
-//		} while (finePartita == false);
-		
+	private void inizializzaLabelConValoriModel() {
+		view.getLabelValue_nCelleAffondate().setText("0 /" + model.getGiocatore().getNumeroCelleNaviPlayer());
+		view.getLabelValue_tentativiDiaffondamento().setText("0 / " + (model.getDimensioneMappa()*model.getDimensioneMappa()));
+		view.getLabelValue_statoNavi().setText("0 / " + model.getNumeroNavi());
+		view.getLabelValue_TurniGiocati().setText("0");
+		view.getLabelValueCpu_nCelleAffondate().setText("0 /" + model.getGiocatore().getNumeroCelleNaviPlayer());
+		view.getLabelValueCpu_tentativiDiaffondamento().setText("0 / " + (model.getMappe_Giocatore().getNumeroCelleMappa()));
+		view.getLabelValueCpu_statoNavi().setText("0 / " + model.getNumeroNavi());
+		view.getLabelValueCpu_TurniGiocati().setText("0");
 	}
 	
 	

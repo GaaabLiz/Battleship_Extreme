@@ -19,6 +19,7 @@ public class MappePlayer {
 	private Boolean TentativiDiAffondEffettuati[][];	/* Indica le celle che il player ha tentato di colpire */
 	private int celleOccupateDaNavi;					/* Indica il numero di cella occupate della mappa */
 	private Boolean spazioNaviAvversarioAffondate[][];	/* Indica lo spazio navi che questo player ha affondato dell'avversario */
+	private int mieNaviAffondate;
 	
 	
 	/**
@@ -174,7 +175,8 @@ public class MappePlayer {
 						Nave NaveCorrente = arrayNaviPlayerDaColpire.get(j2);
 						if (NaveCorrente.getId() == idCorrenteNaveAffondata) {
 							if (NaveCorrente.getCelleColpite() == NaveCorrente.getDimensioneNave()) {
-								return true;
+								mieNaviAffondate++;
+								return true;							
 							}else {
 								return false;
 							}
@@ -231,6 +233,26 @@ public class MappePlayer {
 	 */
 	public Boolean[][] getTentativiDiAffondEffettuati() {
 		return TentativiDiAffondEffettuati;
+	}
+	
+	/**
+	 * @return the tentativiDiAffondEffettuati
+	 */
+	public int getNumTentativiDiAffondEffettuati() {
+		int temp = 0;
+		for (int i = 0; i < TentativiDiAffondEffettuati.length; i++) {
+			for (int j = 0; j < TentativiDiAffondEffettuati.length; j++) {
+				if (TentativiDiAffondEffettuati[i][j]) {
+					temp++;
+				}
+			}
+		}
+		return temp;
+	}
+	
+	
+	public int getNumeroCelleMappa() {
+		return dimensioneMappa*dimensioneMappa;
 	}
 	
 	
@@ -299,6 +321,17 @@ public class MappePlayer {
 		
 		return null;	
 	}
+
+
+	/**
+	 * @return the mieNaviAffondate
+	 */
+	public int getMieNaviAffondate() {
+		return mieNaviAffondate;
+	}
+	
+	
+	
 
 	
 	
