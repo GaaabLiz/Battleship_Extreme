@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import model.BattleshipExtremeModel;
+import model.Partita;
 
 public class StatistichePartitaView extends JFrame {
 
@@ -99,20 +100,42 @@ public class StatistichePartitaView extends JFrame {
 		table.getColumnModel().getColumn(2).setPreferredWidth(155);
 		scrollPane.setViewportView(table);
 		
+		JCheckBox chckbxSalva = new JCheckBox("Salva i risultati della partita nello storico partite");
+		chckbxSalva.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		chckbxSalva.setBounds(117, 756, 399, 23);
+		chckbxSalva.setSelected(true);
+		chckbxSalva.setVisible(false);
+		this.getContentPane().add(chckbxSalva);
+		
 		JButton btnSalvaRisultati = new JButton("Termina partita");
 		btnSalvaRisultati.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		btnSalvaRisultati.setBounds(97, 807, 189, 43);
 		btnSalvaRisultati.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if(chckbxSalva.isSelected()) {
+					String nomeGiocatore;
+					if (model.getNomeGiocatore() == null) {
+						nomeGiocatore = "Player";
+					}else {
+						nomeGiocatore = model.getNomeGiocatore();
+					}
+					Partita p = new Partita();
+					p.setNomeGiocatore(nomeGiocatore);
+					p.setPunteggioCpu(model.getCpu().punteggio);
+					p.setPunteggioGiocatore(model.getGiocatore().punteggio);
+					p.setDurataPartita(model.getActualTimer());
+					p.setDimMappa(model.getDimensioneMappa());
+					p.setNumNavi(model.getNumeroNavi());
+					model.scriviPartitaSuFile(p);
+				}
+				
 				chiudiJFrame();
 			}
 		});
 		this.getContentPane().add(btnSalvaRisultati);
 		
-		JCheckBox chckbxSalva = new JCheckBox("Salva i risultati della partita nello storico partite");
-		chckbxSalva.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		chckbxSalva.setBounds(117, 756, 399, 23);
-		this.getContentPane().add(chckbxSalva);
+		
 		
 		JButton btnChiudiGioco = new JButton("Termina e chiudi");
 		btnChiudiGioco.setFont(new Font("Segoe UI", Font.PLAIN, 18));
@@ -123,6 +146,7 @@ public class StatistichePartitaView extends JFrame {
 				int a=JOptionPane.showConfirmDialog(s,"Sei sicuro di uscire dal gioco?");  
 				if(a==JOptionPane.YES_OPTION){  
 				    s.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+				    model.scriviFileDiLog();
 				    System.exit(0);
 				} 	
 			}

@@ -145,9 +145,9 @@ public class ImpostazioniView extends JFrame {
 		pannello_CheatDebug.add(chckbxMostraLeNavi);
 		
 		
-		JCheckBox chckbxMostraID = new JCheckBox("Mostra gli ID della navi nella mappa");
+		JCheckBox chckbxMostraID = new JCheckBox("Mostra gli ID della navi nella mappa (è un cheat)");
 		chckbxMostraID.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		chckbxMostraID.setBounds(26, 78, 279, 23);
+		chckbxMostraID.setBounds(26, 78, 315, 23);
 		if (model.MOSTRA_NUMERI_NAVE) {
 			chckbxMostraID.setSelected(true);
 		}else {
@@ -155,24 +155,34 @@ public class ImpostazioniView extends JFrame {
 		}
 		pannello_CheatDebug.add(chckbxMostraID);
 		
+		JCheckBox chckbxPartitaAutomatica = new JCheckBox("Abilita partita automatica (è un cheat)");
+		if (model.ABILITA_PARTITA_AUTOMATICA) {
+			chckbxPartitaAutomatica.setSelected(true);
+		}else {
+			chckbxPartitaAutomatica.setSelected(false);
+		}
+		chckbxPartitaAutomatica.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		chckbxPartitaAutomatica.setBounds(26, 128, 291, 23);
+		pannello_CheatDebug.add(chckbxPartitaAutomatica);
+		
 		
 		
 		
 		/* Pannello Partita --------------*/ 
 		
 		JPanel pannello_Partita = new JPanel();
-		tabbedPane.addTab("Partita", null, pannello_CheatDebug, null);
+		tabbedPane.addTab("Partita", null, pannello_Partita, null);
 		pannello_CheatDebug.setLayout(null);
 		
 		JLabel lblNewLabel_1_4 = new JLabel("Secondi di attività turno CPU :");
 		lblNewLabel_1_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel_1_4.setBounds(20, 32, 213, 22);
-		pannello_CheatDebug.add(lblNewLabel_1_4);
+		pannello_Partita.add(lblNewLabel_1_4);
 		
 		JSpinner spinner_SecCpu = new JSpinner();
 		spinner_SecCpu.setValue(model.getSecondiTurnoCpu());
 		spinner_SecCpu.setBounds(236, 31, 48, 30);
-		pannello_CheatDebug.add(spinner_SecCpu);
+		pannello_Partita.add(spinner_SecCpu);
 		
 		
 		
@@ -205,6 +215,10 @@ public class ImpostazioniView extends JFrame {
 				
 				model.MOSTRA_NUMERI_NAVE = chckbxMostraID.isSelected();
 				model.aggiungiLog("INFO", "Impostazioni", "Il mostra ID nave è settato a: " + model.MOSTRA_NUMERI_NAVE);
+				
+				model.ABILITA_PARTITA_AUTOMATICA = chckbxPartitaAutomatica.isSelected();
+				model.aggiungiLog("INFO", "Impostazioni", "La partita automatica è settata a: " + model.ABILITA_PARTITA_AUTOMATICA);
+				view.getMenu_Partita_GiocaAutomaticamente().setVisible(true);
 				
 				model.setSecondiTurnoCpu((int) spinner_SecCpu.getValue());
 				model.aggiungiLog("INFO", "Impostazioni", "I secondi di attività di CPU sono: " + model.getSecondiTurnoCpu());

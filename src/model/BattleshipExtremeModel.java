@@ -1,14 +1,23 @@
 package model;
 
 import java.awt.Point;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class BattleshipExtremeModel {
 	
-	// # COSTANTI PUBBLICHE DEL GIOCO #-----------------------------------------------------------------
+	// # VARIABILI/COSTANTI GLOBALI DEL GIOCO #-----------------------------------------------------------------
 		public int MAX_DIM_MAPPA = 20;						/* Dimensione massima della mappa */
 		public int MIN_DIM_MAPPA = 10;						/* Dimensione minima della mappa  */
 		public int MIN_NUM_NAVI = 2;						/* Dimensione minima delle navi   */
@@ -18,12 +27,18 @@ public class BattleshipExtremeModel {
 		public Boolean PARTITA_INIZIATA = false;			/* Indentifica se la partita è in corso o no */
 		public Boolean ABILITA_NAVE_DIM_1 = false;			/* Abilita la dimensione della nave corrispondete */
 		public int VINCITORE = -1;
+		public String directoryLog;
+		public String directoryPartite;
 		
 		// # COSTANTI USATE PER SCOPI DI DEBUG #-------------------------------------------------------------
-		public Boolean MOSTRA_NUMERI_NAVE = false;	/* Mostra sulle celle occupate l'ID della nave. */
-		public Boolean MOSTRA_NAVI_CPU = true; 		/* Mostra le navi della CPU nella mappa tentativi */
+		public Boolean MOSTRA_NUMERI_NAVE = false;			/* Mostra sulle celle occupate l'ID della nave. */
+		public Boolean MOSTRA_NAVI_CPU = true; 				/* Mostra le navi della CPU nella mappa tentativi */
+		public Boolean ABILITA_PARTITA_AUTOMATICA = false;   /* Mostra le navi della CPU nella mappa tentativi */
 		
 		// # VARIABILI PRINCIPALI DEL GIOCO #----------------------------------------------------------------
+		private Boolean pathEsiste;
+		private Boolean pathIsCartella;
+		private Boolean pathCanWrite;
 		private ArrayList<Log> LogGioco;
 		private int dimensioneMappa;						/* La dimensione delle mappe di ogni giocatore */
 		private MappePlayer Mappe_Giocatore;				/* Le 2 mappe del giocatore (Navi e tentativi) */
@@ -45,9 +60,74 @@ public class BattleshipExtremeModel {
 		 * 
 		 */
 		public BattleshipExtremeModel() {
+			
 			setLogGioco();
 			
+			// Creazione directory
+			directoryLog = System.getenv("APPDATA") + "\\Battleshipextreme\\Log";
+			directoryPartite = System.getenv("APPDATA") + "\\Battleshipextreme\\Partite";
+//			System.out.println(directory);
+			
+			
+			//inizializzazione del path e creazione del path sottoforma di file
+			File pathLog = new File(directoryLog);
+			File pathPartite = new File(directoryPartite);
+					
+			
+			//controllo esistenza path (se non esiste la crea)
+			if (pathLog.exists()) {
+				pathEsiste = true;
+				aggiungiLog("DEBUG", "DIRECTORY LOG", "Il path esiste.");
+			}else {
+				pathEsiste = false;
+				aggiungiLog("DEBUG", "DIRECTORY LOG", "Il path non esiste e sta per essere creato.");
+				pathLog.mkdir();
+			}
+			if (pathPartite.exists()) {
+				pathEsiste = true;
+				aggiungiLog("DEBUG", "DIRECTORY PARTITE", "Il path esiste.");
+			}else {
+				pathEsiste = false;
+				aggiungiLog("DEBUG", "DIRECTORY PARTITE", "Il path non esiste e sta per essere creato.");
+				pathPartite.mkdir();
+			}
+			
+			//controllo se FILE è una directory
+			if (pathLog.isDirectory()) {
+				pathIsCartella = true;
+				aggiungiLog("DEBUG", "DIRECTORY LOG", "Il path è una cartella ed è giusto che sia così.");
+			}else {
+				pathIsCartella = false;
+				aggiungiLog("DEBUG", "DIRECTORY LOG", "Il path non è una cartella.");
+			}
+			if (pathPartite.isDirectory()) {
+				pathIsCartella = true;
+				aggiungiLog("DEBUG", "DIRECTORY PARTITE", "Il path è una cartella ed è giusto che sia così.");
+			}else {
+				pathIsCartella = false;
+				aggiungiLog("DEBUG", "DIRECTORY PARTITE", "Il path non è una cartella.");
+			}
+			
+			//controllo permesso di accesso nella directory
+			if (pathLog.canWrite()) {
+				pathCanWrite = true;
+				aggiungiLog("DEBUG", "DIRECTORY LOG", "Nel path è possibile scrivere.");
+			}else {
+				pathCanWrite = false;
+				aggiungiLog("DEBUG", "DIRECTORY LOG", "Nel path non è possibile scrivere.");
+			}
+			//controllo permesso di accesso nella directory
+			if (pathPartite.canWrite()) {
+				pathCanWrite = true;
+				aggiungiLog("DEBUG", "DIRECTORY PARTITE", "Nel path è possibile scrivere.");
+			}else {
+				pathCanWrite = false;
+				aggiungiLog("DEBUG", "DIRECTORY PARTITE", "Nel path non è possibile scrivere.");
+			}
+			
+					
 		}
+		
 		
 		public void aggiungiLog(String tipo, String fonte, String Text) {
 			Log g = new Log(tipo, fonte, Text);
@@ -376,6 +456,81 @@ public class BattleshipExtremeModel {
 		 */
 		public void aggiungiModelloNave(int indice, int dim) {
 			modelloNavi[indice] = dim;
+		}
+		
+		
+		
+		public void scriviFileDiLog() {
+			Date date = new Date(); 
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy_HHmm");	
+			String data = formatter.format(date);
+//			System.out.println(data);
+			File fout = new File(directoryLog + "\\" + data + ".txt");
+			
+			
+			FileOutputStream fos = null;
+			try {
+				fos = new FileOutputStream(fout);
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		 
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+			
+			ArrayList<Log> logDaStampare = getLogGioco();
+			
+			for (int i = 0; i < logDaStampare.size(); i++) {
+				
+				String tempOra = "{" + logDaStampare.get(i).getOra() + "}";
+				String tempTipo = "[" + logDaStampare.get(i).getTipo() + "]";
+				String tempFonte = "(" + logDaStampare.get(i).getFonte() + ")";
+				String tempText = logDaStampare.get(i).getTestoLog();
+				String temp;
+				
+				temp = tempOra + " " + tempTipo + " " + tempFonte + " " + tempText;
+						
+				try {
+					bw.write(temp);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					bw.newLine();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		 
+			try {
+				bw.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+		
+		
+		public void scriviPartitaSuFile(Partita p) {
+			Date date = new Date(); 
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy_HHmm");	
+			String data = formatter.format(date);
+			File f = new File(directoryPartite + "\\" + data + ".dat");
+			
+			try {
+				ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f));
+				out.writeObject(p);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 		

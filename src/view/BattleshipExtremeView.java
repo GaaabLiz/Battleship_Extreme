@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
+import controller.WindowMainListener;
 import model.BattleshipExtremeModel;
 import model.MappePlayer;
 
@@ -66,7 +67,9 @@ public class BattleshipExtremeView extends JFrame{
     private JMenuItem menu_File_esci;
     private JMenuItem menu_Modifica_settings;
     private JMenuItem menu_Visualizza_console;
+    private JMenuItem menu_Visualizza_storicoPartite;
     private JMenuItem menu_Partita_TempoCorrente;
+    private JMenuItem menu_Partita_GiocaAutomaticamente;
     private JMenuItem menu_Aiuto_regole;
     private JMenuItem menu_Aiuto_tutorial;
     private JMenuItem menu_Info_progetto;
@@ -164,6 +167,12 @@ public class BattleshipExtremeView extends JFrame{
 		menu_Visualizza_console.setFont(FONT_SEGOE_H2_P);
 		menu_Visualizza.add(menu_Visualizza_console);
 		
+		// Menu : VISUALIZZA : STORICO PARTITE
+		menu_Visualizza_storicoPartite= new JMenuItem("Storico Partite");
+		menu_Visualizza_storicoPartite.setFont(FONT_SEGOE_H2_P);
+		menu_Visualizza.add(menu_Visualizza_storicoPartite);
+		menu_Visualizza_storicoPartite.setVisible(false);
+		
 		// Menu : PARTITA
 		menu_Partita = new JMenu("Partita");
 		menu_Partita.setFont(FONT_SEGOE_H1_P);
@@ -174,6 +183,13 @@ public class BattleshipExtremeView extends JFrame{
 		menu_Partita_TempoCorrente.setFont(FONT_SEGOE_H2_P);
 		menu_Partita_TempoCorrente.setEnabled(false);
 		menu_Partita.add(menu_Partita_TempoCorrente);
+		
+		// Menu : PARTITA : PARtita AUTOMATICA
+		menu_Partita_GiocaAutomaticamente= new JMenuItem("Fai giocare la CPU al tuo posto");
+		menu_Partita_GiocaAutomaticamente.setFont(FONT_SEGOE_H2_P);
+		menu_Partita_GiocaAutomaticamente.setEnabled(false);
+		menu_Partita_GiocaAutomaticamente.setVisible(false);
+		menu_Partita.add(menu_Partita_GiocaAutomaticamente);
 		
 		// Menu : AIUTO
 		menu_Aiuto = new JMenu("Aiuto");
@@ -931,6 +947,26 @@ public class BattleshipExtremeView extends JFrame{
 	public JLabel getLabelValueCpu_TurniGiocati() {
 		return labelValueCpu_TurniGiocati;
 	}
+
+
+	/**
+	 * @return the menu_Partita_GiocaAutomaticamente
+	 */
+	public JMenuItem getMenu_Partita_GiocaAutomaticamente() {
+		return menu_Partita_GiocaAutomaticamente;
+	}
+
+
+	/**
+	 * @return the menu_Visualizza_storicoPartite
+	 */
+	public JMenuItem getMenu_Visualizza_storicoPartite() {
+		return menu_Visualizza_storicoPartite;
+	}
+	
+	
+	
+	
 	
 	
 	
