@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -17,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import controller.DatabaseController;
 import model.BattleshipExtremeModel;
 import model.Partita;
 
@@ -24,6 +28,54 @@ public class StatistichePartitaView extends JFrame {
 
 	@SuppressWarnings("serial")
 	public StatistichePartitaView(BattleshipExtremeModel model, BattleshipExtremeView view) {
+		
+		// db
+		Boolean stato_connessione = false;
+		DatabaseController d = new DatabaseController();
+		
+		try {
+			stato_connessione = d.getConnessione().isClosed();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		if (!stato_connessione) {
+			model.aggiungiLog("INFO", "DATABASE", "La connessione al database è aperta.");
+			
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
+		    LocalDateTime now = LocalDateTime.now();  
+			
+			String tempNome = model.getNomeGiocatore();
+			String tempDataPartita = dtf.format(now);
+			int tempPunteggiGiocatore = model.getGiocatore().punteggio;
+			int tempPunteggioCpu = model.getGiocatore().punteggio;
+			String tempDurataPartita = model.getActualTimer();
+			int tempDimMappa = model.getDimensioneMappa();
+			int tempNumNavi = model.getNumeroNavi();
+			
+			Partita p = new Partita();
+			p.setNomeGiocatore(tempNome);
+			p.setDataPartita(tempDataPartita);
+			p.setPunteggioGiocatore(tempPunteggiGiocatore);
+			p.setPunteggioCpu(tempPunteggioCpu);
+			p.setDurataPartita(tempDurataPartita);
+			p.setDimMappa(tempDimMappa);
+			p.setNumNavi(tempNumNavi);
+			
+			try {
+				d.addPartitaToDb(p);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		}else {
+			model.aggiungiLog("ERRORE", "DATABASE", "La connessione al database è chiusa.");
+			JFrame f=new JFrame();  
+		    JOptionPane.showMessageDialog(f,"Spiacente! La connessione al database non è riuscita. Non sara' possibile inserire la partita nel database. Contattare lo sviluppatore.","Errore di connessione",JOptionPane.ERROR_MESSAGE);     
+		}
+		
 		
 		// Inizializzazione del JFrame
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(BattleshipExtremeView.class.getResource("/icons/result.png")));

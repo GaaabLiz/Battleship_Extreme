@@ -39,6 +39,8 @@ public class ImpostazioniPartitaView extends JFrame {
 	private JPanel panelloGrigliaCOntainer;
 	JPanel panello_creaPosNavi;
 	JLabel label_naviInserite;
+	JTextField textField_nomeGIocatore;
+	JLabel labelNomeGiocatore;
 	JTable table;
 	int numNaviCreate = 0;
 	Nave nTemp = new Nave(-1, 0, PuntoCardinale.EST, new Point(-1, -1));
@@ -83,12 +85,12 @@ public class ImpostazioniPartitaView extends JFrame {
 		panelloNomeGIocatore.setBounds(39, 83, 555, 55);
 		this.getContentPane().add(panelloNomeGIocatore);
 		
-		JLabel labelNomeGiocatore = new JLabel("Nome del giocatore (facoltativo): ");
+		labelNomeGiocatore = new JLabel("Nome del giocatore : ");
 		labelNomeGiocatore.setFont(view.FONT_SEGOE_H1_P);
 		labelNomeGiocatore.setBounds(10, 15, 278, 25);
 		panelloNomeGIocatore.add(labelNomeGiocatore);
 		
-		JTextField textField_nomeGIocatore = new JTextField();
+		textField_nomeGIocatore = new JTextField();
 		textField_nomeGIocatore.setFont(view.FONT_SEGOE_H1_P);
 		textField_nomeGIocatore.setBounds(285, 14, 239, 27);
 		panelloNomeGIocatore.add(textField_nomeGIocatore);
@@ -151,7 +153,8 @@ public class ImpostazioniPartitaView extends JFrame {
 				int mappaInserita = (int) spinner_mappa.getValue();
 				Boolean condinzione1 =  ((naviInserite <= model.MAX_NUM_NAVI) && (naviInserite >= model.MIN_NUM_NAVI));
 				Boolean condinzione2 =  ((mappaInserita <= model.MAX_DIM_MAPPA) && (mappaInserita >= model.MIN_DIM_MAPPA));
-				if (condinzione1 && condinzione2) {
+				Boolean condizione3 = textField_nomeGIocatore.getText().length() != 0;
+				if (condinzione1 && condinzione2 && condizione3) {
 					JFrame f = new JFrame();			
 					int a=JOptionPane.showConfirmDialog(f,"Confermi di voler giocare con " + naviInserite + " navi in una mappa di " + mappaInserita + "X" + mappaInserita + " caselle?");  
 					if(a==JOptionPane.YES_OPTION){  
@@ -186,7 +189,7 @@ public class ImpostazioniPartitaView extends JFrame {
 					}
 				}else {
 					JFrame f = new JFrame();
-					JOptionPane.showMessageDialog(f,"Ce almeno un valore inserito che non rientra nel range di valori ammissibili. Riprovare.","Errore",JOptionPane.ERROR_MESSAGE);  
+					JOptionPane.showMessageDialog(f,"Ce almeno un valore inserito che non rientra nel range di valori ammissibili. Controllare di aver inserito un nome e che i dati della mappa/navi siano corretti.","Errore",JOptionPane.ERROR_MESSAGE);  
 				}
 				  
 				
@@ -548,13 +551,13 @@ public class ImpostazioniPartitaView extends JFrame {
 		});
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER); 
+        table.setRowHeight(25);
+		table.setFont(view.FONT_SEGOE_H3_P);
         table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
         table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
         table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-        table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
-		table.setRowHeight(25);
-		table.setFont(view.FONT_SEGOE_H3_P);
+        table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);	
 		table.getColumnModel().getColumn(0).setPreferredWidth(10);
 		table.getColumnModel().getColumn(0).setMinWidth(5);
 		table.getColumnModel().getColumn(1).setPreferredWidth(90);

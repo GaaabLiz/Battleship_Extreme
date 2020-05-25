@@ -171,7 +171,7 @@ public class BattleshipExtremeView extends JFrame{
 		menu_Visualizza_storicoPartite= new JMenuItem("Storico Partite");
 		menu_Visualizza_storicoPartite.setFont(FONT_SEGOE_H2_P);
 		menu_Visualizza.add(menu_Visualizza_storicoPartite);
-		menu_Visualizza_storicoPartite.setVisible(false);
+		menu_Visualizza_storicoPartite.setVisible(true);
 		
 		// Menu : PARTITA
 		menu_Partita = new JMenu("Partita");

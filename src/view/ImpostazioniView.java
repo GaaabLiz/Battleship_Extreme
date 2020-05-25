@@ -147,7 +147,7 @@ public class ImpostazioniView extends JFrame {
 		
 		JCheckBox chckbxMostraID = new JCheckBox("Mostra gli ID della navi nella mappa (è un cheat)");
 		chckbxMostraID.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		chckbxMostraID.setBounds(26, 78, 315, 23);
+		chckbxMostraID.setBounds(26, 78, 335, 23);
 		if (model.MOSTRA_NUMERI_NAVE) {
 			chckbxMostraID.setSelected(true);
 		}else {
@@ -182,7 +182,21 @@ public class ImpostazioniView extends JFrame {
 		JSpinner spinner_SecCpu = new JSpinner();
 		spinner_SecCpu.setValue(model.getSecondiTurnoCpu());
 		spinner_SecCpu.setBounds(236, 31, 48, 30);
+		spinner_SecCpu.setEnabled(false);
 		pannello_Partita.add(spinner_SecCpu);
+		
+		
+		/* Pannello database --------------*/ 
+		
+		JPanel pannello_Database = new JPanel();
+		tabbedPane.addTab("Database", null, pannello_Database, null);
+		pannello_Database.setLayout(null);
+		
+		JCheckBox chckbxConsentiIlSalvataggio = new JCheckBox("Consenti il salvataggio delle statistiche delle tue partite nel database.");
+		chckbxConsentiIlSalvataggio.setSelected(true);
+		chckbxConsentiIlSalvataggio.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		chckbxConsentiIlSalvataggio.setBounds(20, 30, 502, 23);
+		pannello_Database.add(chckbxConsentiIlSalvataggio);
 		
 		
 		

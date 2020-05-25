@@ -10,6 +10,8 @@ public class Partita implements Serializable{
 	private String durataPartita;
 	private int dimMappa;
 	private int numNavi;
+	private String dataPartita;
+	private int id;
 	
 	/**
 	 * @param nomeGiocatore
@@ -17,12 +19,13 @@ public class Partita implements Serializable{
 	 * @param punteggioCpu
 	 * @param durataPartita
 	 */
-	public Partita(String nomeGiocatore, int punteggioGiocatore, int punteggioCpu, String durataPartita) {
+	public Partita(String nomeGiocatore, int punteggioGiocatore, int punteggioCpu, String durataPartita, String dataPartita) {
 		super();
 		this.nomeGiocatore = nomeGiocatore;
 		this.punteggioGiocatore = punteggioGiocatore;
 		this.punteggioCpu = punteggioCpu;
 		this.durataPartita = durataPartita;
+		this.dataPartita = dataPartita;
 	}
 
 	public Partita() {
@@ -114,6 +117,38 @@ public class Partita implements Serializable{
 	public void setNumNavi(int numNavi) {
 		this.numNavi = numNavi;
 	}
+
+	/**
+	 * @return the dataPartita
+	 */
+	public String getDataPartita() {
+		return dataPartita;
+	}
+
+	/**
+	 * @param dataPartita the dataPartita to set
+	 */
+	public void setDataPartita(String dataPartita) {
+		this.dataPartita = dataPartita;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
+	
+	
 	
 	
 	
