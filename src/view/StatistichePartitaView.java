@@ -40,7 +40,7 @@ public class StatistichePartitaView extends JFrame {
 			e1.printStackTrace();
 		}
 		
-		if (!stato_connessione) {
+		if (!stato_connessione && model.ABILITA_SALVATAGGIO_DB) {
 			model.aggiungiLog("INFO", "DATABASE", "La connessione al database è aperta.");
 			
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
@@ -49,7 +49,7 @@ public class StatistichePartitaView extends JFrame {
 			String tempNome = model.getNomeGiocatore();
 			String tempDataPartita = dtf.format(now);
 			int tempPunteggiGiocatore = model.getGiocatore().punteggio;
-			int tempPunteggioCpu = model.getGiocatore().punteggio;
+			int tempPunteggioCpu = model.getCpu().punteggio;
 			String tempDurataPartita = model.getActualTimer();
 			int tempDimMappa = model.getDimensioneMappa();
 			int tempNumNavi = model.getNumeroNavi();
@@ -71,9 +71,16 @@ public class StatistichePartitaView extends JFrame {
 			}
 			
 		}else {
-			model.aggiungiLog("ERRORE", "DATABASE", "La connessione al database è chiusa.");
-			JFrame f=new JFrame();  
-		    JOptionPane.showMessageDialog(f,"Spiacente! La connessione al database non è riuscita. Non sara' possibile inserire la partita nel database. Contattare lo sviluppatore.","Errore di connessione",JOptionPane.ERROR_MESSAGE);     
+			if (!model.ABILITA_SALVATAGGIO_DB) {
+				model.aggiungiLog("AVVISO", "DATABASE", "Le informazioni della partita non sono state salvate nel database.");
+				JFrame f=new JFrame();  
+			    JOptionPane.showMessageDialog(f,"Le statistiche della partita non sono state salvate nel database in quanto l'opzioni di salvataggio è stata disabilitata prima della partita.","Avviso",JOptionPane.WARNING_MESSAGE);
+			}else {
+				model.aggiungiLog("ERRORE", "DATABASE", "La connessione al database è chiusa.");
+				JFrame f=new JFrame();  
+			    JOptionPane.showMessageDialog(f,"Spiacente! La connessione al database non è riuscita. Non sara' possibile inserire la partita nel database. Contattare lo sviluppatore.","Errore di connessione",JOptionPane.ERROR_MESSAGE);
+			}
+			     
 		}
 		
 		

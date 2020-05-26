@@ -46,7 +46,7 @@ public class DatabaseController {
 	public ArrayList<Partita> getElencoPartiteFromDb(BattleshipExtremeModel model) throws SQLException {
 		
 		ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
-		Partita p = new Partita();
+		Partita p;
 		
 		String sql = "SELECT * FROM battleship_games";
 				
@@ -54,6 +54,7 @@ public class DatabaseController {
 		ResultSet rs = ps.executeQuery();
 		
 		while(rs.next()) {
+			p = new Partita();
 			p.setId(rs.getInt(1));
 			p.setNomeGiocatore(rs.getString(2));
 			p.setDataPartita(rs.getString(3));
@@ -78,7 +79,9 @@ public class DatabaseController {
 		int tempDimMappa = p.getDimMappa();
 		int tempNumNavi = p.getNumNavi();
 		
-		String sql = "INSERT INTO battleship_games (nome_giocatore, data_partita, punteggio_giocatore, punteggio_cpu, durata_partita, dim_mappa, num_navi) VALUES ("+tempNome+ ", " + tempDataPartita + ", " + tempPunteggiGiocatore + ", " + tempPunteggioCpu + ", " + tempDurataPartita + ", " + tempDimMappa + ", " + tempNumNavi + ")";
+		String sql = "INSERT INTO battleship_games (nome_giocatore, data_partita, punteggio_giocatore, punteggio_cpu, durata_partita, dim_mappa, num_navi) "
+				+ "VALUES ('"+tempNome+ "', '" + tempDataPartita + "', " + tempPunteggiGiocatore + ", " + tempPunteggioCpu + ", '" + tempDurataPartita + "', " + tempDimMappa + ", " + tempNumNavi + ")";
+		//System.out.println(sql);
 		PreparedStatement ps = getConnessione().prepareStatement(sql);
 		ps.executeUpdate();
 	}

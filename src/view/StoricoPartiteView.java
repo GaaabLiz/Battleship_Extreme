@@ -190,6 +190,7 @@ public class StoricoPartiteView extends JFrame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			model.aggiungiLog("INFO", "DATABASE", "Sono stati trovati nel database " + elencoPartite.size() + " partite.");
 			
 			DefaultTableModel m = (DefaultTableModel) table.getModel();
 			for (int i = 0; i < elencoPartite.size(); i++) {			
@@ -201,6 +202,13 @@ public class StoricoPartiteView extends JFrame {
 				String tempDurataPartita = elencoPartite.get(i).getDurataPartita();
 				int tempDimMappa = elencoPartite.get(i).getDimMappa();
 				int tempNumNavi = elencoPartite.get(i).getNumNavi();
+				model.aggiungiLog("DEBUG", "DATABASE", "Il valore 'ID' della partita #" + i + " e': " + temp_id + ".");
+				model.aggiungiLog("DEBUG", "DATABASE", "Il valore 'NOMEGIOCATORE' della partita #" + i + " e': " + TempNomeGiocatore + ".");
+				model.aggiungiLog("DEBUG", "DATABASE", "Il valore 'PunteggioGiocatore' della partita #" + i + " e': " + tempPunteggioGiocatore + ".");
+				model.aggiungiLog("DEBUG", "DATABASE", "Il valore 'PunteggioCpu' della partita #" + i + " e': " + tempPunteggioCpu + ".");
+				model.aggiungiLog("DEBUG", "DATABASE", "Il valore 'DurataPartita' della partita #" + i + " e': " + tempDurataPartita + ".");
+				model.aggiungiLog("DEBUG", "DATABASE", "Il valore 'DimMappa' della partita #" + i + " e': " + tempDimMappa + ".");
+				model.aggiungiLog("DEBUG", "DATABASE", "Il valore 'NumNavi' della partita #" + i + " e': " + tempNumNavi + ".");
 				Object datiDaInserire[] = {temp_id, TempNomeGiocatore, tempDataPartita, tempPunteggioGiocatore, tempPunteggioCpu, tempDurataPartita, tempDimMappa, tempNumNavi};
 				m.addRow(datiDaInserire);
 			}

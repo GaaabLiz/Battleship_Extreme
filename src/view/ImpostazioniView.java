@@ -193,6 +193,11 @@ public class ImpostazioniView extends JFrame {
 		pannello_Database.setLayout(null);
 		
 		JCheckBox chckbxConsentiIlSalvataggio = new JCheckBox("Consenti il salvataggio delle statistiche delle tue partite nel database.");
+		if(model.ABILITA_SALVATAGGIO_DB) {
+			chckbxConsentiIlSalvataggio.setSelected(true);
+		}else {
+			chckbxConsentiIlSalvataggio.setSelected(false);
+		}	
 		chckbxConsentiIlSalvataggio.setSelected(true);
 		chckbxConsentiIlSalvataggio.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		chckbxConsentiIlSalvataggio.setBounds(20, 30, 502, 23);
@@ -237,6 +242,8 @@ public class ImpostazioniView extends JFrame {
 				model.setSecondiTurnoCpu((int) spinner_SecCpu.getValue());
 				model.aggiungiLog("INFO", "Impostazioni", "I secondi di attività di CPU sono: " + model.getSecondiTurnoCpu());
 				
+				model.ABILITA_SALVATAGGIO_DB = chckbxConsentiIlSalvataggio.isSelected();
+				model.aggiungiLog("INFO", "Impostazioni", "Il salvataggio partite su DB è impostato su: " + model.ABILITA_SALVATAGGIO_DB);
 				chiudiJFrame();
 			}
 		});
