@@ -1,0 +1,224 @@
+/*
+*******************************************************************************
+* @NOME: typography.scss
+* @DESCRIZIONE: definizione degli stili di scrittura e intestazione.
+*******************************************************************************
+*/
+
+/** █► STILE CSS H1 ◄█ ----------------------------------------------------- */
+.heading-primary {
+  //stile generale sia per title che per subtitle
+  color: $colore-bianco;
+  text-transform: uppercase;
+  margin-bottom: 6rem;
+
+  //stile H1 solo per title
+  &__title {
+    display: block;
+    font-size: 6rem;
+    font-weight: 700;
+    letter-spacing: 3.5rem;
+    font-family: "Abel", sans-serif;
+    text-shadow: 5px 2px 2px rgba($colore-bianco, 0.5);
+    margin-bottom: 1rem;
+    @include respond(tab-port) { //css tablet portrait
+      line-height: 1.2;
+      margin-top: 1rem;
+    }
+    @include respond(phone) { //css mobile
+      letter-spacing: 1rem;
+      font-size: 5rem;
+      line-height: 1.2;
+      margin-top: 1rem;
+    }
+
+  }
+
+  //stile H1 solo per subtitle
+  &__subtitle {
+    display: block;
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: 0.75rem;
+    @include respond(tab-port) { //css tablet portrait
+      line-height: 1.2;
+      margin-top: 1rem;
+    }
+    @include respond(phone) { // css mobile
+        letter-spacing: .5rem;
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+  }
+}
+
+/** █► STILE CSS H2 ◄█ ----------------------------------------------------- */
+.heading-secondary {
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  background-image: linear-gradient(to right, $colore-primario-viola, $colore-primario-azzurro);
+  display: inline-block;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+  transition: all .2s;
+  z-index: 50;
+
+  @include respond(tab-land) {
+   font-size: 4rem;
+  }
+
+  @include respond(tab-port) {
+   font-size: 4rem;
+  }
+
+  @include respond(phone) {
+   font-size: 4.2rem;
+  }
+
+  &-static {
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    display: inline-block;
+    transition: all .2s;
+    color: $colore-primario-azzurro;
+    word-spacing: 2px;
+    @include respond(tab-land) {
+      font-size: 2rem;
+    }
+    @include respond(tab-port) {
+      font-size: 3rem;
+    }
+  }
+}
+
+/** █► STILE CSS H3 ◄█ ----------------------------------------------------- */
+.heading-tertiary {
+  font-size: 2.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  @include respond(big-desktop) {
+  }
+  @include respond(tab-land) {
+   font-size: 2.4rem;
+  }
+  @include respond(tab-port) {
+   font-size: 2.4rem;
+  }
+  @include respond(phone) {
+   font-size: 2.4rem;
+  }
+}
+
+/** █► STILE CSS H4 ◄█ ----------------------------------------------------- */
+.heading-four {
+  font-size: $default-font-size;
+  @include respond(big-desktop) {
+  }
+  @include respond(tab-land) {
+   font-size: 2.4rem;
+  }
+  @include respond(tab-port) {
+   font-size: 2.4rem;
+  }
+  @include respond(phone) {
+   font-size: 2.4rem;
+  }
+}
+
+/** █► Popup heading ◄█ ----------------------------------------------------- */
+.heading-popup {
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: block;
+  text-align: center;
+  letter-spacing: 2px;
+  color: $colore-nero;
+}
+
+/** █► PARAGRAFO CON PADDING (OBSOLETO) ◄█ ----------------------------------------------------- */
+.paragraph-withPadding {
+  font-size: $default-font-size;
+  text-align: justify;
+  padding: 0 20rem;
+  &:not(:last-child){
+    margin-bottom: 3rem;
+  }
+  @include respond(big-desktop) {
+   padding: 0 25rem;
+  }
+  @include respond(tab-land) {
+   padding: 0 15rem;
+   font-size: 2.4rem;
+  }
+  @include respond(tab-port) {
+   padding: 0 10rem;
+   font-size: 2.4rem;
+  }
+  @include respond(phone) {
+   padding: 0 4.5rem;
+   font-size: 2.4rem;
+  }
+}
+
+/** █► STILE PARAGRAFO ◄█ ----------------------------------------------------- */
+.paragraph {
+  font-size: $default-font-size;
+  text-align: justify;
+  text-align-last: left;
+  &:not(:last-child){
+    margin-bottom: 3rem;
+  }
+  @include respond(big-desktop) {
+  }
+  @include respond(tab-land) {
+   font-size: 2.4rem;
+  }
+  @include respond(tab-port) {
+   font-size: 2.4rem;
+  }
+  @include respond(phone) {
+   font-size: 2.4rem;
+  }
+}
+
+/** █► popup paragrafo ◄█ ----------------------------------------------------- */
+.paragraph-popup {
+  font-size: $default-font-size;
+  text-align: center;
+  line-height: 1.2;
+}
+
+
+
+/** █► STILE LISTE ◄█ ----------------------------------------------------- */
+.lu-paragraph {
+  margin-left: 1.7rem;
+  font-size: $default-font-size;
+  @include respond(tab-land) {
+   font-size: 2.4rem;
+  }
+  @include respond(tab-port) {
+   font-size: 2.4rem;
+  }
+  @include respond(phone) {
+   font-size: 2.4rem;
+  }
+}
+
+.li-paragraph {
+  font-size: $default-font-size;
+  @include respond(tab-land) {
+   font-size: 2.4rem;
+  }
+  @include respond(tab-port) {
+   font-size: 2.4rem;
+  }
+  @include respond(phone) {
+   font-size: 2.4rem;
+  }
+}

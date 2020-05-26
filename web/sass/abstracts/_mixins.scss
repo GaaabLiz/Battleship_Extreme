@@ -1,0 +1,88 @@
+/******************************************************************************
+* @nomefile: mixins.scss
+* @descrizione: definizione mixins riutilizzabili nel codice
+******************************************************************************/
+
+/*
+ • Big-desktop (min-widht)      -> 1800px e oltre     -> 180rem  -> 112.5em
+ • Desktop                      -> da 1200px a 1800px -> css di base
+ • Tablet-landscape (max-widht) -> da 900px a 1200px  -> 120rem  -> 75em
+ • Tablet-portrait (max-width)  -> da 600px a 900px   -> 90rem   -> 56.25em
+ • Phone (max-width)            -> 600px e inferiori  -> 60rem   -> 37.5em
+ */
+
+
+//RESPOSIVE DESIGN MIXINS
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    @media (max-width: 37.5em) { @content}; //600px
+  }
+  @if $breakpoint == tab-port {
+    @media (max-width: 56.25em) { @content}; //900px
+  }
+  @if $breakpoint == tab-land {
+    @media (max-width: 75em) { @content}; //1200px
+  }
+  @if $breakpoint == big-desktop {
+    @media (min-width: 112.5em) { @content}; //1800px
+  }
+}
+
+
+//CENTRATURA ELEMENTO POSITION ABSOLUTE
+@mixin posAbsCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+//CLEAR PER I FLOAT
+@mixin clearFIX {
+  &::after{
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+//PADDING PER BIG-DESKTOP
+@mixin padding-big-desktop {
+  padding-top: $default-sec-bigdesktop-padding-top;
+  padding-right: $default-sec-bigdesktop-padding-right;
+  padding-left: $default-sec-bigdesktop-padding-left;
+  padding-bottom: $default-sec-bigdesktop-padding-bottom;
+}
+
+//PADDING PER DESKTOP
+@mixin padding-desktop {
+  padding-top: $default-sec-desktop-padding-top;
+  padding-right: $default-sec-desktop-padding-right;
+  padding-left: $default-sec-desktop-padding-left;
+  padding-bottom: $default-sec-desktop-padding-bottom;
+}
+
+//PADDING PER TABLET-LANDSCAPE
+@mixin padding-tabland {
+  padding-top: $default-sec-tabland-padding-top;
+  padding-right: $default-sec-tabland-padding-right;
+  padding-left: $default-sec-tabland-padding-left;
+  padding-bottom: $default-sec-tabland-padding-bottom;
+}
+
+//PADDING PER TABLET-PORTRAIT
+@mixin padding-tabport {
+  padding-top: $default-sec-tabport-padding-top;
+  padding-right: $default-sec-tabport-padding-right;
+  padding-left: $default-sec-tabport-padding-left;
+  padding-bottom: $default-sec-tabport-padding-bottom;
+}
+
+//PADDING PER PHONE
+@mixin padding-phone {
+  padding-top: $default-sec-phone-padding-top;
+  padding-right: $default-sec-phone-padding-right;
+  padding-left: $default-sec-phone-padding-left;
+  padding-bottom: $default-sec-phone-padding-bottom;
+}

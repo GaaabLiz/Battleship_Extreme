@@ -1,0 +1,190 @@
+/*
+*******************************************************************************
+* @NOME: home.scss
+* @DESCRIZIONE: Css per le sezioni/elementi della pagina home
+*******************************************************************************
+*/
+
+$outset-section-webIntro: 15rem;
+
+
+
+.section-webIntro {
+
+  //visualizzazione su desktop
+  background-color: $colore-sfondo-pagina;
+  margin-top: -20vh;
+  padding-top: calc(#{$default-sec-desktop-padding-top} + #{$outset-section-webIntro});
+  padding-right: $default-sec-desktop-padding-right;
+  padding-left: $default-sec-desktop-padding-left;
+  padding-bottom: $default-sec-desktop-padding-bottom;
+
+  //visualizzazione su big-desktop
+  @include respond(big-desktop) {
+    padding-top: calc(#{$default-sec-bigdesktop-padding-top} + #{$outset-section-webIntro});
+    padding-right: $default-sec-bigdesktop-padding-right;
+    padding-left: $default-sec-bigdesktop-padding-left;
+    padding-bottom: $default-sec-bigdesktop-padding-bottom;
+  }
+
+  //visualizzazione su tablet-landscape
+  @include respond(tab-land) {
+    padding-top: calc(#{$default-sec-tabland-padding-top} + #{$outset-section-webIntro});
+    padding-right: $default-sec-tabland-padding-right;
+    padding-left: $default-sec-tabland-padding-left;
+    padding-bottom: $default-sec-tabland-padding-bottom;
+  }
+
+  //visualizzazione su tablet-portrait
+  @include respond(tab-port) {
+    padding-top: calc(#{$default-sec-tabport-padding-top} + #{$outset-section-webIntro});
+    padding-right: $default-sec-tabport-padding-right;
+    padding-left: $default-sec-tabport-padding-left;
+    padding-bottom: $default-sec-tabport-padding-bottom;
+  }
+
+  //visualizzazione su mobile
+  @include respond(phone) {
+    padding-top: calc(#{$default-sec-phone-padding-top} +  #{$outset-section-webIntro});
+    padding-right: $default-sec-phone-padding-right;
+    padding-left: $default-sec-phone-padding-left;
+    padding-bottom: $default-sec-phone-padding-bottom;
+  }
+}
+
+
+
+
+
+
+.section-infoIntro {
+  position: relative;
+
+  //visualizzazione su desktop
+  @include padding-desktop();
+
+  //visualizzazione su big-desktop
+  @include respond(big-desktop) {
+    @include padding-big-desktop();
+  }
+
+  //visualizzazione su tablet-landscape
+  @include respond(tab-land) {
+    @include padding-tabland;
+  }
+
+  //visualizzazione su tablet-portrait
+  @include respond(tab-port) {
+    @include padding-tabport;
+  }
+
+  //visualizzazione su mobile
+  @include respond(phone) {
+    @include padding-phone;
+  }
+
+  //video in back
+  &__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+  }
+}
+
+
+.section-contrIntro {
+  background-color: $colore-sfondo-pagina;
+  position: relative;
+  //visualizzazione su desktop
+  @include padding-desktop();
+
+  //visualizzazione su big-desktop
+  @include respond(big-desktop) {
+    @include padding-big-desktop();
+  }
+
+  //visualizzazione su tablet-landscape
+  @include respond(tab-land) {
+    @include padding-tabland;
+  }
+
+  //visualizzazione su tablet-portrait
+  @include respond(tab-port) {
+    @include padding-tabport;
+  }
+
+  //visualizzazione su mobile
+  @include respond(phone) {
+    @include padding-phone;
+  }
+}
+
+
+
+.section-statIntro {
+  background-color: $colore-sfondo-pagina;
+  position: relative;
+
+  //visualizzazione su desktop
+  @include padding-desktop();
+
+  //visualizzazione su big-desktop
+  @include respond(big-desktop) {
+    @include padding-big-desktop();
+  }
+
+  //visualizzazione su tablet-landscape
+  @include respond(tab-land) {
+    @include padding-tabland;
+  }
+
+  //visualizzazione su tablet-portrait
+  @include respond(tab-port) {
+    @include padding-tabport;
+  }
+
+  //visualizzazione su mobile
+  @include respond(phone) {
+    @include padding-phone;
+  }
+
+  //video in back
+  &__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.section-contatti {
+  background-image: linear-gradient(to right bottom, rgba($colore-primario-viola, 0.9), rgba($colore-primario-azzurro, 0.9));
+  position: relative;
+
+  //visualizzazione su desktop
+  @include padding-desktop();
+
+  //visualizzazione su big-desktop
+  @include respond(big-desktop) {
+    @include padding-big-desktop();
+  }
+
+  //visualizzazione su tablet-landscape
+  @include respond(tab-land) {
+    padding: $default-sec-tabland-padding-top $default-sec-phone-padding-left;
+  }
+
+  //visualizzazione su tablet-portrait
+  @include respond(tab-port) {
+    padding: $default-sec-tabland-padding-top $default-sec-phone-padding-left;
+  }
+
+  //visualizzazione su mobile
+  @include respond(phone) {
+    padding: $default-sec-tabland-padding-top $default-sec-phone-padding-left;
+  }
+}

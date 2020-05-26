@@ -1,0 +1,45 @@
+/*
+*******************************************************************************
+* @NOME: flexbox.scss
+* @DESCRIZIONE: definzione layout flexbox reponsvie
+*******************************************************************************
+*/
+
+.flex-grid {
+  display: flex;
+}
+
+.flex-grid .col {
+  flex: 1;
+  margin: 0 3rem;
+}
+
+.flex-grid-thirds {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-grid-thirds .col {
+  @include respond(big-desktop) {
+    width: 30%;
+  }
+  width: 30%;
+  @include respond(tab-land) {
+    width: 30%;
+  }
+}
+
+@include respond(tab-land) {
+  .flex-grid,
+  .flex-grid-thirds {
+    display: block;
+    .col {
+      width: 100%;
+      margin: 0 0 5rem 0;
+    }
+  }
+}
+
+.flex-grid {
+  margin: 0 0 20px 0;
+}

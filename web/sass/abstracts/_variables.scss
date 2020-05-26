@@ -1,0 +1,62 @@
+/*
+*******************************************************************************
+* @NOME: variables.scss
+* @DESCRIZIONE: definizione delle variabiliu globali SCSS.
+*******************************************************************************
+*/
+
+/** █► VARIABILI PRIMARI DEL SITO ◄█ ------------------------------------------ */
+$colore-primario-viola: #6666ff;
+$colore-primario-azzurro: #33adff;
+$colore-primario-blu: #0066ff;
+$colore-bianco: #FFF;
+$colore-nero: #000;
+$colore-trasparente: rgba($colore-bianco, 0);
+$default-font-size: 1.8rem;
+
+
+/** █► VARIABILI SECONDARI DEL SITO ◄█ ---------------------------------------- */
+$colore-testo-primario: #777;
+$colore-trasparente-mezzo: rgba($colore-bianco, .5);
+$colore-sfondo-pagina: #f7f7f7;
+
+
+/** █► VARIABILI TERZIARI DEL SITO ◄█ ---------------------------------------- */
+$colore-grigio-scurissimo: #252525;
+$colore-grigio-1: #E0E0E0;
+$colore-grigio-2: #A4A4A4;
+$colore-verde-1: #55C57A;
+$colore-verde-2: #28b485;
+$colore-verde-acqua: #36D2C7;
+$colore-arancione-errore: #FF7730;
+$colore-grigioNero: #333;
+$colore-giallo-warning: #F3B989;
+$colore-verde-ok: #28b485;
+$colore-rosso-errore: #FF2264;
+
+
+/** █► PADDING SEZIONI DEL SITO ◄█ ---------------------------------------- */
+$default-sec-bigdesktop-padding-top: 10rem;
+$default-sec-bigdesktop-padding-bottom: 10rem;
+$default-sec-bigdesktop-padding-left: 40rem;
+$default-sec-bigdesktop-padding-right: 40rem;
+
+$default-sec-desktop-padding-top: 10rem;
+$default-sec-desktop-padding-bottom: 10rem;
+$default-sec-desktop-padding-left: 30rem;
+$default-sec-desktop-padding-right: 30rem;
+
+$default-sec-tabland-padding-top: 10rem;
+$default-sec-tabland-padding-bottom: 10rem;
+$default-sec-tabland-padding-left: 20rem;
+$default-sec-tabland-padding-right: 20rem;
+
+$default-sec-tabport-padding-top: 10rem;
+$default-sec-tabport-padding-bottom: 10rem;
+$default-sec-tabport-padding-left: 10rem;
+$default-sec-tabport-padding-right: 10rem;
+
+$default-sec-phone-padding-top: 10rem;
+$default-sec-phone-padding-bottom: 10rem;
+$default-sec-phone-padding-left: 3rem;
+$default-sec-phone-padding-right: 3rem;

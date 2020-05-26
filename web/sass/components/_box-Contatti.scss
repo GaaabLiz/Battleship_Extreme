@@ -1,0 +1,211 @@
+.boxCont {
+  background-color: rgba($colore-bianco, .8);
+  box-shadow: 0 1.5rem 4rem rgba($colore-nero, .15);
+  border-radius: 0.8rem;
+  display: block;
+  padding: 2rem 5rem;
+
+  &__form {
+
+  }
+
+  &__group {
+    display: block;
+  }
+
+  &__input {
+    outline: none;
+    background-color: $colore-bianco;
+    border: none;
+    padding: 1rem 0.5rem;
+    font-size: $default-font-size;
+    transition: all .2s;
+    display: block;
+    margin: 0 auto;
+    border-radius: 0.8rem;
+    color: $colore-testo-primario;
+    width: 35%;
+
+    @include respond(big-desktop) {
+      width: 30%;
+    }
+    @include respond(tab-land) {
+     font-size: 2.4rem;
+    }
+    @include respond(tab-port) {
+     font-size: 2.4rem;
+    }
+    @include respond(phone) {
+     font-size: 2.4rem;
+     width: 100%;
+    }
+
+
+    &:focus {
+      transform: scale(1.02);
+      box-shadow: 0 1.5rem 4rem rgba($colore-nero, .15);
+      border: 2px $colore-primario-blu solid;
+
+
+    }
+    &::placeholder {
+      text-align: center;
+      color: $colore-testo-primario;
+    }
+
+
+  }
+
+  &__status {
+    &__item {
+      display: inline-block;
+      margin: 0 auto;
+    }
+
+  }
+
+
+  &__progressBar {
+    width: 20%;
+    background-color: $colore-bianco;
+    display: block;
+    margin: 0 auto;
+    height: 3rem;
+    position: relative;
+    @include respond(big-desktop) {
+    }
+    @include respond(tab-land) {
+     font-size: 2.4rem;
+    }
+    @include respond(tab-port) {
+     width: 40%;
+    }
+    @include respond(phone) {
+     font-size: 2.4rem;
+     width: 100%;
+    }
+
+    &__value {
+      width: 0%;
+      height: inherit;
+      background-color: $colore-primario-blu;
+      opacity: 0.5;
+    }
+
+    &__percent {
+      @include posAbsCenter;
+    }
+
+
+  }
+
+  &__rangecontainer {
+    width: 20%;
+    display: block;
+    margin: 0 auto;
+  }
+
+  &__range {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    border-radius: 5px;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none; /* Override default look */
+      appearance: none;
+      width: 25px; /* Set a specific slider handle width */
+      height: 25px; /* Slider handle height */
+      background: $colore-primario-viola; /* Green background */
+      border-radius: 50%;
+      cursor: pointer; /* Cursor on hover */
+    }
+
+    &::-moz-range-thumb {
+      width: 25px; /* Set a specific slider handle width */
+      height: 25px; /* Slider handle height */
+      background: $colore-primario-viola; /* Green background */
+      border-radius: 50%;
+      cursor: pointer; /* Cursor on hover */
+    }
+
+
+  }
+
+  &__textarea {
+    outline: none;
+    background-color: $colore-bianco;
+    border: none;
+    padding: 1rem 0.5rem;
+    font-size: $default-font-size;
+    transition: all .2s;
+    border-radius: 0.8rem;
+    color: $colore-testo-primario;
+    width: 60%;
+    margin: 0 auto;
+    display: block;
+    font-family: "lato", sans-serif;
+
+    &:focus {
+      transform: scale(1.02);
+      box-shadow: 0 1.5rem 4rem rgba($colore-nero, .15);
+      border: 2px $colore-primario-blu solid;
+    }
+
+    &::placeholder {
+      text-align: center;
+      color: $colore-testo-primario;
+      font-family: "lato", sans-serif;
+    }
+    @include respond(big-desktop) {
+    }
+    @include respond(tab-land) {
+     font-size: 2.4rem;
+    }
+    @include respond(tab-port) {
+     font-size: 2.4rem;
+     width: 75%;
+    }
+    @include respond(phone) {
+     font-size: 2.4rem;
+     width: 100%;
+    }
+
+
+
+  }
+
+  &__loader {
+    border: 0.8rem solid #f3f3f3;
+    border-top: 0.8rem solid $colore-grigio-scurissimo;
+    border-radius: 50%;
+    width: 5rem;
+    height: 5rem;
+    animation: spin 1.5s linear infinite;
+    display: block;
+    margin: 0 auto;
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+  }
+
+
+  &__simpleText {
+    display: inline-block;
+    margin: 0 auto;
+  }
+
+
+}

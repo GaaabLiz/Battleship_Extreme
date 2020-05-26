@@ -87,12 +87,12 @@ public class ImpostazioniPartitaView extends JFrame {
 		
 		labelNomeGiocatore = new JLabel("Nome del giocatore : ");
 		labelNomeGiocatore.setFont(view.FONT_SEGOE_H1_P);
-		labelNomeGiocatore.setBounds(10, 15, 278, 25);
+		labelNomeGiocatore.setBounds(48, 15, 278, 25);
 		panelloNomeGIocatore.add(labelNomeGiocatore);
 		
 		textField_nomeGIocatore = new JTextField();
 		textField_nomeGIocatore.setFont(view.FONT_SEGOE_H1_P);
-		textField_nomeGIocatore.setBounds(285, 14, 239, 27);
+		textField_nomeGIocatore.setBounds(255, 14, 239, 27);
 		panelloNomeGIocatore.add(textField_nomeGIocatore);
 		textField_nomeGIocatore.setColumns(10);
 		

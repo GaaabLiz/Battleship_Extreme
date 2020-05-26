@@ -1,0 +1,78 @@
+.graph-home {
+display: inline-block;
+@include respond(tab-land) {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+}
+  &__wrapper{
+    width: 100%;
+    position: relative;
+    @include respond(tab-land) {
+      display: none;
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+
+  &__coordinates {
+    position: absolute;
+    counter-reset: line 6;
+    @include respond(tab-land) {
+      display: none;
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+
+  &__span {
+    display: inline-block;
+    border-bottom: 1px solid black;
+    height: 20px;
+    width: 400px;
+    @include respond(tab-land) {
+      display: none;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    &:before {
+      counter-increment: line -1;
+      content: counter(line);
+      display: inline-block;
+      color: black;
+      margin: 10px 0px 0px -15px;
+    }
+  }
+
+  &__svg{
+    position: absolute;
+    margin: 36px 0px 0px 15px;
+    @include respond(tab-land) {
+      display: none;
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+
+  &__path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: dash 3s ease-in forwards;
+    animation-iteration-count: infinite;
+    animation-delay: 1s;
+    @include respond(tab-land) {
+      display: none;
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+
+
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

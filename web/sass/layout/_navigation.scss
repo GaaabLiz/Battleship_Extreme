@@ -1,0 +1,184 @@
+/*
+*******************************************************************************
+* @NOME: navigation.scss
+* @DESCRIZIONE: creazione della barra di navigazione principale del sito
+*******************************************************************************
+*/
+
+.navigation {
+
+  //checkbox invisibile per attivare/disattivare
+  &__checkbox {
+    display: none;
+  }
+
+  //pulsante per attivate la checkbox
+  &__button {
+    background-color: $colore-bianco;
+    height: 7rem;
+    width: 7rem;
+    position: fixed;
+    top: 6rem;
+    right: 6rem;
+    border-radius: 50%;
+    z-index: 2000;
+    box-shadow: 0 1rem 3rem rgba($colore-nero, .1);
+    text-align: center;
+    cursor: pointer;
+    @include respond(tab-port) { //css su tablet portrait
+      top: 4rem;
+      right: 4rem;
+    }
+    @include respond(phone) { //css su mobile
+      top: 2rem;
+      right: 2rem;
+    }
+
+  }
+
+  //css del background che si espande
+  &__background {
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    position: fixed;
+    top: 6.5rem;
+    right: 6.5rem;
+    background-image: radial-gradient($colore-primario-azzurro, $colore-primario-viola);
+    z-index: 1000;
+    transition: transform .7s cubic-bezier(0.075, 0.82, 0.165, 1);
+    @include respond(tab-port) { //css su tablet portrait
+      top: 4.5rem;
+      right: 4.5rem;
+    }
+    @include respond(phone) { //css su mobile
+      top: 3.5rem;
+      right: 3.5rem;
+    }
+  }
+
+  //il menu di navigazione che compare su background
+  &__nav {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1500;
+    opacity: 0;
+    width: 0;
+    visibility: hidden;
+    transition: all .2s;
+  }
+
+  //la navbar con la lista
+  &__list {
+    @include posAbsCenter;
+    list-style: none;
+    text-align: center;
+    width: 100%;
+  }
+
+  //css singola voce della navbar
+  &__item {
+    margin: 1.5rem;
+    @include respond(phone) { //css su mobile
+      margin: 1rem;
+      font-size: 2.5rem;
+    }
+  }
+
+  //css del link interno all'item
+  &__link {
+    &:link, &:visited {
+      display: inline-block;
+      font-size: 3rem;
+      font-weight: 700;
+      color: $colore-bianco;
+      padding: 0.5rem 2rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      background-image: linear-gradient(120deg, $colore-trasparente 0%, $colore-trasparente 50%, $colore-bianco 50%);
+      background-size: 220%;
+      transition: all .4s;
+      @include respond(phone) { //css su mobile
+        font-size: 2.5rem;
+        padding: 0.2rem 1.5rem;
+      }
+    }
+
+    //quando fai hover sul link
+    &:hover {
+      box-shadow: 1rem 0 2rem rgba(0, 0, 0, 0.15);
+      transform: scale(1.1);
+      transition: all .2s ;
+    }
+
+    //sposta in alto il link di 2 pixel
+    &:active {
+      transform: translateY(2px);
+    }
+
+    //quando attivo e hover
+    &:hover, &:active {
+      background-position: 100%;
+      color: $colore-primario-azzurro;
+
+    }
+  }
+
+  //quando la checkbox è attiva apri il background
+  &__checkbox:checked ~ &__background {
+    transform: scale(190);
+  }
+
+  //quando la checkbox è attiva visuializza la navbar
+  &__checkbox:checked ~ &__nav {
+    opacity: 1;
+    width: 100%;
+    visibility: visible;
+  }
+
+  //css dell'icona sul pulsante
+  &__icon {
+    position: relative;
+    margin-top: 3.4rem;
+    &,
+    &::before,
+    &::after {
+      width: 3rem;
+      height: 2px;
+      background-color: $colore-grigio-scurissimo;
+      display: inline-block;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      transition: all .2s;
+    }
+
+    &::before {top: -.8rem;}
+    &::after {top: .8rem;}
+  }
+
+  &__button:hover &__icon:before {
+    top: -1rem;
+  }
+  &__button:hover &__icon:after {
+    top: 1rem;
+  }
+
+  &__checkbox:checked + &__button &__icon {
+    background-color: $colore-trasparente;
+  }
+  &__checkbox:checked + &__button &__icon::before {
+    top: 0;
+    transform: rotate(135deg);
+  }
+  &__checkbox:checked + &__button &__icon::after {
+    top: 0;
+    transform: rotate(-135deg);
+  }
+}

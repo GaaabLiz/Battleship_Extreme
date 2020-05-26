@@ -1,0 +1,34 @@
+.section-content {
+  background-color: $colore-sfondo-pagina;
+
+  //visualizzazione su desktop
+  @include padding-desktop();
+
+  //visualizzazione su big-desktop
+  @include respond(big-desktop) {
+    @include padding-big-desktop();
+  }
+
+  //visualizzazione su tablet-landscape
+  @include respond(tab-land) {
+    @include padding-tabland;
+  }
+
+  //visualizzazione su tablet-portrait
+  @include respond(tab-port) {
+    @include padding-tabport;
+  }
+
+  //visualizzazione su mobile
+  @include respond(phone) {
+    @include padding-phone;
+  }
+}
+
+.separator-white {
+  width: 100%;
+  background-color: $colore-bianco;
+  height: 2.5rem;
+  position: absolute;
+  left: 0%;
+}

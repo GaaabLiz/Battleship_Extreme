@@ -1,0 +1,114 @@
+/*
+*******************************************************************************
+* @NOME: contact.scss
+* @DESCRIZIONE: css per la pagina dei Contatti
+*******************************************************************************
+*/
+
+.section__compagnia {
+
+  //visualizzazione su desktop
+  padding: 0 35rem;
+  background-color: $colore-sfondo-pagina;
+
+  //visualizzazione su big-desktop
+  @include respond(big-desktop) {
+    padding: 0 45rem;
+  }
+
+  //visualizzazione su tablet-landscape
+  @include respond(tab-land) {
+    padding: 0 20rem;
+  }
+
+  //visualizzazione su tablet-portrait
+  @include respond(tab-port) {
+    padding: 0 10rem;
+  }
+
+  //visualizzazine su phone
+  @include respond(phone) {
+    padding: 0 3rem;
+  }
+}
+
+
+
+.section__trovaci {
+  //visualizzazione su desktop
+  padding: 0 35rem;
+  background-color: $colore-sfondo-pagina;
+
+  //visualizzazione su big-desktop
+  @include respond(big-desktop) {
+    padding: 0 45rem;
+  }
+
+  //visualizzazione su tablet-landscape
+  @include respond(tab-land) {
+    padding: 0 20rem;
+  }
+
+  //visualizzazione su tablet-portrait
+  @include respond(tab-port) {
+    padding: 0 10rem;
+  }
+
+  //visualizzazine su phone
+  @include respond(phone) {
+    padding: 0 3rem;
+  }
+}
+
+
+.section-autori{
+  //visualizzazione su desktop
+  padding: 0 35rem;
+  background-color: $colore-sfondo-pagina;
+
+  //visualizzazione su big-desktop
+  @include respond(big-desktop) {
+    padding: 0 45rem;
+  }
+
+  //visualizzazione su tablet-landscape
+  @include respond(tab-land) {
+    padding: 0 20rem;
+  }
+
+  //visualizzazione su tablet-portrait
+  @include respond(tab-port) {
+    padding: 0 10rem;
+  }
+
+  //visualizzazine su phone
+  @include respond(phone) {
+    padding: 0 3rem;
+  }
+}
+
+.section-fonti{
+  //visualizzazione su desktop
+  padding: 0 35rem;
+  background-color: $colore-sfondo-pagina;
+
+  //visualizzazione su big-desktop
+  @include respond(big-desktop) {
+    padding: 0 45rem;
+  }
+
+  //visualizzazione su tablet-landscape
+  @include respond(tab-land) {
+    padding: 0 20rem;
+  }
+
+  //visualizzazione su tablet-portrait
+  @include respond(tab-port) {
+    padding: 0 10rem;
+  }
+
+  //visualizzazine su phone
+  @include respond(phone) {
+    padding: 0 3rem;
+  }
+}

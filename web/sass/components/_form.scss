@@ -1,0 +1,192 @@
+/*
+*******************************************************************************
+* @NOME: form.scss
+* @DESCRIZIONE: definzione dei form del sito
+*******************************************************************************
+*/
+
+.form {
+
+  &__group {
+  position: relative;
+
+    &__login {
+      margin-bottom: 1.8rem;
+      font-size: 2rem;
+    }
+
+    &__signedornot {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translate(-50%, 0);
+      display: inline-block;
+    }
+
+    &__submit {
+      position: absolute;
+      bottom: 8rem;
+      left: 50%;
+      transform: translate(-50%, 0);
+
+      // @include respond(phone) {
+      //   bottom: 4.5rem;
+      // }
+    }
+  }
+
+  &__input {
+    font-size: 1.5rem;
+    padding: 1.5rem 2rem;
+    border-radius: 2px;
+    background-color: $colore-trasparente-mezzo;
+    border: none;
+    font-family: inherit;
+    border-bottom: 3px solid transparent;
+    width: 100%;
+    color: inherit;
+    display: block;
+    transition: all .3s;
+
+    &::-webkit-input-placeholder {
+      color: $colore-grigio-2;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 1rem 2rem rgba($colore-nero, .15);
+      border-bottom: 3px solid $colore-verde-1;
+
+      &:invalid {
+        border-bottom: 3px solid $colore-arancione-errore;
+      }
+    }
+  }
+
+  &__input-login {
+    font-size: 2.2rem;
+    padding: 1.5rem 2rem;
+    border-radius: 2px;
+    background-color: $colore-trasparente-mezzo;
+    border: none;
+    font-family: inherit;
+    border-bottom: 3px solid transparent;
+    width: 100%;
+    color: inherit;
+    display: block;
+    transition: all .3s;
+    border-radius: 3rem;
+
+    @include respond(tab-land) {
+      font-size: 2rem;
+    }
+
+    @include respond(tab-port) {
+      font-size: 2rem;
+    }
+
+    @include respond(phone) {
+      font-size: 2rem;
+    }
+
+    &::-webkit-input-placeholder {
+      color: $colore-grigio-2;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 1rem 2rem rgba($colore-nero, .15);
+    }
+  }
+
+  &__label {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-left: 2rem;
+    margin-top: 0.5rem;
+    transition: all .3s;
+    display: block;
+
+    @include respond(tab-land) {
+      font-size: 2rem;
+    }
+
+    @include respond(tab-port) {
+      font-size: 2rem;
+    }
+
+    @include respond(phone) {
+      font-size: 2rem;
+    }
+  }
+
+  &__input:placeholder-shown + &__label{
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4.6rem);
+  }
+
+}
+
+
+.formBody {
+  background-color: rgba($colore-bianco, .8);
+  &__wrapper {
+    padding: 3rem;
+    @include respond(phone) {
+      padding: 0;
+
+    }
+
+  }
+
+  &__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -3;
+  }
+
+  &__radiant {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right bottom, rgba($colore-primario-viola, 0.9), rgba($colore-primario-azzurro, 0.9));
+    z-index: -2;
+  }
+
+  &__box {
+    background-color: rgba($colore-bianco, .8);
+    font-size: 1.5rem;
+    padding: 3rem;
+    text-align: center;
+    border-radius: 0.8rem;
+    transition: all .3s;
+    display: block;
+    box-shadow: 0 1.5rem 4rem rgba($colore-nero, .15);
+    @include posAbsCenter;
+    width: 30%;
+    @include respond(big-desktop) {
+      width: 25%;
+    }
+    @include respond(tab-land) {
+      width: 45%;
+    }
+    @include respond(tab-port) {
+      width: 70%;
+    }
+    @include respond(phone) {
+      width: 100%;
+      border-radius: 0;
+    }
+
+    &__icon {
+      text-align: center;
+      font-size: 5rem;
+    }
+  }
+}

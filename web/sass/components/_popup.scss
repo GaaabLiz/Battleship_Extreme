@@ -1,0 +1,76 @@
+/*
+*******************************************************************************
+* @NOME: popup.scss
+* @DESCRIZIONE: creazione dei popup di login/signup/altro
+*******************************************************************************
+*/
+
+.popup__accedi {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba($colore-nero, .8);
+  z-index: 3000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all .3s;
+
+
+  &:target {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &__close {
+   &:link, &:visited {
+     color: $colore-testo-primario;
+     position: absolute;
+     top: 0.5rem;
+     right: 1.5rem;
+     font-size: 3rem;
+     text-decoration: none;
+     display: inline-block;
+     transition: all .2s;
+     line-height: 1;
+   }
+   &:hover {
+     color: $colore-primario-viola;
+   }
+ }
+ &__content {
+   @include posAbsCenter;
+   width: 30%;
+   height: 60vh;
+   background-color: $colore-sfondo-pagina;
+   box-shadow: 0 2rem 4rem rgba($colore-nero, .2);
+   border-radius: 3rem;
+   padding: 2rem;
+
+   @include respond(big-desktop) {
+     width: 30%;
+     height: 60vh;
+   }
+
+   @include respond(tab-land) {
+     width: 40%;
+     height: 60vh;
+   }
+
+   @include respond(tab-port) {
+     width: 90%;
+     height: 90vh;
+   }
+
+   @include respond(phone) {
+     width: 90%;
+     height: 90vh;
+     padding: 1rem;
+   }
+
+
+ }
+
+
+}

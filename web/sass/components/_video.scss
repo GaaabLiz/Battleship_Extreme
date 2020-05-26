@@ -1,0 +1,72 @@
+/*
+*******************************************************************************
+* @NOME: video.scss
+* @DESCRIZIONE: Css per i video del sito
+*******************************************************************************
+*/
+
+//video di sfondo nell'header
+.bg-video-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: .65;
+  overflow: hidden;
+}
+
+//video di sfondo nell'area introduzione
+.bg-video-Info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  opacity: 0.1;
+}
+
+//video di sfondo della pagina controlli
+.bg-video-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  opacity: 0.1;
+}
+
+//video di sfondo nell'area introduzione
+.bg-video-stat {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  opacity: 0.1;
+}
+
+//video di sfondo del form.php
+.bg-video-form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  opacity: 0.9;
+}
+
+//video normale flusso pagina
+.video__container {
+  display: block;
+  max-width: 55%;
+  margin: 0 auto;
+
+  &-content {
+    width: 100%
+  }
+}

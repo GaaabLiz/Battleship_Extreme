@@ -1,0 +1,217 @@
+/*
+*******************************************************************************
+* @NOME: button.scss
+* @DESCRIZIONE: creazione del pulsanti del sito
+*******************************************************************************
+*/
+
+//pulsante link generico del sito
+.btn {
+  &, &:link, &:visited {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1.1rem 4rem;
+    display: inline-block;
+    border-radius: 10rem;
+    transition: all .2s;
+    position: relative;
+    font-size: $default-font-size;
+
+    border: none;
+    cursor: pointer;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 1rem 2rem rgba($colore-nero, 0.2);
+
+    &::after {
+      transform: scaleX(1.5) scaleY(1.6);
+      opacity: 0;
+    }
+  }
+
+  &:active, &:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 .5rem 1rem rgba($colore-nero, 0.2);
+    outline: none;
+  }
+
+  &-white {
+    background-color: $colore-bianco;
+    color: $colore-grigio-2;
+
+    &::after {
+      background-color: $colore-bianco;
+    }
+  }
+
+
+  &-violaAzz {
+    background-image: linear-gradient(to right, $colore-primario-viola, $colore-primario-azzurro);
+    color: $colore-bianco;
+    @include respond(tab-land) {
+      font-size: 2rem;
+    }
+
+    @include respond(tab-port) {
+      font-size: 2rem;
+    }
+
+    @include respond(phone) {
+      font-size: 2rem;
+    }
+
+
+    &::after {
+      background-image: linear-gradient(to right, $colore-primario-viola, $colore-primario-azzurro);
+    }
+  }
+
+  &::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+    transition: all .4s;
+  }
+  &-animated {
+    animation: fromUptoBottom 1s ease-out 2s;
+    animation-fill-mode: backwards;
+  }
+}
+
+
+
+// link gradient generale
+.btn-link {
+  &:link,
+  &:visited{
+    font-size: $default-font-size;
+    background-image: linear-gradient(to right, $colore-primario-viola, $colore-primario-azzurro);
+    display: inline-block;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    transition: all .2s;
+
+    @include respond(tab-land) {
+      font-size: 2.5rem
+    }
+    @include respond(tab-port) {
+      font-size: 2.5rem
+    }
+    @include respond(phone) {
+      font-size: 2.5rem
+    }
+  }
+
+  &:hover {
+    transform: scale(1.09);
+  }
+
+  &:active{
+    font-weight: 700;
+  }
+
+
+}
+
+// link grandient per paragrafi no scale
+.btn-link-paragraph {
+  &:link,
+  &:visited{
+    font-size: $default-font-size;
+    background-image: linear-gradient(to right, $colore-primario-viola, $colore-primario-azzurro);
+    display: inline-block;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    transition: all .2s;
+
+    @include respond(tab-land) {
+      font-size: 2.5rem
+    }
+    @include respond(tab-port) {
+      font-size: 2.5rem
+    }
+    @include respond(phone) {
+      font-size: 2.5rem
+    }
+  }
+
+  &:hover {
+    text-decoration: underline;
+    background-image: linear-gradient(to right, $colore-primario-azzurro, $colore-primario-azzurro);
+  }
+
+  &:active{
+    font-weight: 700;
+    background-image: linear-gradient(to right, $colore-primario-viola, $colore-primario-viola);
+  }
+
+
+}
+
+
+.btn-link-edition {
+  &:link,
+  &:visited{
+  @include respond(big-desktop) {
+    font-size: 1.6rem;
+  }
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: inline-block;
+    text-decoration: none;
+    color: $colore-grigio-2;
+    transition: all .2s;
+  }
+
+  &:active {
+    text-decoration: underline;
+  }
+
+  @include respond(tab-land) {
+    font-size: 1.3rem;
+  }
+  @include respond(tab-port) {
+    font-size: 1.8rem;
+  }
+}
+
+
+
+// link tutto viola secondario
+.btn-text {
+  &:link,
+  &:visited{
+    font-size: $default-font-size;
+    color: $colore-primario-viola;
+    display: inline-block;
+    text-decoration: none;
+    border: 2px solid $colore-primario-viola;
+    padding: 5px;
+    transition: all .2s;
+    border-radius: 3px;
+  }
+
+  &:hover {
+    color: $colore-bianco;
+    background-color: $colore-primario-viola;
+    box-shadow: 0 1rem 2rem rgba($colore-nero, .15);
+    border-color: $colore-primario-viola;
+    transform: translateY(-2px);
+  }
+
+  &:active{
+    box-shadow: 0 .5rem 1rem rgba($colore-nero, .15);
+    transform: translateY(0);
+  }
+
+}

@@ -1,0 +1,57 @@
+.section-intro {
+  padding: 0 15rem;
+  background-color: $colore-sfondo-pagina;
+  position: relative;
+  @include respond(big-desktop) {
+    padding: 0 25rem;
+  }
+  @include respond(tab-port) {
+    padding: 0 10rem;
+  }
+  @include respond(tab-land) {
+    padding: 0 8rem;
+  }
+  @include respond(tab-land) {
+    padding: 0 3rem;
+  }
+
+
+}
+
+.section-password  {
+  padding: 10rem 30rem 10rem 30rem;
+  // background-image: linear-gradient(to right bottom, rgba($colore-primario-viola, 0.9), rgba($colore-primario-azzurro, 0.9));
+  position: relative;
+  @include respond(big-desktop) { //css tablet portrait
+    padding: 10rem  40rem ;
+  }
+  @include respond(tab-land) { //css tablet portrait
+    padding: 10rem 5rem;
+  }
+  @include respond(tab-port) { //css tablet portrait
+    padding: 10rem 5rem;
+  }
+  @include respond(phone) { //css tablet portrait
+    padding: 10rem 2rem;
+  }
+
+  &__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -2;
+  }
+
+  &__radiant {
+    position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   // background-image: linear-gradient(to right bottom, rgba($colore-primario-viola, 0.9), rgba($colore-primario-azzurro, 0.9));
+   background-color: $colore-sfondo-pagina;
+   z-index: -3;
+  }
+}

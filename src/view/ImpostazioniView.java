@@ -147,7 +147,7 @@ public class ImpostazioniView extends JFrame {
 		
 		JCheckBox chckbxMostraID = new JCheckBox("Mostra gli ID della navi nella mappa (è un cheat)");
 		chckbxMostraID.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		chckbxMostraID.setBounds(26, 78, 335, 23);
+		chckbxMostraID.setBounds(26, 78, 390, 23);
 		if (model.MOSTRA_NUMERI_NAVE) {
 			chckbxMostraID.setSelected(true);
 		}else {

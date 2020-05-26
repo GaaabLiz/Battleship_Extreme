@@ -1,0 +1,90 @@
+/*
+*******************************************************************************
+* @NOME: base.scss
+* @DESCRIZIONE: implementazione stile css dei tag html
+*******************************************************************************
+*/
+
+
+/** █► SETTAGGIO GLOBALE DEL SITO ◄█ ----------------------------------------- */
+// Si selezionano tutti i tag del sito (comprese le pseudoclassi before/afte
+// r) e si impostano i margini/padding a zero. Dopodiche ineritare il box-sizing.
+*,
+*::after,
+*::before {
+  margin: 0; //settaggio margini default del sito a 0
+  padding: 0; //settaggio padding default del sito a 0
+  box-sizing: inherit; //ineritare il box-sizing dal parente
+}
+
+
+
+/** █► FONT_SIZE PER SITO RESPONSIVE ◄█ ------------------------------------ */
+//impostazione del font-size di base in modo tale che le unità rem/em possono
+//prendere i valori giusti del font in base al dispositivo di visualizzazione
+html {
+  //font-size modalità destop
+  font-size: 62.5%; // 62.5% di 16px = 10px = 1 rem
+
+  //font-size modalità tablet-landscape
+  @include respond(tab-land) { //width < 1200
+    font-size: 56.25%; //1 rem = 9px -> 9/26 = 56.25%
+  }
+
+  //font-size modalità tablet-portrait
+  @include respond(tab-port) { //widht < 900
+    font-size: 50%; //1 rem = 8px -> 8/26 = 50%
+  }
+
+  //font-size modalità mobile
+  @include respond(big-desktop) {
+    font-size: 75%; //1 rem = 12px -> 12/26 = 75%
+  }
+}
+
+
+
+/** █► TAG HTML: BODY ◄█ -------------------------------------------------- */
+//stile css per il tag body.
+body {
+  box-sizing: border-box;
+  padding: 3rem;
+  font-family: "lato", sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  color: $colore-testo-primario;
+
+  //visualizzazione body su tablet-portrait
+  @include respond(tab-port) {
+    padding: 0;
+  }
+}
+
+
+
+/** █► TAG HTML: VIDEO ◄█ -------------------------------------------------- */
+//stile css per il tag VIDEO.
+video {
+  object-fit: cover;
+}
+
+
+/** █► TAG HTML: VIDEO ◄█ -------------------------------------------------- */
+//stile css per il tag table.
+table {
+  font-size: $default-font-size;
+}
+
+/** █► TAG HTML: VIDEO ◄█ -------------------------------------------------- */
+//disabilitazione expand della textarea
+textarea {
+    resize: none;
+}
+
+/** █► CLEARFIX DEL FLOAT ◄█ -------------------------------------------------- */
+//disabilitazione expand della textarea
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}

@@ -1,0 +1,81 @@
+/*
+*******************************************************************************
+* @NOME: utilities.scss
+* @DESCRIZIONE: Piccole classi css di utilità generale
+*******************************************************************************
+*/
+.u-margin-right-little {margin-right: 1rem !important;}
+.u-margin-right-small {margin-right: 2rem !important;}
+.u-margin-right-medium{margin-right: 4rem !important;}
+.u-margin-right-big{margin-right: 6rem !important;}
+.u-margin-right-huge{margin-right: 8rem !important;}
+.u-margin-right-superHuge{margin-right: 10rem !important;}
+
+.u-margin-top-little {margin-top: 1rem !important;}
+.u-margin-top-small {margin-top: 2rem !important;}
+.u-margin-top-medium{margin-top: 4rem !important;}
+.u-margin-top-big{margin-top: 6rem !important;}
+.u-margin-top-huge{margin-top: 8rem !important;}
+.u-margin-top-superHuge{margin-top: 10rem !important;}
+
+.u-margin-left-small {margin-left: 2rem;}
+.u-margin-left-medium{margin-left: 4rem;}
+.u-margin-left-big{margin-left: 6rem;}
+.u-margin-left-huge{margin-left: 8rem;}
+.u-margin-left-superHuge{margin-left: 10rem;}
+
+.u-padding-right-little {padding-right: 1rem;}
+.u-padding-right-small {padding-right: 2rem;}
+.u-padding-right-medium {padding-right: 4rem;}
+.u-padding-right-big {padding-right: 6rem;}
+.u-padding-right-huge {padding-right: 8rem;}
+
+.u-padding-left-small {padding-left: 2rem;}
+.u-padding-left-medium {padding-left: 4rem;}
+.u-padding-left-big {padding-left: 6rem;}
+.u-padding-left-huge {padding-left: 8rem;}
+
+.u-center-text {text-align: center !important;}
+.u-margin-bottom-big {margin-bottom: 8rem !important;}
+.u-margin-bottom-huge {margin-bottom: 10rem !important;}
+
+.u-margin-bottom-medium {margin-bottom: 4rem !important;}
+
+.u-margin-bottom-little {margin-bottom: 2.5rem !important;}
+.u-margin-bottom-small {margin-bottom: 1rem !important;}
+.u-margin-bottom-none {margin-bottom: 0 !important;}
+
+
+.u-position-relative {position: relative !important;}
+.u-display-inlineblock {display: inline-block !important;}
+.u-display-block-marginAuto {display: block !important; margin: 0 auto !important;}
+
+.u-disappear {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+.u-nohover {pointer-events: none;}
+.u-max-width-70 {max-width: 70% !important;}
+.u-float-left {float: left;}
+.u-border-radius-little {border-radius: 0.5rem !important;}
+.u-font-weight-bold {font-weight: bold !important;}
+.u-text-decoration-underline {text-decoration: underline !important;}
+.u-fontstyle-italic {font-style: italic !important; }
+
+.u-color-warning {color: $colore-giallo-warning !important};
+.u-color-ok {color: $colore-verde-ok !important};
+.u-color-error {color: $colore-rosso-errore !important};
+
+.u-listype-none {list-style: none !important;}
+
+.u-width-full {width: 100% !important;}
+.u-width-meta {width: 50% !important;}
+.u-width-300px {width: 300px !important;}
+.u-width-50px {
+  &:first-child {
+    width: 100px !important;
+  }
+
+}
