@@ -18,6 +18,7 @@ import javax.swing.border.MatteBorder;
 
 import controller.BattleshipExtremeController;
 import model.MappePlayer;
+import model.BattleshipExtremeModel;
 
 import java.awt.*;
 
@@ -590,15 +591,20 @@ public class BattleshipExtremeView extends JFrame{
     }
     
     
+    /**
+     * Metodo che rende visibile il campo di gioco.
+     */
     public void visualizzaCampoDiGioco() {
     	panello_griglia_navi_master.setVisible(true);
     	panello_griglia_tentativi_master.setVisible(true);
     }
     
     
-
-	
-	
+	/**
+	 * Metodo che crea le griglie del campo di gioco con la dimensione prefissata.
+	 * @param dimensioneMappa La dimensione della mappa da settare
+	 * @see ImpostazioniPartitaView
+	 */
 	public void creaGriglie(int dimensioneMappa) {
 		
 		// Griglia Navi
@@ -622,9 +628,7 @@ public class BattleshipExtremeView extends JFrame{
 		griglia_tentativi.setBackground(Color.WHITE);
 		panelloGrigliTentativiContainer.add(griglia_tentativi, BorderLayout.CENTER);
 		panelloGrigliTentativiContainer.revalidate();
-		panelloGrigliTentativiContainer.repaint();
-		
-		
+		panelloGrigliTentativiContainer.repaint();	
 	}
 	
 	
@@ -654,7 +658,6 @@ public class BattleshipExtremeView extends JFrame{
 	}
 	
 	
-	
 	/**
 	 * Metodo usato solamente per scopi di debug, mostra per ogni cella della mappa in cui è presente una nave, il suo id
 	 * 
@@ -678,7 +681,10 @@ public class BattleshipExtremeView extends JFrame{
 	}
 	
 	
-	
+	/**
+	 * Scrive nella chat del gioco una stringa.
+	 * @param s La stringa da scrivere
+	 */
 	public void writeChatLine(String s) {
 
 		if(textAreaChat.getText().length() != 0) {
@@ -689,12 +695,13 @@ public class BattleshipExtremeView extends JFrame{
 		
 	}
 	
-	public void writeChatLineTurno(int numeroTurno) {
-
-		
-		textAreaChat.setText(textAreaChat.getText() +  "\n" + "# TURNO "+ numeroTurno + "# --------------------------------------------");
-		
-		
+	
+	/**
+	 * Scrive nella chat del gioco una stringa per il turno.
+	 * @param numeroTurno il numero del turno
+	 */
+	public void writeChatLineTurno(int numeroTurno) {	
+		textAreaChat.setText(textAreaChat.getText() +  "\n" + "# TURNO "+ numeroTurno + "# --------------------------------------------");		
 	}
 	
 	
@@ -755,8 +762,6 @@ public class BattleshipExtremeView extends JFrame{
 			}
 		}
 	}
-	
-	
 	
 	
 	

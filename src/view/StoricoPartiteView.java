@@ -1,15 +1,9 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -27,13 +21,18 @@ import controller.DatabaseController;
 import model.BattleshipExtremeModel;
 import model.Partita;
 
+/**
+ * Classe che crea la GUI dello storico partite prese dal DB.
+ * @author Gabriele
+ *
+ */
+@SuppressWarnings("serial")
 public class StoricoPartiteView extends JFrame {
 	
 	private ArrayList<Partita> elencoPartite;
 	private JTable table;
 	private Boolean viaLiberaPerInserimento = false;
 
-	@SuppressWarnings("serial")
 	public StoricoPartiteView(BattleshipExtremeModel model, BattleshipExtremeView view) {
 		
 		
@@ -148,9 +147,11 @@ public class StoricoPartiteView extends JFrame {
 				"N\u00B0", "Nome giocatore", "Data Partita", "Punteggio giocatore", "Punteggio cpu", "Durata partita", "Dim. Mappa", "N\u00B0 navi"
 			}
 		) {
+			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				Integer.class, String.class, String.class, Integer.class, Integer.class, String.class, Integer.class, Integer.class
 			};
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -219,7 +220,9 @@ public class StoricoPartiteView extends JFrame {
 		this.setVisible(true);
 	}
 	
-	
+	/**
+	 * metodo che nasconde il JFrame
+	 */
 	private void chiudiJFrame() {
 		this.setVisible(false);
 		

@@ -2,6 +2,13 @@ package model;
 
 import java.io.Serializable;
 
+
+/**
+ * Classe che rappresenta la singola partita all'interno del gioco. Contiene tutte le informazioni utli di una partita.
+ * @author Gabriele
+ *
+ */
+@SuppressWarnings("serial")
 public class Partita implements Serializable{
 	
 	private String nomeGiocatore;
@@ -14,10 +21,11 @@ public class Partita implements Serializable{
 	private int id;
 	
 	/**
-	 * @param nomeGiocatore
-	 * @param punteggioGiocatore
-	 * @param punteggioCpu
-	 * @param durataPartita
+	 * @param nomeGiocatore il nome del giocatore
+	 * @param punteggioGiocatore il putneggio del giocatore
+	 * @param punteggioCpu il punteggio di cpu
+	 * @param durataPartita la durata della partita.
+	 * @param dataPartita la data della partita.
 	 */
 	public Partita(String nomeGiocatore, int punteggioGiocatore, int punteggioCpu, String durataPartita, String dataPartita) {
 		super();
@@ -27,7 +35,10 @@ public class Partita implements Serializable{
 		this.durataPartita = durataPartita;
 		this.dataPartita = dataPartita;
 	}
-
+	
+	/**
+	 * Costruttore della partita.
+	 */
 	public Partita() {
 		// TODO Auto-generated constructor stub
 	}

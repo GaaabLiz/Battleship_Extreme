@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -11,19 +10,23 @@ import javax.swing.JTextArea;
 
 import model.Log;
 
+/**
+ * Classe che crea una nuova finestea contenente solamente la console del gioco. serve per vedere tutti i log del gioco.
+ * @author Gabriele
+ *
+ */
+@SuppressWarnings("serial")
 public class ConsoleView extends JFrame {
-	 
-	private ArrayList<Log> logs;
-	private BattleshipExtremeView view;
 
+	
 	/**
-	 * @param logs
-	 * @throws HeadlessException
+	 * Costruttore della console
+	 * @param logs l'elenco dei log del programma attuali.
+	 * @param view la view principale del programma.
+	 * @throws HeadlessException in caso di errore
 	 */
 	public ConsoleView(ArrayList<Log> logs, BattleshipExtremeView view) throws HeadlessException {
 		super();
-		this.logs = logs;
-		this.view = view;
 		
 		// Inizializzazione del JFrame
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(BattleshipExtremeView.class.getResource("/icons/console.png")));

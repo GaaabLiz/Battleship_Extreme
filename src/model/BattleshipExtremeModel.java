@@ -13,6 +13,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import view.BattleshipExtremeView;
 
 import controller.BattleshipExtremeController;
 
@@ -600,7 +601,7 @@ public class BattleshipExtremeModel {
 	}
 
 	/**
-	 * @param logGioco the logGioco to set
+	 * Iniziualizza l'array dei log
 	 */
 	public void setLogGioco() {
 		LogGioco = new ArrayList<Log>();

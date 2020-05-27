@@ -3,12 +3,20 @@ package model;
 import java.awt.Point;
 import java.util.Random;
 
+/**
+ * Classe che rappresenta la CPU. 
+ * @author Gabriele
+ *
+ */
 public class Cpu extends Player{
 	
 	public final int NUMERO_GIOCATORE = 1;
 		
+	/**
+	 * Costruttore della CPU.
+	 */
 	public Cpu () {
-		super();
+		
 	}
 	
 	
@@ -29,6 +37,7 @@ public class Cpu extends Player{
 	 * Metodo che genera un intero casuale per la dim nave.
 	 * @return l'intero generato
 	 */
+	@SuppressWarnings("unused")
 	public int generaDimNaveCasuale() {
 			int min = 2;
 		    int max = 6;
