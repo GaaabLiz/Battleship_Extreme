@@ -704,6 +704,13 @@ public class BattleshipExtremeView extends JFrame{
 		textAreaChat.setText(textAreaChat.getText() +  "\n" + "# TURNO "+ numeroTurno + "# --------------------------------------------");		
 	}
 	
+	/**
+	 * Cancella tutto il contenuto della chat.
+	 */
+	public void resetChat() {
+		textAreaChat.setText("");
+	}
+	
 	
 	/**
 	 * Aggiorna la griglia relativa al giocatore mostrando i rispettivi tenativi di affondamkento 

@@ -199,7 +199,9 @@ public class StatistichePartitaView extends JFrame {
 				
 				chiudiJFrame();
 			}
+			
 		});
+		btnSalvaRisultati.setVisible(false);
 		this.getContentPane().add(btnSalvaRisultati);
 		
 		

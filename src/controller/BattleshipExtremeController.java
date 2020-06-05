@@ -384,7 +384,13 @@ public class BattleshipExtremeController {
 				view.getPanello_GestioneTurno().setVisible(true);
 				view.getMenu_Partita_GiocaAutomaticamente().setEnabled(true);
 				
+				// Inizializzazione valori di default per nuova partita
 				inizializzaLabelConValoriModel();
+				model.getGiocatore().punteggio = 0;
+				model.getCpu().punteggio = 0;
+				model.getMappe_Giocatore().setSpazioNavi();
+				model.getMappe_Cpu().setSpazioNavi();
+				model.setTurnoAttuale(0);
 				
 				// Creazione e posizionamento navi CPU
 				creaPosNaviCpu();
