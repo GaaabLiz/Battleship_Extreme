@@ -320,6 +320,7 @@ public class BattleshipExtremeController {
 				view.getPanello_InformazioniPartitaMaster().setVisible(true);
 				view.getPanello_GestioneTurno().setVisible(true);
 				view.getMenu_Partita_GiocaAutomaticamente().setEnabled(true);
+				view.getPanello_InfoGIocatore().setEnabled(false);
 				
 				// Inizializzazione valori di default per nuova partita
 				inizializzaLabelConValoriModel();

@@ -94,6 +94,7 @@ public class BattleshipExtremeView extends JFrame{
     private JPanel panelloPunteggioTempo;
     private JPanel panello_InformazioniPartitaMaster;
     private JPanel panello_GestioneTurno;
+    private JPanel panello_InfoGIocatore;
     private JSpinner spinnerValueX;
     private JSpinner spinnerValueY;
     private PannelloGriglia griglia_navi;
@@ -400,9 +401,9 @@ public class BattleshipExtremeView extends JFrame{
 		
 		
 		// Pannello Info giocatore
-		JPanel panello_InfoGIocatore = new JPanel();
+		panello_InfoGIocatore = new JPanel();
 		panello_InfoGIocatore.setBackground(new Color(255, 255, 255));
-		tabbedPaneInfoPartita.addTab("Info Giocatore", null, panello_InfoGIocatore, null);
+		//tabbedPaneInfoPartita.addTab("Info Giocatore", null, panello_InfoGIocatore, null);
 		panello_InfoGIocatore.setLayout(null);
 		
 		JLabel lblNewLabel_1_1_1_2_1 = new JLabel("Tentativi di affondamento :");
@@ -970,6 +971,17 @@ public class BattleshipExtremeView extends JFrame{
 	public JMenuItem getMenu_Visualizza_storicoPartite() {
 		return menu_Visualizza_storicoPartite;
 	}
+
+
+	/**
+	 * @return the panello_InfoGIocatore
+	 */
+	public JPanel getPanello_InfoGIocatore() {
+		return panello_InfoGIocatore;
+	}
+	
+	
+	
 	
 	
 	
