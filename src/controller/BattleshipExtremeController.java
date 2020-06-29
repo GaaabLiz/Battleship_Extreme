@@ -33,8 +33,6 @@ public class BattleshipExtremeController {
 	private ActionListener nascondiSpinnerColpisci;
 	private ActionListener giocaAutomaticamente;
 	private ActionListener visualizzaStoricoPartite;
-	private ActionListener visualizzaInfoProgetto;
-	private ActionListener apriSitoWeb;
 
 	
 	Boolean cellagiacolpita = true;
@@ -64,8 +62,6 @@ public class BattleshipExtremeController {
 		set_Action_nascondiSpinnerColpisci();
 		set_Action_giocaAutomaticamente();
 		set_Action_visualizzaStoricoPartite();
-		set_Action_visualizzaInfoProgetto();
-		set_Action_apriSitoWeb();
 		
 		
 		// Settaggio Action Listener
@@ -81,27 +77,10 @@ public class BattleshipExtremeController {
 		view.getChckbxColpisciCoordCasuale().addActionListener(nascondiSpinnerColpisci);
 		view.getMenu_Partita_GiocaAutomaticamente().addActionListener(giocaAutomaticamente);
 		view.getMenu_Visualizza_storicoPartite().addActionListener(visualizzaStoricoPartite);
-		view.getMenu_Info_progetto().addActionListener(visualizzaInfoProgetto);
-		view.getMenu_Info_sito().addActionListener(c);
 	}
 	
 	
 	
-	private void set_Action_visualizzaInfoProgetto() {
-		visualizzaInfoProgetto = new ActionListener() {		
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String riga1 = "BattleshipExtreme |  Ver. 2.2" + "\n\n";
-				String riga2 = "Questo è un progetto universitario per l'esame di Ingegneria del software. Anno accademico 2019/2020." + "\n\n";
-				String riga3 = "lizzosgabriele@live.it";
-				JFrame f=new JFrame();  
-				JOptionPane.showMessageDialog(f,riga1 + riga2 + riga3);  
-			}
-		};
-	}
-
-
-
 	private void set_Action_visualizzaStoricoPartite() {
 		visualizzaStoricoPartite = new ActionListener() {		
 			@Override
@@ -110,22 +89,6 @@ public class BattleshipExtremeController {
 			}
 		};
 		
-	}
-	
-	private void set_Action_apriSitoWeb() {
-		apriSitoWeb = new ActionListener() {		
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Runtime rt = Runtime.getRuntime();
-				String url = "https://it.wikipedia.org/wiki/Battaglia_navale_(gioco)";
-				try {
-					rt.exec("rundll32 url.dll,FileProtocolHandler " + url);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}		
-			}
-		};
 	}
 
 

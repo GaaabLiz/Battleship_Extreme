@@ -16,7 +16,8 @@ import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
-import controller.BattleshipExtremeController;
+import controller.WindowMainListener;
+import model.BattleshipExtremeModel;
 import model.MappePlayer;
 
 import java.awt.*;
@@ -24,11 +25,8 @@ import java.awt.*;
 /**
  * Questa è la classe che controlla la "view" di tutto il programma. Contiene la GUI
  * principale del programma.
- * @see BattleshipExtremeModel
- * @see BattleshipExtremeController
- * @author Gabriele
+ * @author GaaabLiz
  */
-@SuppressWarnings("serial")
 public class BattleshipExtremeView extends JFrame{
 	
 
@@ -58,7 +56,6 @@ public class BattleshipExtremeView extends JFrame{
     protected final LineBorder BORDER_GRIGINO = new LineBorder(Color.LIGHT_GRAY);
     protected final LineBorder BORDER_GRIGIO = new LineBorder(Color.GRAY);
     
-    //Dichiarazioni componenti swing da passare al controller
     private JMenuBar barraDelMenu;
     private JMenu menu_File;
     private JMenu menu_Modifica;
@@ -76,7 +73,6 @@ public class BattleshipExtremeView extends JFrame{
     private JMenuItem menu_Aiuto_regole;
     private JMenuItem menu_Aiuto_tutorial;
     private JMenuItem menu_Info_progetto;
-    private JMenuItem menu_Info_sito;
     private JLabel label_titolo;
     private JLabel labelValueTurno;
     private JLabel labelValuePunteggio;
@@ -107,7 +103,7 @@ public class BattleshipExtremeView extends JFrame{
     
     
     /**
-     * Costruttore della View. Viene invocato nel main. Qua si costruisce tutto il JFrame principale.
+     * Costruttore della View. Viene invocato nel mail. Qua si costruisce tutto il JFrame principale.
      */
     public BattleshipExtremeView() {
     	
@@ -204,26 +200,6 @@ public class BattleshipExtremeView extends JFrame{
 		menu_Aiuto_regole = new JMenuItem("Regole di Battaglia Navale");
 		menu_Aiuto_regole.setFont(FONT_SEGOE_H2_P);
 		menu_Aiuto.add(menu_Aiuto_regole);
-		
-		// Menu : AIUTO : TUTORIAL 
-		menu_Aiuto_tutorial = new JMenuItem("Guida del gioco");
-		menu_Aiuto_tutorial.setFont(FONT_SEGOE_H2_P);
-		menu_Aiuto.add(menu_Aiuto_tutorial);
-		
-		// Menu : INFO
-		menu_Info = new JMenu("Info");
-		menu_Info.setFont(FONT_SEGOE_H1_P);
-		barraDelMenu.add(menu_Info);
-		
-		// Menu : INFO : PROGETTO 
-		menu_Info_progetto = new JMenuItem("Info sul progetto");
-		menu_Info_progetto.setFont(FONT_SEGOE_H2_P);
-		menu_Info.add(menu_Info_progetto);
-		
-		// Menu : INFO : SITO 
-		menu_Info_sito = new JMenuItem("Sito web del progetto");
-		menu_Info_sito.setFont(FONT_SEGOE_H2_P);
-		menu_Info.add(menu_Info_sito);
         
         
 		
@@ -994,32 +970,6 @@ public class BattleshipExtremeView extends JFrame{
 	public JMenuItem getMenu_Visualizza_storicoPartite() {
 		return menu_Visualizza_storicoPartite;
 	}
-
-
-	/**
-	 * @return the menu_Aiuto_tutorial
-	 */
-	public JMenuItem getMenu_Aiuto_tutorial() {
-		return menu_Aiuto_tutorial;
-	}
-
-
-	/**
-	 * @return the menu_Info_progetto
-	 */
-	public JMenuItem getMenu_Info_progetto() {
-		return menu_Info_progetto;
-	}
-
-
-	/**
-	 * @return the menu_Info_sito
-	 */
-	public JMenuItem getMenu_Info_sito() {
-		return menu_Info_sito;
-	}
-	
-	
 	
 	
 	

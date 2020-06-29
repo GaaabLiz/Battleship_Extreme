@@ -137,7 +137,7 @@ public class StoricoPartiteView extends JFrame {
 		
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 82, 743, 383);
+		scrollPane.setBounds(10, 82, 743, 283);
 		this.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -214,7 +214,34 @@ public class StoricoPartiteView extends JFrame {
 			}
 		}
 		
-			
+		
+		
+		JLabel lblNewLabel_1_4 = new JLabel("Numero partite totali:");
+		lblNewLabel_1_4.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblNewLabel_1_4.setBounds(13, 396, 196, 34);
+		this.getContentPane().add(lblNewLabel_1_4);
+		
+		JLabel lblNewLabel_1_4_1 = new JLabel("Tempo totale di gioco:");
+		lblNewLabel_1_4_1.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblNewLabel_1_4_1.setBounds(347, 396, 196, 34);
+		this.getContentPane().add(lblNewLabel_1_4_1);
+		
+		JLabel lblNewLabel_1_1_2_2_1_1_1 = new JLabel("0");
+		lblNewLabel_1_1_2_2_1_1_1.setForeground(new Color(65, 105, 225));
+		lblNewLabel_1_1_2_2_1_1_1.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		lblNewLabel_1_1_2_2_1_1_1.setBounds(196, 402, 63, 25);
+		this.getContentPane().add(lblNewLabel_1_1_2_2_1_1_1);
+		
+		JLabel lblNewLabel_1_1_2_2_1_1_1_1 = new JLabel("0 ore 00 minuti 00 secondi");
+		lblNewLabel_1_1_2_2_1_1_1_1.setForeground(new Color(65, 105, 225));
+		lblNewLabel_1_1_2_2_1_1_1_1.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		lblNewLabel_1_1_2_2_1_1_1_1.setBounds(540, 402, 212, 25);
+		this.getContentPane().add(lblNewLabel_1_1_2_2_1_1_1_1);
+		
+		
+		
+		
+		
 		
 		this.setVisible(true);
 	}
