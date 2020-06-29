@@ -99,6 +99,7 @@ public class BattleshipExtremeController {
 			public void actionPerformed(ActionEvent e) {
 				int coordX = 0;
 				int coordY = 0;
+				Boolean coordinateDentroMappa = false;
 				
 				// Il giocatore cerca di colpire una cella avversaria
 				if ((model.getTurnoAttuale() == 0) &&  (cpu_ha_vinto == false) && (giocatore_ha_vinto == false)) {
@@ -123,6 +124,12 @@ public class BattleshipExtremeController {
 						coordY = (int) view.getSpinnerValueY().getValue();
 						model.aggiungiLog("INFO", "Turno Giocatore", "La variabile X contenuta nello spinnerX è: " + coordX);
 						model.aggiungiLog("INFO", "Turno Giocatore", "La variabile Y contenuta nello spinnerY è: " + coordY);
+						Boolean controlloCoordX = (coordX<0) || (coordX>model.getDimensioneMappa());
+						Boolean controlloCoordY = (coordY<0) || (coordY>model.getDimensioneMappa());
+						if (controlloCoordX || controlloCoordY) {
+							JFrame f=new JFrame();  
+						    JOptionPane.showMessageDialog(f,"Le coordinate inserite non sono corrette!","Errore Coordinate",JOptionPane.ERROR_MESSAGE);    
+						}
 					}			
 					cellagiacolpita = model.getGiocatore().controllaCellaGiaColpita(model.getMappe_Giocatore().getTentativiDiAffondEffettuati(), new Point(coordX, coordY));
 					if (cellagiacolpita) {

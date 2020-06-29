@@ -129,7 +129,7 @@ public class StatistichePartitaView extends JFrame {
 				{"Navi Affondate", String.valueOf(model.getMappe_Cpu().getMieNaviAffondate()) + " / " + model.getNumeroNavi(), String.valueOf(model.getMappe_Giocatore().getMieNaviAffondate()) + " / " + model.getNumeroNavi()},
 				{"Turni giocati", String.valueOf(model.getGiocatore().turniGiocati), String.valueOf(model.getCpu().turniGiocati)},
 				{"Tentativi di affondamento", String.valueOf(model.getMappe_Giocatore().getNumTentativiDiAffondEffettuati()) + " / " + model.getMappe_Giocatore().getNumeroCelleMappa(), String.valueOf(model.getMappe_Cpu().getNumTentativiDiAffondEffettuati()) + " / " + model.getMappe_Cpu().getNumeroCelleMappa()},
-				{"Numero Celle affondate", String.valueOf(model.getGiocatore().mieCelleNaviAffondate) + " / "+ model.getCpu().getNumeroCelleNaviPlayer(), String.valueOf(model.getCpu().mieCelleNaviAffondate) + " / "+ model.getCpu().getNumeroCelleNaviPlayer()},
+				//{"Numero Celle affondate", String.valueOf(model.getGiocatore().mieCelleNaviAffondate) + " / "+ model.getCpu().getNumeroCelleNaviPlayer(), String.valueOf(model.getCpu().mieCelleNaviAffondate) + " / "+ model.getCpu().getNumeroCelleNaviPlayer()},
 			},
 			new String[] {
 				"Descrizione", "Info Giocatore", "Info Cpu"
