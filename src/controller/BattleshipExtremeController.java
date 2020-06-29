@@ -178,12 +178,6 @@ public class BattleshipExtremeController {
 						view.getLabelValue_nCelleAffondate().setText(String.valueOf(model.getGiocatore().mieCelleNaviAffondate) + " / " + String.valueOf(model.getGiocatore().getNumeroCelleNaviPlayer()));
 						view.getLabelValue_statoNavi().setText(String.valueOf(model.getMappe_Cpu().getMieNaviAffondate()) + " / " + model.getNumeroNavi());
 						chiamaCPUperTurno();
-						model.aggiungiLog("DEBUG", "Info giocatore", "Il turno attuale è: " + model.getTurniCount()); 
-						model.aggiungiLog("DEBUG", "Info giocatore", "I turni giocati dal giocatore sono: " + model.getGiocatore().turniGiocati); 
-						model.aggiungiLog("DEBUG", "Info giocatore", "I tentativi di affondamento effettuati dal giocatore sono: " + model.getMappe_Giocatore().getNumTentativiDiAffondEffettuati()); 
-						model.aggiungiLog("DEBUG", "Info giocatore", "Le celle affondate del giocatore sono: " + model.getGiocatore().mieCelleNaviAffondate); 
-						model.aggiungiLog("DEBUG", "Info giocatore", "Le navi affondate del giocatore sono: " + model.getMappe_Cpu().getMieNaviAffondate()); 
-						
 						
 					}
 				}
@@ -636,11 +630,6 @@ public class BattleshipExtremeController {
 			view.getLabelValueCpu_tentativiDiaffondamento().setText(String.valueOf(model.getMappe_Cpu().getNumTentativiDiAffondEffettuati()) + " / " + model.getMappe_Cpu().getNumeroCelleMappa());
 			view.getLabelValueCpu_nCelleAffondate().setText(String.valueOf(model.getCpu().mieCelleNaviAffondate) + " / "+ model.getCpu().getNumeroCelleNaviPlayer());
 			view.getLabelValueCpu_statoNavi().setText(String.valueOf(model.getMappe_Giocatore().getMieNaviAffondate()) + " / " + model.getNumeroNavi());
-			model.aggiungiLog("DEBUG", "Info Cpu", "Il turno attuale è: " + model.getTurniCount()); 
-			model.aggiungiLog("DEBUG", "Info Cpu", "I turni giocati dalla cpu sono: " + model.getCpu().turniGiocati); 
-			model.aggiungiLog("DEBUG", "Info Cpu", "I tentativi di affondamento effettuati dalla cpu sono: " + model.getMappe_Cpu().getNumTentativiDiAffondEffettuati()); 
-			model.aggiungiLog("DEBUG", "Info Cpu", "Le celle affondate della cpu sono: " + model.getCpu().mieCelleNaviAffondate); 
-			model.aggiungiLog("DEBUG", "Info Cpu", "Le navi affondate dalla cpu sono: " + model.getMappe_Giocatore().getMieNaviAffondate()); 
 			
 			if (!cpu_ha_vinto) {
 				view.writeChatLineTurno(model.getTurniCount());
