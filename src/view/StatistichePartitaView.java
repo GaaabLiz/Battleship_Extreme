@@ -24,14 +24,9 @@ import controller.DatabaseController;
 import model.BattleshipExtremeModel;
 import model.Partita;
 
-@SuppressWarnings("serial")
-/**
- * Classe che crea la gui che mostra le statistiche di fine partita.
- * @author Gabriele
- *
- */
 public class StatistichePartitaView extends JFrame {
 
+	@SuppressWarnings("serial")
 	public StatistichePartitaView(BattleshipExtremeModel model, BattleshipExtremeView view) {
 		
 		// db
@@ -140,15 +135,12 @@ public class StatistichePartitaView extends JFrame {
 				"Descrizione", "Info Giocatore", "Info Cpu"
 			}
 		) {
-			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				String.class, String.class, String.class
 			};
-			@SuppressWarnings("unused")
 			boolean[] columnEditables = new boolean[] {
 					false, false, false
 				};
-			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -236,9 +228,6 @@ public class StatistichePartitaView extends JFrame {
 		this.setVisible(true);
 	}
 	
-	/**
-	 * Nasconde questo JFrame.
-	 */
 	private void chiudiJFrame() {
 		this.setVisible(false);
 	}

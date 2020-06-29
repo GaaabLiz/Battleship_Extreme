@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -17,23 +18,19 @@ import javax.swing.JTabbedPane;
 
 import model.BattleshipExtremeModel;
 
-@SuppressWarnings("serial")
-/**
- * Classe che crea la gui delle impostazioni del gioco.
- * @author Gabriele
- *
- */
 public class ImpostazioniView extends JFrame {
 
+	private BattleshipExtremeModel model;
+	private BattleshipExtremeView view;
 
 	/**
-	 * Costruttore delle impostazioni.
-	 * @param model il model di MVC
-	 * @param view la view di MVC
-	 * @throws HeadlessException in caso di errore.
+	 * @param model
+	 * @throws HeadlessException
 	 */
 	public ImpostazioniView(BattleshipExtremeModel model, BattleshipExtremeView view) throws HeadlessException {
 		super();
+		this.model = model;
+		this.view = view;
 		
 		// Inizializzazione del JFrame
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(BattleshipExtremeView.class.getResource("/icons/settings.png")));
@@ -269,9 +266,6 @@ public class ImpostazioniView extends JFrame {
 	}
 	
 	
-	/**
-	 * nasconde il JFrame attuale
-	 */
 	private void chiudiJFrame() {
 		this.setVisible(false);
 		

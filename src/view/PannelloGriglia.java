@@ -13,12 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-@SuppressWarnings("serial")
-/**
- * Classe che rappresenta la singola mappa di gioco.
- * @author Gabriele
- *
- */
 public class PannelloGriglia extends JPanel{
 	
 	// # VARIABILI PRINCIPALI DELLA GRIGLIA #----------------------------------------------------------------

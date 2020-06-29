@@ -18,20 +18,10 @@ import view.ImpostazioniView;
 import view.StatistichePartitaView;
 import view.StoricoPartiteView;
 
-/**
- * Classe che aggiunge tutti gli actionListener ai pulsante del programma. Rapprensenta il Controller del pattern MVC.
- * @see BattleshipExtremeModel
- * @see BattleshipExtremeView
- * @author Gabriele
- *
- */
 public class BattleshipExtremeController {
 	
-	// MVC
 	private BattleshipExtremeModel model;
 	private BattleshipExtremeView view;
-	
-	// Definizione degli action Listener
 	private ActionListener uscitaDalGioco;
 	private ActionListener apriRegoleGioco;
 	private ActionListener nuovaPartita;
@@ -46,7 +36,7 @@ public class BattleshipExtremeController {
 	private ActionListener visualizzaInfoProgetto;
 	private ActionListener apriSitoWeb;
 
-	// Variabili di controllo partita.
+	
 	Boolean cellagiacolpita = true;
 	Boolean giocatore_ha_vinto = false;
 	Boolean cpu_ha_vinto = false;
@@ -54,9 +44,8 @@ public class BattleshipExtremeController {
 	Boolean qualcunoHaVinto = false;
 	
 	/**
-	 * Costruttore del controller. Vengono assegnati tutti gli action listener ai vari componenti.
-	 * @param model Il model del MVC
-	 * @param view La view principale
+	 * @param model
+	 * @param view
 	 */
 	public BattleshipExtremeController(BattleshipExtremeModel model, BattleshipExtremeView view) {
 		super();
@@ -93,13 +82,11 @@ public class BattleshipExtremeController {
 		view.getMenu_Partita_GiocaAutomaticamente().addActionListener(giocaAutomaticamente);
 		view.getMenu_Visualizza_storicoPartite().addActionListener(visualizzaStoricoPartite);
 		view.getMenu_Info_progetto().addActionListener(visualizzaInfoProgetto);
-		view.getMenu_Info_sito().addActionListener(apriSitoWeb);
+		view.getMenu_Info_sito().addActionListener(c);
 	}
 	
 	
-	/**
-	 * Settaggio actionListener relativo al componente.
-	 */
+	
 	private void set_Action_visualizzaInfoProgetto() {
 		visualizzaInfoProgetto = new ActionListener() {		
 			@Override
@@ -114,12 +101,9 @@ public class BattleshipExtremeController {
 	}
 
 
-	/**
-	 * Settaggio actionListener relativo al componente.
-	 */
+
 	private void set_Action_visualizzaStoricoPartite() {
 		visualizzaStoricoPartite = new ActionListener() {		
-			@SuppressWarnings("unused")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				StoricoPartiteView s = new StoricoPartiteView(model, view);
@@ -128,10 +112,6 @@ public class BattleshipExtremeController {
 		
 	}
 	
-	
-	/**
-	 * Settaggio actionListener relativo al componente.
-	 */
 	private void set_Action_apriSitoWeb() {
 		apriSitoWeb = new ActionListener() {		
 			@Override
@@ -149,12 +129,9 @@ public class BattleshipExtremeController {
 	}
 
 
-	/**
-	 * Settaggio actionListener relativo al componente. Qua si implemnta la logica dei turni dei giocatori.
-	 */
+
 	private void set_Action_colpisciCella() {
 		colpisciCella = new ActionListener() {		
-			@SuppressWarnings("unused")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int coordX = 0;
@@ -260,13 +237,10 @@ public class BattleshipExtremeController {
 	}
 	
 	
-	/**
-	 * Settaggio actionListener relativo al componente.
-	 */
 	private void set_Action_giocaAutomaticamente() {
 		
+		
 		giocaAutomaticamente = new ActionListener() {		
-			@SuppressWarnings("unused")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
@@ -362,13 +336,13 @@ public class BattleshipExtremeController {
 				
 				view.getMenu_Partita_GiocaAutomaticamente().setEnabled(false);
 			}
-		};	
+		};
+		
+		
 	}
 
 
-	/**
-	 * Settaggio actionListener relativo al componente. Qua vengono effettuate tutte le operazioni preliminari all'inizio del gioco.
-	 */
+
 	private void set_Action_iniziaPartita() {
 		
 		iniziaPartita = new ActionListener() {		
@@ -425,9 +399,7 @@ public class BattleshipExtremeController {
 	}
 
 
-	/**
-	 * Settaggio actionListener relativo al componente.
-	 */
+
 	private void set_Action_calcolaTempoTrascorso() {
 		calcolaTempoTrascorso = new ActionListener() {		
 			@Override
@@ -442,9 +414,6 @@ public class BattleshipExtremeController {
 	}
 	
 	
-	/**
-	 * Settaggio actionListener relativo al componente.
-	 */
 	private void set_Action_nascondiSpinnerColpisci() {
 		nascondiSpinnerColpisci = new ActionListener() {		
 			@Override
@@ -462,12 +431,9 @@ public class BattleshipExtremeController {
 	}
 
 
-	/**
-	 * Settaggio actionListener relativo al componente.
-	 */
+
 	private void set_Action_nuovaPartita() {
 		nuovaPartita = new ActionListener() {		
-			@SuppressWarnings("unused")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				view.getMenu_Modifica_settings().setEnabled(false);
@@ -478,9 +444,7 @@ public class BattleshipExtremeController {
 	}
 
 
-	/**
-	 * Settaggio actionListener relativo al componente.
-	 */
+
 	private void set_Action_uscitaDalGioco() {
 		uscitaDalGioco = new ActionListener() {		
 			@Override
@@ -498,12 +462,8 @@ public class BattleshipExtremeController {
 	}
 	
 	
-	/**
-	 * Settaggio actionListener relativo al componente.
-	 */
 	private void set_Action_apriImpostazioni() {
 		apriImpostazioni = new ActionListener() {		
-			@SuppressWarnings("unused")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ImpostazioniView impostazioni = new ImpostazioniView(model, view);		
@@ -512,12 +472,9 @@ public class BattleshipExtremeController {
 	}
 	
 	
-	/**
-	 * Settaggio actionListener relativo al componente.
-	 */
+	
 	private void set_Action_visualizzaConsole() {
 		visualizzaConsole = new ActionListener() {		
-			@SuppressWarnings("unused")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ConsoleView console = new ConsoleView(model.getLogGioco(), view);		
@@ -526,9 +483,6 @@ public class BattleshipExtremeController {
 	}
 	
 	
-	/**
-	 * Settaggio actionListener relativo al componente.
-	 */
 	private void set_Action_apriRegoleGioco() {
 		apriRegoleGioco = new ActionListener() {		
 			@Override
@@ -641,9 +595,6 @@ public class BattleshipExtremeController {
 	}
 	
 	
-	/**
-	 * Metodo che controlla e gestisce il turno della CPU. Viene chiamato quando il turno del giocatore finisce.
-	 */
 	private void chiamaCPUperTurno() {
 		// La CPU fa la sua mossa
 		model.setTurnoAttuale(model.CODICE_CPU);
@@ -743,9 +694,7 @@ public class BattleshipExtremeController {
 	}
 	
 	
-	/**
-	 * Metodo che setta tutte le label di informazioni dei giocatore con i valori di default.
-	 */
+	
 	private void inizializzaLabelConValoriModel() {
 		view.getLabelValue_nCelleAffondate().setText("0 /" + model.getGiocatore().getNumeroCelleNaviPlayer());
 		view.getLabelValue_tentativiDiaffondamento().setText("0 / " + (model.getDimensioneMappa()*model.getDimensioneMappa()));

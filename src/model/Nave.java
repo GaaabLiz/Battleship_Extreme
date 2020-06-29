@@ -5,7 +5,8 @@ import java.awt.Point;
 /**
  * <strong>Questa classe rappresenta la singola nave all'interno del gioco.</strong>
  * 
- * @author Gabriele
+ * @author Gabriele Lizzos
+ * @author Antonio Scalogna
  */
 public class Nave {
 	

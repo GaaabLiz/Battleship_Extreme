@@ -11,27 +11,18 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import model.BattleshipExtremeModel;
 import model.Partita;
 
-/**
- * Classe che controlla l'iterazione tra programma e database.
- * @author Gabriele
- *
- */
 public class DatabaseController {
 	
-	@SuppressWarnings("unused")
 	private final String CONNECTION_URL = "mysql://q2ntj5yaru5q48fn:vl5rjwb3xh7okw42@gi6kn64hu98hy0b6.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/fmtakid77se46q71";
 	private final String HOST = "gi6kn64hu98hy0b6.chr7pe7iynqr.eu-west-1.rds.amazonaws.com";
 	private final String USERNAME = "q2ntj5yaru5q48fn";
 	private final String PASSWORD = "vl5rjwb3xh7okw42";
 	private final int PORT = 3306;
 	private final String DATABASE_NAME = "fmtakid77se46q71";
+	
 	private Connection connessione;
 	
 	
-	/**
-	 * Metodo che stabilisce una connessione con il database.
-	 * @return La connessione stabilita.
-	 */
 	public Connection getConnessione() {
 		if (connessione == null) {
 			MysqlDataSource dataSource = new MysqlDataSource();
@@ -52,12 +43,6 @@ public class DatabaseController {
 	}
 	
 	
-	/**
-	 * Scarica dal db tutte le partite memorizzate.
-	 * @param model Il model di MVC
-	 * @return un array contenente tutte le partite.
-	 * @throws SQLException In caso di errore download partite.
-	 */
 	public ArrayList<Partita> getElencoPartiteFromDb(BattleshipExtremeModel model) throws SQLException {
 		
 		ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
@@ -85,11 +70,6 @@ public class DatabaseController {
 	}
 	
 	
-	/**
-	 * Aggiunge nel db la partita corrente appena giocata.
-	 * @param p la partita appena finita
-	 * @throws SQLException In caso di erore inserimento
-	 */
 	public void addPartitaToDb(Partita p) throws SQLException {
 		String tempNome = p.getNomeGiocatore();
 		String tempDataPartita = p.getDataPartita();

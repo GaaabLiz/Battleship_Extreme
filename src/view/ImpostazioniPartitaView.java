@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -25,20 +26,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import model.BattleshipExtremeModel;
+import model.MappePlayer;
 import model.Nave;
 import model.PuntoCardinale;
 
-/**
- * Classe che rappresenta la GUI delle impostazioni della partita. Qua vengono settate tutte le impostazioni del gioco.
- * @author Gabriele
- *
- */
-@SuppressWarnings("serial")
 public class ImpostazioniPartitaView extends JFrame {
 	
-	@SuppressWarnings("unused")
 	private BattleshipExtremeModel model;
-	@SuppressWarnings("unused")
 	private BattleshipExtremeView view;
 	private Boolean confermMappaNavi = false;
 	private PannelloGriglia griglia;
@@ -52,13 +46,7 @@ public class ImpostazioniPartitaView extends JFrame {
 	Nave nTemp = new Nave(-1, 0, PuntoCardinale.EST, new Point(-1, -1));
 	int iDcorrente = 1;
 
-	
-	/**
-	 * Costruttore della GUI delle impostazioni della partita.
-	 * @param model Il model del pattern MVC
-	 * @param view La view del pattern MVC che contiene la gui principale.
-	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings("serial")
 	public ImpostazioniPartitaView(BattleshipExtremeModel model, BattleshipExtremeView view) {
 		super();
 		this.model = model;
@@ -650,11 +638,7 @@ public class ImpostazioniPartitaView extends JFrame {
 	
 	
 	
-	/**
-	 * Visualizza nelle griglia di preview le navi appena inserite.
-	 * @param spazioNavi Lo spazio navi del giocatore.
-	 * @param dimensioneMappa La dim. della mappa di gioco appena impostata.
-	 */
+	
 	private void updateGrigliaPan3 (Boolean[][] spazioNavi, int dimensioneMappa) {
 		for (int i = 0; i < dimensioneMappa; i++) {
 			for (int j = 0; j < dimensioneMappa; j++) {
@@ -666,17 +650,16 @@ public class ImpostazioniPartitaView extends JFrame {
 	}
 	
 	
-	/**
-	 * Metodo che visualizza il pannello di inserimento e creazione nave.
-	 */
+	
 	private void visualizzaPannellonavi() {
 		panello_creaPosNavi.setVisible(true);
 	}
 	
 	
-	/**
-	 * Metodo che nasconde questo JFrame.
-	 */
+	
+	
+
+	
 	private void chiudiJFrame() {
 		this.setVisible(false);
 	}

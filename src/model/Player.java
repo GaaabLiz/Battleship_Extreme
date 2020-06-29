@@ -8,7 +8,8 @@ import java.util.ArrayList;
  * 
  * Questa classe rappresenta principalemte il giocatore, in quanto la CPU
  * estende questa classe (avra' tutti i metodi di questa classe + altri). 
- * @author Gabriele
+ * @author Gabriele Lizzos
+ * @author Antonio Scalogna
  */
 public class Player {
 	public ArrayList<Nave> navi;
@@ -116,11 +117,6 @@ public class Player {
 	}
 	
 	
-	/**
-	 * Metodo che aggiunge il punteggio al player in base al tempo trascorso in partita e se ha affondato una nave.
-	 * @param secondi il numero di secondi attuali della partita
-	 * @param naveColpita Lo stato della nave
-	 */
 	public void aggiungiPunteggio(Long secondi, Boolean naveColpita) {
 		int temp = 0;
 		if( (secondi <60)) {
@@ -164,9 +160,7 @@ public class Player {
 	}
 	
 	
-	/**
-	 * @return Restiuscie il numero di celle occupate dalle navi di un player
-	 */
+	
 	public int getNumeroCelleNaviPlayer() {
 		int temp = 0;
 		for (int i = 0; i < navi.size(); i++) {
