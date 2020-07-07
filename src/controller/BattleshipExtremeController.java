@@ -42,15 +42,15 @@ public class BattleshipExtremeController {
 	Boolean qualcunoHaVinto = false;
 	
 	/**
-	 * @param model
-	 * @param view
+	 * @param model il model di mvc
+	 * @param view la view di mvc
 	 */
 	public BattleshipExtremeController(BattleshipExtremeModel model, BattleshipExtremeView view) {
 		super();
 		this.model = model;
 		this.view = view;
 		
-		// Inizializzazione degli event Handler
+		// Inizializzazione degli event HaSndler
 		set_Action_nuovaPartita();
 		set_Action_uscitaDalGioco();
 		set_Action_apriImpostazioni();

@@ -549,9 +549,7 @@ public class BattleshipExtremeModel {
 			return LogGioco;
 		}
 
-		/**
-		 * @param logGioco the logGioco to set
-		 */
+		
 		public void setLogGioco() {
 			LogGioco = new ArrayList<Log>();
 		}

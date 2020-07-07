@@ -24,8 +24,9 @@ public class ImpostazioniView extends JFrame {
 	private BattleshipExtremeView view;
 
 	/**
-	 * @param model
-	 * @throws HeadlessException
+	 * @param model il model di mvc
+	 * @param view la view di mvc
+	 * @throws HeadlessException eccezione
 	 */
 	public ImpostazioniView(BattleshipExtremeModel model, BattleshipExtremeView view) throws HeadlessException {
 		super();

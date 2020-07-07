@@ -7,8 +7,7 @@ import java.util.ArrayList;
  * <strong>Classe che rappresenta le 2 mappe di ogni Player</strong>
  * 
  * In questa classe sono contenute tutte le informazioni sulla mappa navi e sulla mappa tentativi di ogni Player
- * @author Gabriele Lizzos
- * @author Antonio Scalogna
+ * @author Gabriele 
  *
  */
 public class MappePlayer {
@@ -82,25 +81,26 @@ public class MappePlayer {
 		
 	}
 	
+
 	
+//	/**
+//	 * Metodo usato solamente per scopi di debug. Usato per testare il settaggio TRUE/FALSE dello spazio navi 
+//	 */
+//	public void stampaSpazioNavi() {
+//		System.out.println();
+//		for (int i = 0; i < spazioNavi.length; i++) {
+//			for (int j = 0; j < spazioNavi.length; j++) {
+//				if (spazioNavi[i][j] == true) {
+//					System.out.print('▒');
+//				}else {
+//					System.out.print('|');
+//				}
+//				
+//			}
+//			System.out.println();
+//		}
+//	}
 	
-	/**
-	 * Metodo usato solamente per scopi di debug. Usato per testare il settaggio TRUE/FALSE dello spazio navi 
-	 */
-	public void stampaSpazioNavi() {
-		System.out.println();
-		for (int i = 0; i < spazioNavi.length; i++) {
-			for (int j = 0; j < spazioNavi.length; j++) {
-				if (spazioNavi[i][j] == true) {
-					System.out.print('▒');
-				}else {
-					System.out.print('|');
-				}
-				
-			}
-			System.out.println();
-		}
-	}
 	
 	
 	/**

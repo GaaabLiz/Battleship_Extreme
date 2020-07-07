@@ -17,8 +17,9 @@ public class ConsoleView extends JFrame {
 	private BattleshipExtremeView view;
 
 	/**
-	 * @param logs
-	 * @throws HeadlessException
+	 * @param logs i log da stampare
+	 * @param view la view di mvc
+	 * @throws HeadlessException eccezione
 	 */
 	public ConsoleView(ArrayList<Log> logs, BattleshipExtremeView view) throws HeadlessException {
 		super();

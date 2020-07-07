@@ -14,10 +14,11 @@ public class Partita implements Serializable{
 	private int id;
 	
 	/**
-	 * @param nomeGiocatore
-	 * @param punteggioGiocatore
-	 * @param punteggioCpu
-	 * @param durataPartita
+	 * @param nomeGiocatore il nome del giocatore
+	 * @param punteggioGiocatore il putneggio del giocatore
+	 * @param punteggioCpu il punteggio della cpu
+	 * @param durataPartita la durata della partita
+	 * @param dataPartita la data della partita
 	 */
 	public Partita(String nomeGiocatore, int punteggioGiocatore, int punteggioCpu, String durataPartita, String dataPartita) {
 		super();

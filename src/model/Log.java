@@ -9,9 +9,9 @@ public class Log {
 	private String testoLog;
 	
 	/**
-	 * @param tipo
-	 * @param fonte
-	 * @param testoLog
+	 * @param tipo il tipo di log
+	 * @param fonte la fonte da cui proviene
+	 * @param testoLog il testo da scrivere
 	 */
 	public Log(String tipo, String fonte, String testoLog) {
 		super();

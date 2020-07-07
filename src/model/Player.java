@@ -8,8 +8,7 @@ import java.util.ArrayList;
  * 
  * Questa classe rappresenta principalemte il giocatore, in quanto la CPU
  * estende questa classe (avra' tutti i metodi di questa classe + altri). 
- * @author Gabriele Lizzos
- * @author Antonio Scalogna
+ * @author Gabriele 
  */
 public class Player {
 	public ArrayList<Nave> navi;
