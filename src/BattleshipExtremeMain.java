@@ -1,8 +1,6 @@
 import java.sql.SQLException;
 
 import controller.BattleshipExtremeController;
-import controller.DatabaseController;
-import controller.WindowMainListener;
 import model.BattleshipExtremeModel;
 import view.BattleshipExtremeView;
 

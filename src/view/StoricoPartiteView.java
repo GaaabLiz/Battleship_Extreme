@@ -22,8 +22,6 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
-import controller.DatabaseController;
 import model.BattleshipExtremeModel;
 import model.Partita;
 
@@ -39,14 +37,14 @@ public class StoricoPartiteView extends JFrame {
 		
 		// db
 		Boolean stato_connessione = false;
-		DatabaseController d = new DatabaseController();
+		//DatabaseController d = new DatabaseController();
 		
-		try {
+		/*try {
 			stato_connessione = d.getConnessione().isClosed();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
 		
 		if (!stato_connessione) {
 			model.aggiungiLog("INFO", "DATABASE", "La connessione al database è aperta.");
@@ -184,12 +182,13 @@ public class StoricoPartiteView extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		if (viaLiberaPerInserimento) {
+			/*
 			try {
 				elencoPartite = d.getElencoPartiteFromDb(model);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
+			}*/
 			model.aggiungiLog("INFO", "DATABASE", "Sono stati trovati nel database " + elencoPartite.size() + " partite.");
 			
 			DefaultTableModel m = (DefaultTableModel) table.getModel();

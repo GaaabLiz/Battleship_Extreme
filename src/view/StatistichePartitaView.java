@@ -20,7 +20,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import controller.DatabaseController;
 import model.BattleshipExtremeModel;
 import model.Partita;
 
@@ -31,14 +30,14 @@ public class StatistichePartitaView extends JFrame {
 		
 		// db
 		Boolean stato_connessione = false;
-		DatabaseController d = new DatabaseController();
+		//DatabaseController d = new DatabaseController();
 		
-		try {
+		/*try {
 			stato_connessione = d.getConnessione().isClosed();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
 		
 		if (!stato_connessione && model.ABILITA_SALVATAGGIO_DB) {
 			model.aggiungiLog("INFO", "DATABASE", "La connessione al database è aperta.");
@@ -63,12 +62,12 @@ public class StatistichePartitaView extends JFrame {
 			p.setDimMappa(tempDimMappa);
 			p.setNumNavi(tempNumNavi);
 			
-			try {
+			/*try {
 				d.addPartitaToDb(p);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
+			}*/
 			
 		}else {
 			if (!model.ABILITA_SALVATAGGIO_DB) {
